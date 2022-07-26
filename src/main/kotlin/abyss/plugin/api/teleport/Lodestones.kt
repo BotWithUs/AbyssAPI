@@ -253,7 +253,6 @@ enum class Lodestones(
                 InputHelper.typeCharLiteral('T')
                 Widgets.isOpen(LODESTONE_ID)
             }) {
-            println("${this.name} - ${isAvailable()}")
             if (!isAvailable()) {
                 println("Not unlocked!")
                 return false
