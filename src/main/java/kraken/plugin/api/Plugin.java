@@ -1,5 +1,7 @@
 package kraken.plugin.api;
 
+import abyss.plugin.api.attributes.PluginAttributes;
+
 import java.io.*;
 import java.security.SecureRandom;
 import java.util.HashMap;
@@ -11,7 +13,8 @@ import java.util.Random;
  */
 public abstract class Plugin {
 
-    private final Map<String, String> attributes = new HashMap<>();
+    public final PluginAttributes attributes = new PluginAttributes(new HashMap<>());
+    public final PluginAttributes sharedAttributes = new PluginAttributes(new HashMap<>());
 
     /**
      * A random instance that is seeded with information about the running account.
