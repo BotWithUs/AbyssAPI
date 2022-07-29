@@ -21,7 +21,10 @@
 
 <!-- ABOUT THE PROJECT -->
 ### About The Project
-###### Open-source API created for<a href="https://discord.gg/zSQYcGuVaF"><strong> RS3 Bot Abyss</strong> </a>
+###### Open-source API created for RS3 Bot Abyss </a>
+<a href="http://abyss.ninja/"><strong> Website</strong>
+<br>
+<a href="https://discord.gg/zSQYcGuVaF"><strong> Discord</strong>
 
 <!-- Jump to top button -->
 <p align="right">(<a href="#top">back to top</a>)</p>
