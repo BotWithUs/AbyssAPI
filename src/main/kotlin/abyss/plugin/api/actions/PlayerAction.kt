@@ -5,4 +5,7 @@ enum class PlayerAction(override val type: Int) : ActionType {
 
     override val actionIndex: Int
         get() = ordinal
+
+    override val typeName: String
+        get() = name
 }

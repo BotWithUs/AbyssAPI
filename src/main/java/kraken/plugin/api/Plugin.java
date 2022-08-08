@@ -74,6 +74,10 @@ public abstract class Plugin {
 
     }
 
+    public void onActionMenuFired(int type, int param1, int param2, int param3, int param4) {
+
+    }
+
     /**
      * Called when a connection variable changes.
      */
@@ -108,6 +112,13 @@ public abstract class Plugin {
     /**
      * Called when an item in the inventory is changed.
      */
+    private void inventoryItemChanged(WidgetItem prev, WidgetItem next) {
+        ItemContainer inventory = ItemContainers.byId(93);
+        prev.setContainer(inventory);
+        next.setContainer(inventory);
+        onInventoryItemChanged(prev, next);
+    }
+
     public void onInventoryItemChanged(WidgetItem prev, WidgetItem next) {
 
     }

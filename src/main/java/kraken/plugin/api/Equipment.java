@@ -31,7 +31,7 @@ public final class Equipment {
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(new WidgetItem(item.getId(), item.getAmount(), i, WIDGET_INTERACT_ID));
+                list.add(new WidgetItem(item.getId(), item.getAmount(), i, WIDGET_INTERACT_ID, container));
             }
         }
         return list.toArray(new WidgetItem[0]);

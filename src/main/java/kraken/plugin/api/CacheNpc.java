@@ -15,6 +15,10 @@ public final class CacheNpc extends AsyncData {
     private int varbitId = -1;
     private int[] transformIds = new int[0];
 
+    private int size;
+    private int combatLevel;
+    private boolean hasMapDot;
+
     CacheNpc(int id) {
         this.id = id;
     }
@@ -52,6 +56,29 @@ public final class CacheNpc extends AsyncData {
             options[i] = binaryOptionNames[i] == null ? "" : new String(binaryOptionNames[i]);
         }
         return options;
+    }
+
+    /**
+     * Size of the npc
+     */
+    public int getSize() {
+        return size;
+    }
+
+    /**
+     * Combat Level of the npc
+     */
+
+    public int getCombatLevel() {
+        return combatLevel;
+    }
+
+    /**
+     * Does the npc show up on the minimap
+     */
+
+    public boolean hasMapDot() {
+        return hasMapDot;
     }
 
     /**

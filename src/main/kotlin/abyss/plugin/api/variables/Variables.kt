@@ -1,8 +1,10 @@
 package abyss.plugin.api.variables
 
+import kraken.plugin.api.ItemContainer
+import kraken.plugin.api.ItemContainers
 import kotlin.reflect.KProperty
 
-enum class Variables(val variable: Variable) : Variable by variable {
+enum class Variables(val variable: PlayerVariable) : PlayerVariable by variable {
     BANK_INVENTORY_TAB(VariableBit(45319)),
     BANK_TAB(VariableBit(45141)),
     PRESETS_OPEN(VariableBit(39433)),
@@ -59,6 +61,7 @@ enum class Variables(val variable: Variable) : Variable by variable {
 
     inline operator fun <reified T> getValue(ref: Any?, prop: KProperty<*>): T = when(T::class)
     {
+        ItemContainer::class -> ItemContainers.byId(value) as T
         Boolean::class -> (value == 1) as T
         else -> value as T
     }

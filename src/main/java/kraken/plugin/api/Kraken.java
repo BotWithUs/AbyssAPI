@@ -1,6 +1,8 @@
 package kraken.plugin.api;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Provides access to kraken itself.
@@ -22,7 +24,7 @@ public final class Kraken {
      * @param entry The entry-point of the plugin to load.
      * @return The context of the loaded plugin.
      */
-    public static native PluginContext loadNewPlugin(Class<?> entry);
+    public static native PluginContext loadNewPlugin(Class<?> entry, int pluginId);
 
     /**
      * Retrieves the path to the plugin directory.

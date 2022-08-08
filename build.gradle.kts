@@ -6,7 +6,7 @@ plugins {
     `maven-publish`
 }
 
-group = "org.example"
+group = "abyss.plugin.api"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
     testImplementation(kotlin("test"))
 }
 

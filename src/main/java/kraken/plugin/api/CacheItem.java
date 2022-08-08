@@ -13,6 +13,14 @@ public final class CacheItem extends AsyncData {
     private byte[][] binaryOptionNames = new byte[0][];
     private byte[][] binaryGroundOptionNames = new byte[0][];
 
+    private boolean isMembers;
+    private boolean isStackable;
+    private int storeValue;
+    private int geBuyLimit;
+    private int category;
+    private int equipSlotID;
+    private int equipID;
+
     CacheItem(int id) {
         this.id = id;
     }
@@ -61,6 +69,34 @@ public final class CacheItem extends AsyncData {
             options[i] = binaryGroundOptionNames[i] == null ? "" : new String(binaryGroundOptionNames[i]);
         }
         return options;
+    }
+
+    public boolean isMembers() {
+        return isMembers;
+    }
+
+    public boolean isStackable() {
+        return isStackable;
+    }
+
+    public int getStoreValue() {
+        return storeValue;
+    }
+
+    public int getGeBuyLimit() {
+        return geBuyLimit;
+    }
+
+    public int getCategory() {
+        return category;
+    }
+
+    public int getEquipSlotID() {
+        return equipSlotID;
+    }
+
+    public int getEquipID() {
+        return equipID;
     }
 
     /**

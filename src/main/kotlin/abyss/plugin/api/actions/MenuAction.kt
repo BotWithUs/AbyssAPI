@@ -16,4 +16,6 @@ enum class MenuAction(override val type: Int) : ActionType {
 
     override val actionIndex: Int
         get() = -1
+    override val typeName: String
+        get() = name
 }

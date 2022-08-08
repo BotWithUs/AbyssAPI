@@ -1,15 +1,15 @@
 package abyss.plugin.api.variables
 
-sealed interface Variable {
+sealed interface PlayerVariable {
     val variableId: Int
     val value: Int
 }
 
-class VariableBit(override val variableId: Int) : Variable {
+class VariableBit(override val variableId: Int) : PlayerVariable {
     override val value: Int
         get() = VariableManager.getVarbitById(variableId)
 }
-class ConVarValue(override val variableId: Int) : Variable {
+class ConVarValue(override val variableId: Int) : PlayerVariable {
     override val value: Int
         get() = VariableManager.getConVarById(variableId)?.valueInt ?: 0
 }

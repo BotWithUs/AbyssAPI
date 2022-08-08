@@ -6,6 +6,9 @@ enum class NpcAction(override val type: Int) : ActionType {
     override val actionIndex: Int
         get() = ordinal
 
+    override val typeName: String
+        get() = name
+
     companion object {
         fun forAction(index: Int): NpcAction {
             for (value in values()) {

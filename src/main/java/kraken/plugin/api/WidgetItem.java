@@ -1,5 +1,7 @@
 package kraken.plugin.api;
 
+import abyss.plugin.api.variables.ContainerVariables;
+
 import java.util.Objects;
 
 /**
@@ -10,18 +12,21 @@ public class WidgetItem extends Item {
     private int slot;
     private int widgetId = -1;
 
+    private ItemContainer container;
+
     public WidgetItem() {
     }
 
-    public WidgetItem(int id, int amount, int slot) {
-        super(id, amount);
+    public WidgetItem(int itemId, int amount, int slot) {
+        super(itemId, amount);
         this.slot = slot;
     }
 
-    public WidgetItem(int id, int amount, int slot, int widgetId) {
+    public WidgetItem(int id, int amount, int slot, int widgetId, ItemContainer container) {
         super(id, amount);
         this.slot = slot;
         this.widgetId = widgetId;
+        this.container = container;
     }
 
     /**
@@ -51,6 +56,23 @@ public class WidgetItem extends Item {
      */
     public void setWidgetId(int widgetId) {
         this.widgetId = widgetId;
+    }
+
+    /**
+     * The Item Container this item belongs too
+     * @return ItemContainer
+     */
+
+    public ItemContainer getContainer() {
+        return container;
+    }
+
+    /**
+     * Sets the item container that this item belongs too
+     */
+
+    public void setContainer(ItemContainer container) {
+        this.container = container;
     }
 
     /**
@@ -84,6 +106,15 @@ public class WidgetItem extends Item {
                 ", amount= " + getAmount() +
                 ", slot=" + slot +
                 '}';
+    }
+
+    public int getVarbitValue(int varbitID) {
+        if(container == null) return 0;
+        return container.getVarbitById(slot, varbitID);
+    }
+
+    public int getVarbitValue(ContainerVariables var) {
+        return this.getVarbitValue(var.getVarbitID());
     }
 
     @Override
