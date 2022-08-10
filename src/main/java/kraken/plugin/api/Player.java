@@ -1,5 +1,8 @@
 package kraken.plugin.api;
 
+import abyss.plugin.api.variables.VariableManager;
+import abyss.plugin.api.variables.Variables;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +28,7 @@ public final class Player extends Spirit {
      * @return If this player is under attack currently.
      */
     public boolean isUnderAttack() {
-        return isStatusBarActive(STATUS_HEALTH);
+        return Variables.IN_COMBAT.getValue() == 1;
     }
 
     /**

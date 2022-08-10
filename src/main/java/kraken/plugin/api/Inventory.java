@@ -118,4 +118,10 @@ public final class Inventory {
             }
         }
     }
+
+    public static int getVarbitValue(int slot, int varbitId) {
+        ItemContainer inventory = ItemContainers.byId(93);
+        if(inventory == null) return -1;
+        return inventory.getVarbitById(slot, varbitId);
+    }
 }

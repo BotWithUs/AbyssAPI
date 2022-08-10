@@ -1,6 +1,6 @@
 package kraken.plugin.api;
 
-import abyss.plugin.api.attributes.PluginAttributes;
+import abyss.plugin.api.actions.attributes.PluginAttributes;
 
 import java.io.*;
 import java.security.SecureRandom;
