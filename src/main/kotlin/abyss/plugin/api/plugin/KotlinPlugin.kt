@@ -16,7 +16,9 @@ abstract class KotlinPlugin : Plugin() {
 
     abstract suspend fun loop(): Int
 
-    abstract fun ImVerticalPane.createGui()
+    open fun ImVerticalPane.createGui() {
+
+    }
 
     final override fun initImGui() {
         super.initImGui()
