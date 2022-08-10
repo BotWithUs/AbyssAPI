@@ -1,11 +1,11 @@
 package kraken.plugin.api;
 
-import abyss.plugin.api.attributes.PluginAttributes;
+import abyss.plugin.api.actions.attributes.PluginAttributes;
+import abyss.plugin.api.imgui.containers.ImVerticalPane;
 
 import java.io.*;
 import java.security.SecureRandom;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -15,6 +15,8 @@ public abstract class Plugin {
 
     public final PluginAttributes attributes = new PluginAttributes(new HashMap<>());
     public final PluginAttributes sharedAttributes = new PluginAttributes(new HashMap<>());
+
+    protected ImVerticalPane pane = null;
 
     /**
      * A random instance that is seeded with information about the running account.
@@ -60,11 +62,17 @@ public abstract class Plugin {
         return 60000;
     }
 
+    public void initImGui() {
+        pane = new ImVerticalPane();
+    }
+
     /**
      * Called when the plugin's window is being painted.
      */
     public void onPaint() {
-
+        if(pane != null) {
+            pane.getSkin().onPaint();
+        }
     }
 
     /**

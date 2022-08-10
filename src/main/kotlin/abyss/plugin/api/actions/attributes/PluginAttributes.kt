@@ -1,4 +1,4 @@
-package abyss.plugin.api.attributes
+package abyss.plugin.api.actions.attributes
 
 import kotlin.reflect.KProperty
 

@@ -57,4 +57,8 @@ public final class Widgets {
         }
         return cur;
     }
+
+    public static int hash(int parentId, int childId) {
+        return (parentId << 16) + childId;
+    }
 }

@@ -36,7 +36,10 @@ public final class ItemContainer {
     }
 
     public int getVarbitById(int slot, int varbitId) {
-        return VariableManager.getContainerVarbit(id, slot, varbitId);
+        if(slot < items.length && items[slot].getId() > 0) {
+            return VariableManager.getContainerVarbit(id, slot, varbitId);
+        }
+        return -1;
     }
 
     public int getVarbitById(int slot, ContainerVariables var) {
