@@ -1,8 +1,7 @@
 package abyss.plugin.api.plugin
 
-import abyss.plugin.api.imgui.containers.ImPane
+import abyss.plugin.api.imgui.containers.ImVerticalPane
 import kotlinx.coroutines.runBlocking
-import kraken.plugin.api.ImGui
 import kraken.plugin.api.Plugin
 
 abstract class KotlinPlugin : Plugin() {
@@ -17,7 +16,7 @@ abstract class KotlinPlugin : Plugin() {
 
     abstract suspend fun loop(): Int
 
-    abstract fun ImPane.createGui()
+    abstract fun ImVerticalPane.createGui()
 
     final override fun initImGui() {
         super.initImGui()
