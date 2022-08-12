@@ -1,13 +1,27 @@
 package abyss.plugin.api.game.chat
 
-class ChatMessage(private val msg: String = "", private val format: Boolean = true) {
+class ChatMessage {
 
-    val message: String get() {
-        if(format) {
-            return parseLine(msg)
-        }
-        return msg
+    private val index: Int = -1
+    private val rawName: String? = null
+    private val name: String? = null
+    private val message: String? = null
+
+    fun getRawMessage() = message
+    fun getMessage() : String? {
+        if(message == null) return null
+        return parseLine(message)
     }
+
+    fun getName() = name
+
+    fun getRawName() = name
+    fun getFullName(): String? {
+        if(rawName == null) return null
+        return parseLine(rawName.replace("?", " "))
+    }
+
+    fun getMessagePosition() = index
 
     private fun parseLine(line: String) : String {
         return try {
@@ -21,8 +35,5 @@ class ChatMessage(private val msg: String = "", private val format: Boolean = tr
     companion object {
         val col = Regex("\\<.*?\\>")
         val time = Regex("\\[.*?\\]")
-
-        fun String.asChatMessage(format: Boolean = true) = ChatMessage(this, format)
     }
-
 }

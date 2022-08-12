@@ -82,7 +82,7 @@ public abstract class Plugin {
 
     }
 
-    public void onActionMenuFired(int type, int param1, int param2, int param3, int param4) {
+    public void onActionMenuFired(int type, int param1, int param2, int param3, int param4, boolean isSynthetic) {
 
     }
 
