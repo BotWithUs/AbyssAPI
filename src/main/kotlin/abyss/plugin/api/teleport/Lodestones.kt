@@ -7,6 +7,7 @@ import abyss.plugin.api.input.InputHelper
 import abyss.plugin.api.variables.VariableManager
 import abyss.plugin.api.world.WorldTile
 import abyss.plugin.api.world.tile
+import kotlinx.coroutines.runBlocking
 import kraken.plugin.api.Widgets
 
 enum class Lodestones(
@@ -199,7 +200,7 @@ enum class Lodestones(
         9482,
         true
     ) {
-        override suspend fun isAvailable(): Boolean {
+        override fun isAvailable(): Boolean {
             return VariableManager.getVarbitById(varbit) >= 15
         }
     },
@@ -212,7 +213,7 @@ enum class Lodestones(
         9482,
         true
     ) {
-        override suspend fun isAvailable(): Boolean {
+        override fun isAvailable(): Boolean {
             return VariableManager.getVarbitById(varbit) >= 100
         }
     },
@@ -244,9 +245,11 @@ enum class Lodestones(
         true
     );
 
-    open override suspend fun isAvailable(): Boolean {
+    open override fun isAvailable(): Boolean {
         return VariableManager.getVarbitById(varbit) == 1
     }
+
+    fun interact() = runBlocking { teleport() }
 
     override suspend fun teleport(): Boolean {
         if (delayUntil(3000, 1000) {
