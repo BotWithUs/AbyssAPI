@@ -20,8 +20,8 @@ object ActionBar {
     fun isLocked() = isLocked == 1
 
     @JvmStatic
-    fun interact(slot: ActionSlot) {
-        slot.interact()
+    fun interact(action: MenuAction, slot: ActionSlot) {
+        slot.interact(action)
     }
 
     @JvmStatic

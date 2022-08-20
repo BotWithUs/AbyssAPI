@@ -21,8 +21,8 @@ enum class ActionSlot(private val buttonId: Int) {
     SLOT_13(220),
     SLOT_14(233);
 
-    fun interact() {
-        ActionHelper.menu(MenuAction.WIDGET, 1, -1, Widgets.hash(ActionBar.ACTION_WIDGET_ID, buttonId))
+    fun interact(action: MenuAction) {
+        ActionHelper.menu(action, 1, -1, Widgets.hash(ActionBar.ACTION_WIDGET_ID, buttonId))
     }
 
 }
