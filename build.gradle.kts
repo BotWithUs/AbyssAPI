@@ -27,8 +27,13 @@ tasks.test {
     useJUnitPlatform()
 }
 
+tasks.withType<JavaCompile> {
+    targetCompatibility = "11"
+    sourceCompatibility = "1.8"
+}
+
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
 }
 
 publishing {
@@ -37,7 +42,7 @@ publishing {
             groupId = "com.abyss.api"
             artifactId = "AbyssAPI"
             version = "1.0-SNAPSHOT"
-            from(components["java"])
+            from(components.getByName("java"))
         }
     }
 }
