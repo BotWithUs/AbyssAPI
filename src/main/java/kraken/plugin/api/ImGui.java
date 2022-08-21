@@ -14,6 +14,28 @@ public final class ImGui {
     public static native void sameLine();
 
     /**
+     * Puts the next element onto a new line.
+     */
+    public static native void newLine();
+
+    /**
+     * Begins a tooltip
+     */
+    public static native void beginTooltip();
+
+    /**
+     * Ends a tooltip
+     */
+
+    public static native void endTooltip();
+
+    /**
+     * Checks if a ImGui node is being hovered
+     */
+
+    public static native boolean isItemHovered();
+
+    /**
      * Begins a child group.
      */
     public static native boolean beginChild(String id);
