@@ -6,5 +6,8 @@ import kraken.plugin.api.ImGui
 class ImLabelSkin(val label: ImLabel) : ImSkin {
     override fun onPaint() {
         ImGui.label(label.text)
+        if(label.tooltip != null) {
+            label.tooltip.getSkin().onPaint()
+        }
     }
 }

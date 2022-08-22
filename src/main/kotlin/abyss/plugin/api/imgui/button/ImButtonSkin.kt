@@ -8,5 +8,8 @@ class ImButtonSkin(val button : ImButton) : ImSkin {
         if(ImGui.button(button.text)) {
             button.onActionProperty.get()?.invoke(button)
         }
+        if(button.tooltip != null) {
+            button.tooltip.getSkin().onPaint()
+        }
     }
 }

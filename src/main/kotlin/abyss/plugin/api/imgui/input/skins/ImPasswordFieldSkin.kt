@@ -12,5 +12,8 @@ class ImPasswordFieldSkin(val textField: ImTextField) : ImSkin {
         if(!textByteArray.contentEquals(textField.input.toByteArray())) {
             textField.inputProperty.set(String(textByteArray))
         }
+        if(textField.tooltip != null) {
+            textField.tooltip.getSkin().onPaint()
+        }
     }
 }

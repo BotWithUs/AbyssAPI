@@ -38,7 +38,7 @@ public final class ImGui {
     /**
      * Begins a child group.
      */
-    public static native boolean beginChild(String id);
+    public static native boolean beginChild(String id, int width, int height, boolean hasBorder);
 
     /**
      * Ends a child group.
@@ -126,4 +126,13 @@ public final class ImGui {
      * Ends rendering of a tab bar.
      */
     public static native void endTabItem();
+
+
+    public static void beginChild(String id) {
+        beginChild(id, 0, 0, false);
+    }
+
+    public static void beginChild(String id, boolean hasBorder) {
+        beginChild(id, 0, 0, hasBorder);
+    }
 }
