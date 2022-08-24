@@ -1,12 +1,15 @@
 package abyss.plugin.api.imgui.containers
 
 import abyss.plugin.api.imgui.AbstractImNode
+import abyss.plugin.api.imgui.ImColor
 import abyss.plugin.api.imgui.ImSkin
 import abyss.plugin.api.imgui.containers.skins.ImVerticalPaneSkin
 import abyss.plugin.api.imgui.fx.getValue
+import abyss.plugin.api.imgui.fx.setValue
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleListProperty
+import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 
 open class ImVerticalPane(id: String? = null) : AbstractImNode(), ImPane {
@@ -19,6 +22,9 @@ open class ImVerticalPane(id: String? = null) : AbstractImNode(), ImPane {
     val width by widthProperty
     val height by heightProperty
     val hasBorder by hasBorderProperty
+
+    val backgroundColorProperty = SimpleObjectProperty<ImColor>()
+    var backgroundColor by backgroundColorProperty
 
     init {
         idProperty.set(id)

@@ -8,6 +8,7 @@ import abyss.plugin.api.variables.VariableManager
 import abyss.plugin.api.world.WorldTile
 import abyss.plugin.api.world.tile
 import kotlinx.coroutines.runBlocking
+import kraken.plugin.api.Debug
 import kraken.plugin.api.Widgets
 
 enum class Lodestones(
@@ -64,7 +65,7 @@ enum class Lodestones(
         tile(3214, 3376),
         39,
         false
-    ),
+    ), //ActionHelper.menu(MenuAction.WIDGET, 1, -1, 71565334);
     FALADOR(
         1,
         -1,
@@ -252,12 +253,12 @@ enum class Lodestones(
     fun interact() = runBlocking { teleport() }
 
     override suspend fun teleport(): Boolean {
-        if (delayUntil(3000, 1000) {
-                InputHelper.typeCharLiteral('T')
-                Widgets.isOpen(LODESTONE_ID)
-            }) {
+        if (!Widgets.isOpen(LODESTONE_ID)) {
+            InputHelper.typeCharLiteral('T')
+        }
+        if (delayUntil(3000) { Widgets.isOpen(LODESTONE_ID) }) {
             if (!isAvailable()) {
-                println("Not unlocked!")
+                Debug.log("Lodestone $name not unlocked!")
                 return false
             }
             if (key != ' ') {
@@ -282,7 +283,7 @@ enum class Lodestones(
             )
             if (delayUntil { Widgets.isOpen(LODESTONE_ID) }) {
                 if (!isAvailable()) {
-                    println("Not unlocked! 2")
+                    Debug.log("Lodestone $name not unlocked!")
                     return false
                 }
                 if (key != ' ') {

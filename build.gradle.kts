@@ -28,12 +28,12 @@ tasks.test {
 }
 
 tasks.withType<JavaCompile> {
-    targetCompatibility = "11"
+    targetCompatibility = "18"
     sourceCompatibility = "1.8"
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.jvmTarget = "18"
 }
 
 publishing {

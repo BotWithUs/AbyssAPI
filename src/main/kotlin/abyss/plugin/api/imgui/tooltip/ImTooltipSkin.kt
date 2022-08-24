@@ -8,7 +8,19 @@ class ImTooltipSkin(val tooltip: ImTooltip) : ImSkin {
         if(ImGui.isItemHovered()) {
             ImGui.beginTooltip()
             if(tooltip.graphic == null) {
+                if(tooltip.textColor != null) {
+                    ImGui.pushStyleColor(
+                        ImGui.ColorStyle.ImGuiCol_Text,
+                        tooltip.textColor.red,
+                        tooltip.textColor.green,
+                        tooltip.textColor.blue,
+                        tooltip.textColor.alpha,
+                    )
+                }
                 ImGui.label(tooltip.text)
+                if(tooltip.textColor != null) {
+                    ImGui.popStyleColor()
+                }
             } else {
                 tooltip.graphic.getSkin().onPaint()
             }

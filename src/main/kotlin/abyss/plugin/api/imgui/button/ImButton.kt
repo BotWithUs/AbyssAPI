@@ -8,6 +8,7 @@ open class ImButton(text: String) : ImLabel(text) {
 
     val onActionProperty = SimpleObjectProperty<(ImButton) -> Unit>()
 
+
     override fun getSkin(): ImSkin {
         return ImButtonSkin(this)
     }

@@ -6,6 +6,15 @@ import kraken.plugin.api.ImGui
 
 class ImHorizontalPaneSkin(val horizontalPane: ImHorizontalPane) : ImSkin {
     override fun onPaint() {
+        if(horizontalPane.backgroundColor != null) {
+            ImGui.pushStyleColor(
+                ImGui.ColorStyle.ImGuiCol_ChildBg,
+                horizontalPane.backgroundColor.red,
+                horizontalPane.backgroundColor.green,
+                horizontalPane.backgroundColor.blue,
+                horizontalPane.backgroundColor.alpha
+            )
+        }
         if (horizontalPane.id != null) {
             ImGui.beginChild(
                 horizontalPane.id,
@@ -22,6 +31,9 @@ class ImHorizontalPaneSkin(val horizontalPane: ImHorizontalPane) : ImSkin {
         }
         if(horizontalPane.id != null) {
             ImGui.endChild()
+        }
+        if(horizontalPane.backgroundColor != null) {
+            ImGui.popStyleColor()
         }
     }
 }
