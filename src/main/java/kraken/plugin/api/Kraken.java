@@ -1,8 +1,7 @@
 package kraken.plugin.api;
 
+
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Provides access to kraken itself.
@@ -195,4 +194,10 @@ public final class Kraken {
      * @return The introspection configuration bitmask.
      */
     public static native int getIntroConfiguration();
+
+    /**
+     * Captures the game screen and writes it to a file.
+     */
+
+    //public static native GameSnapshot takeSnapshot(int x, int y, int width, int height);
 }

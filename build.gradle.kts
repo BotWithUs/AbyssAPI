@@ -19,6 +19,7 @@ javafx {
 }
 
 dependencies {
+    implementation(files("path/to/your/lib.jar"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     testImplementation(kotlin("test"))
 }

@@ -1,7 +1,7 @@
 package kraken.plugin.api;
 
+import abyss.plugin.api.actions.attributes.DefaultPluginAttributeSerializer;
 import abyss.plugin.api.actions.attributes.PluginAttributes;
-import abyss.plugin.api.imgui.containers.ImVerticalPane;
 
 import java.io.*;
 import java.security.SecureRandom;
@@ -13,10 +13,8 @@ import java.util.Random;
  */
 public abstract class Plugin {
 
-    public final PluginAttributes attributes = new PluginAttributes(new HashMap<>());
-    public final PluginAttributes sharedAttributes = new PluginAttributes(new HashMap<>());
-
-    protected ImVerticalPane pane = null;
+    public final PluginAttributes persistentAttributes = new PluginAttributes(new HashMap<>(), DefaultPluginAttributeSerializer.INSTANCE);
+    public final PluginAttributes attributes = new PluginAttributes(new HashMap<>(), DefaultPluginAttributeSerializer.INSTANCE);
 
     /**
      * A random instance that is seeded with information about the running account.
@@ -62,17 +60,11 @@ public abstract class Plugin {
         return 60000;
     }
 
-    public void initImGui() {
-        pane = new ImVerticalPane();
-    }
-
     /**
      * Called when the plugin's window is being painted.
      */
     public void onPaint() {
-        if(pane != null) {
-            pane.getSkin().onPaint();
-        }
+
     }
 
     /**
@@ -83,7 +75,9 @@ public abstract class Plugin {
     }
 
     public void onActionMenuFired(int type, int param1, int param2, int param3, int param4, boolean isSynthetic) {
-
+        if(isSynthetic) {
+            // Bot Clicked Something React
+        }
     }
 
     /**
@@ -139,28 +133,28 @@ public abstract class Plugin {
     }
 
     public final void setAttribute(String key, int value) {
-        attributes.put(key, Integer.toString(value));
+        persistentAttributes.put(key, Integer.toString(value));
     }
 
     public final void setAttribute(String key, boolean value) {
-        attributes.put(key, Boolean.toString(value));
+        persistentAttributes.put(key, Boolean.toString(value));
     }
 
     public final void setAttribute(String key, double value) {
-        attributes.put(key, Double.toString(value));
+        persistentAttributes.put(key, Double.toString(value));
     }
 
     public final void setAttribute(String key, float value) {
-        attributes.put(key, Float.toString(value));
+        persistentAttributes.put(key, Float.toString(value));
     }
 
     public final void setAttribute(String key, String value) {
-        attributes.put(key, value);
+        persistentAttributes.put(key, value);
     }
 
     public final int getInt(String key) {
         try {
-            return attributes.containsKey(key) ? Integer.parseInt(attributes.get(key)) : 0;
+            return persistentAttributes.containsKey(key) ? Integer.parseInt(persistentAttributes.getOrDefault(key, "0")) : 0;
         } catch (NumberFormatException e) {
             return 0;
         }
@@ -168,7 +162,7 @@ public abstract class Plugin {
 
     public final boolean getBoolean(String key) {
         try {
-            return attributes.containsKey(key) && Boolean.parseBoolean(attributes.get(key));
+            return persistentAttributes.containsKey(key) && Boolean.parseBoolean(persistentAttributes.get(key));
         } catch (Exception e) {
             return false;
         }
@@ -176,7 +170,7 @@ public abstract class Plugin {
 
     public final double getDouble(String key) {
         try {
-            return attributes.containsKey(key) ? Double.parseDouble(attributes.get(key)) : 0.0;
+            return persistentAttributes.containsKey(key) ? Double.parseDouble(persistentAttributes.getOrDefault(key, "0.0")) : 0.0;
         } catch (Exception e) {
             return 0.0;
         }
@@ -184,50 +178,23 @@ public abstract class Plugin {
 
     public final double getFloat(String key) {
         try {
-            return attributes.containsKey(key) ? Float.parseFloat(attributes.get(key)) : 0.0;
+            return persistentAttributes.containsKey(key) ? Float.parseFloat(persistentAttributes.getOrDefault(key, "0.0")) : 0.0;
         } catch (Exception e) {
             return 0.0;
         }
     }
 
     public final String getString(String key) {
-        return attributes.getOrDefault(key, "");
+        return persistentAttributes.getOrDefault(key, "");
     }
 
     public final void save(PluginContext context) {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        DataOutputStream data = new DataOutputStream(out);
-
-        try {
-            data.writeByte(attributes.size());
-            attributes.forEach((key, value) -> {
-                try {
-                    data.writeUTF(key);
-                    data.writeUTF(value);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        } catch (IOException e) {
-            Debug.printStackTrace(e.getMessage(), e);
-        }
-
+        ByteArrayOutputStream out = persistentAttributes.serialize(persistentAttributes);
         context.setPersistentData(out.toByteArray());
     }
 
     public final void load(PluginContext context) {
-        ByteArrayInputStream input = new ByteArrayInputStream(context.getPersistentData());
-        DataInputStream data = new DataInputStream(input);
-        try {
-            int size = data.readUnsignedByte();
-            for (int i = 0; i < size; i++) {
-                String key = data.readUTF();
-                String value = data.readUTF();
-                attributes.put(key, value);
-            }
-        } catch (IOException e) {
-            Debug.printStackTrace(e.getMessage(), e);
-        }
+        persistentAttributes.deserialize(persistentAttributes, new ByteArrayInputStream(context.getPersistentData()));
     }
 
     /**
@@ -243,4 +210,6 @@ public abstract class Plugin {
     public Random getSecureRandom() {
         return secureRandom;
     }
+
+
 }
