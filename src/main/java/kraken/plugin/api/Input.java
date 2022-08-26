@@ -39,7 +39,10 @@ public final class Input {
      *
      * @param vk The virtual key code of the key to press.
      */
-    public static native void key(int vk);
+    public static void key(int vk) {
+        press(vk);
+        release(vk);
+    }
 
     /**
      * Moves the mouse.

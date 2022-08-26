@@ -129,6 +129,11 @@ public final class ImGui {
 
     /**
      * Pushes a style color onto the color stack using ImVec4
+     * @param index - What we will be changing the color for eg Text
+     * @param a - First Color Float
+     * @param a1 - Second Color Float
+     * @param a2 - Third Color Float
+     * @param a3 - Fourth Color Float
      */
 
     public static native void pushStyleColor(int index, float a, float a1, float a2, float a3);
@@ -155,8 +160,43 @@ public final class ImGui {
      */
     public static native void popStyleVar(int count);
 
+    /**
+     * Begins a collapsable container
+     * @param name - The name of the collapsable container
+     * @param isOpen - Is the container open or closed by default
+     * @param windowsFlags - Window Flags for ImGui node settings eg No Focus.
+     * @see ImGui#end()
+     */
+
     public static native boolean begin(String name, boolean isOpen, int windowsFlags);
+
+    /**
+     * Ends a collapsable container
+     * @see ImGui#begin(String, boolean)
+     */
+
     public static native void end();
+
+    /**
+     * Creates column containers
+     * @param id - The ImGui id, can be anything but must be unique.
+     */
+
+    public static native void columns(String id, int count, boolean hasBorder);
+
+    /**
+     * Sets the width of the column
+     * @param columnIndex - The column index
+     * @param width - the column with too set
+     */
+
+    public static native void setColumnWidth(int columnIndex, float width);
+
+    /**
+     * Increments the colum index
+     */
+
+    public static native void nextColumn();
 
     public static void pushStyleColor(ColorStyle col, float a, float a1, float a2, float a3) {
         pushStyleColor(col.getIndex(), a, a1, a2, a3);
