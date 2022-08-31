@@ -61,4 +61,12 @@ public final class Widgets {
     public static int hash(int parentId, int childId) {
         return (parentId << 16) + childId;
     }
+
+    public static int getParentId(int hash) {
+        return hash >> 16;
+    }
+
+    public static int getChildId(int hash) {
+        return hash & 65535;
+    }
 }

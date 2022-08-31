@@ -2,6 +2,9 @@ package kraken.plugin.api;
 
 import abyss.plugin.api.actions.attributes.DefaultPluginAttributeSerializer;
 import abyss.plugin.api.actions.attributes.PluginAttributes;
+import abyss.plugin.api.extensions.Extension;
+import abyss.plugin.api.extensions.ExtensionContainer;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -13,12 +16,14 @@ import java.util.Random;
 /**
  * All plugins must extend this base type.
  */
-public abstract class Plugin {
+public abstract class Plugin implements ExtensionContainer<Extension> {
 
     public final PluginAttributes persistentAttributes = new PluginAttributes(new HashMap<>(), DefaultPluginAttributeSerializer.INSTANCE);
     public final PluginAttributes attributes = new PluginAttributes(new HashMap<>(), DefaultPluginAttributeSerializer.INSTANCE);
 
     public final Map<Integer, VarbitRequest> requestedVarbits = new HashMap<>();
+
+    private final Map<Class<?>, Extension> pluginExtensions = new HashMap<>();
 
     /**
      * A random instance that is seeded with information about the running account.
@@ -42,9 +47,7 @@ public abstract class Plugin {
     /**
      * Called when this plugin is enabled in the plugin list.
      */
-    public void onEnabled() {
-
-    }
+    public void onEnabled() {}
 
     /**
      * Called when this plugin is disabled in the plugin list.
@@ -229,12 +232,18 @@ public abstract class Plugin {
     }
 
     public final void save(PluginContext context) {
+        pluginExtensions.forEach((key, value) -> {
+            value.save(persistentAttributes);
+        });
         ByteArrayOutputStream out = persistentAttributes.serialize(persistentAttributes);
         context.setPersistentData(out.toByteArray());
     }
 
     public final void load(PluginContext context) {
         persistentAttributes.deserialize(persistentAttributes, new ByteArrayInputStream(context.getPersistentData()));
+        pluginExtensions.forEach((key, value) -> {
+            value.load(persistentAttributes);
+        });
     }
 
     /**
@@ -251,5 +260,19 @@ public abstract class Plugin {
         return secureRandom;
     }
 
+    @NotNull
+    @Override
+    public Extension getExt(@NotNull Class<?> clazz) {
+        return pluginExtensions.get(clazz);
+    }
 
+    @Override
+    public boolean hasExtension(@NotNull Class<?> clazz) {
+        return pluginExtensions.containsKey(clazz);
+    }
+
+    @Override
+    public void setExtension(@NotNull Extension extension) {
+        pluginExtensions.put(extension.getClass(), extension);
+    }
 }

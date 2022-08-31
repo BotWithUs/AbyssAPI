@@ -1,23 +1,44 @@
 package kraken.plugin.api;
 
+import abyss.plugin.api.extensions.Extension;
+import abyss.plugin.api.extensions.ExtensionContainer;
 import abyss.plugin.api.variables.VariableManager;
+import abyss.plugin.api.widgets.BankWidgetExtension;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides access to the local player's bank.
  */
-public final class Bank {
+public final class Bank implements ExtensionContainer<Extension> {
 
-    private static final int ITEM_CONTAINER_ID = 95;
-    private static final int WIDGET_INTERACT_ID = 33882303;
-    private static final int WIDGET_INVENTORY_INTERACT_ID = 33882127;
-    private static final int WIDGET_EMPTY_BACKPACK_INTERACT_ID = 33882151;
-    private static final int WIDGET_EMPTY_EQUIPMENT_INTERACT_ID = 33882154;
-    private static final int WIDGET_TOGGLE_NOTES_INTERACT_ID = 33882239;
+    public static final Bank BANK = new Bank();
+
+    private final Map<Class<?>, Extension> extensions;
 
     private Bank() {
+        extensions = new HashMap<>();
+        setExtension(new BankWidgetExtension(517, 95, 195, 15, 39, 42, 127, 160));
+    }
+
+    @NotNull
+    @Override
+    public Extension getExt(@NotNull Class<?> clazz) {
+        return extensions.get(clazz);
+    }
+
+    @Override
+    public boolean hasExtension(@NotNull Class<?> clazz) {
+        return extensions.containsKey(clazz);
+    }
+
+    @Override
+    public void setExtension(@NotNull Extension extension) {
+        extensions.put(extension.getClass(), extension);
     }
 
     /**
@@ -26,7 +47,11 @@ public final class Bank {
      * @return If the bank widget is open.
      */
     public static boolean isOpen() {
-        return ItemContainers.isAvailable(ITEM_CONTAINER_ID);
+        if(BANK.hasExtension(BankWidgetExtension.class)) {
+            BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
+            return ItemContainers.isAvailable(ext.getContainerId());
+        }
+        return false;
     }
 
     /**
@@ -35,7 +60,12 @@ public final class Bank {
      * @return All items in the bank.
      */
     public static WidgetItem[] getItems() {
-        ItemContainer container = ItemContainers.byId(ITEM_CONTAINER_ID);
+        if(!BANK.hasExtension(BankWidgetExtension.class)) {
+            return new WidgetItem[0];
+        }
+        BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
+
+        ItemContainer container = ItemContainers.byId(ext.getContainerId());
         if (container == null) {
             return new WidgetItem[0];
         }
@@ -46,7 +76,7 @@ public final class Bank {
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(new WidgetItem(item.getId(), item.getAmount(), i, WIDGET_INTERACT_ID, container));
+                list.add(new WidgetItem(item.getId(), item.getAmount(), i, Widgets.hash(ext.getRootId(), ext.getWithdrawButtonId()), container));
             }
         }
         return list.toArray(new WidgetItem[0]);
@@ -135,9 +165,14 @@ public final class Bank {
      * @param option The menu option to use for depositing.
      */
     public static void deposit(Filter<WidgetItem> filter, int option) {
+        if(!BANK.hasExtension(BankWidgetExtension.class)) {
+            return;
+        }
+        BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
+
         Inventory.forEach((item) -> {
             if (filter.accept(item)) {
-                item.setWidgetId(WIDGET_INVENTORY_INTERACT_ID);
+                item.setWidgetId(Widgets.hash(ext.getRootId(), ext.getDepositButtonId()));
                 item.interact(option);
             }
         });
@@ -147,34 +182,54 @@ public final class Bank {
      * Deposits all items into the bank.
      */
     public static void depositAll() {
-        Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, WIDGET_EMPTY_BACKPACK_INTERACT_ID, 0);
+        if(!BANK.hasExtension(BankWidgetExtension.class)) {
+            return;
+        }
+        BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
+
+        Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Widgets.hash(ext.getRootId(), ext.getDepositInventoryButtonId()), 0);
     }
 
     /**
      * Deposits all equipment into the bank.
      */
     public static void depositEquipment() {
-        Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, WIDGET_EMPTY_EQUIPMENT_INTERACT_ID, 0);
+        if(!BANK.hasExtension(BankWidgetExtension.class)) {
+            return;
+        }
+        BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
+
+        Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Widgets.hash(ext.getRootId(), ext.getDepositEquipmentButtonId()), 0);
     }
 
     /**
      * Determines if items are being withdrawn as notes or not.
      */
     public static boolean isWithdrawingNotes() {
-        ConVar cv = VariableManager.getConVarById(ConVar.ID_WITHDRAW_NOTE);
+        if(!BANK.hasExtension(BankWidgetExtension.class)) {
+            return false;
+        }
+        BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
+
+        ConVar cv = VariableManager.getConVarById(ext.getWithdrawAsNoteConVarId());
         if (cv == null) {
             return false;
         }
 
-        return cv.getValueInt() == ConVar.CFG_WITHDRAW_NOTE_ACTIVE;
+        return cv.getValueInt() == 1;
     }
 
     /**
      * Changes whether or not we are withdrawing items in noted form.
      */
     public static void setWithdrawingNotes(boolean notes) {
+        if(!BANK.hasExtension(BankWidgetExtension.class)) {
+            return;
+        }
+        BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
+
         if (isWithdrawingNotes() != notes) {
-            Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, WIDGET_TOGGLE_NOTES_INTERACT_ID, 0);
+            Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Widgets.hash(ext.getRootId(), ext.getToggleNotesButtonId()), 0);
         }
     }
 }
