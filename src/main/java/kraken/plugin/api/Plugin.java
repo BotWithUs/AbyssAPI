@@ -3,9 +3,11 @@ package kraken.plugin.api;
 import abyss.plugin.api.actions.attributes.DefaultPluginAttributeSerializer;
 import abyss.plugin.api.actions.attributes.PluginAttributes;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.security.SecureRandom;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -15,6 +17,8 @@ public abstract class Plugin {
 
     public final PluginAttributes persistentAttributes = new PluginAttributes(new HashMap<>(), DefaultPluginAttributeSerializer.INSTANCE);
     public final PluginAttributes attributes = new PluginAttributes(new HashMap<>(), DefaultPluginAttributeSerializer.INSTANCE);
+
+    public final Map<Integer, VarbitRequest> requestedVarbits = new HashMap<>();
 
     /**
      * A random instance that is seeded with information about the running account.
@@ -75,9 +79,7 @@ public abstract class Plugin {
     }
 
     public void onActionMenuFired(int type, int param1, int param2, int param3, int param4, boolean isSynthetic) {
-        if(isSynthetic) {
-            // Bot Clicked Something React
-        }
+
     }
 
     /**
@@ -93,6 +95,24 @@ public abstract class Plugin {
      */
 
     public void onDebugLog(String log) {
+
+    }
+
+    /**
+     * Called when the runescape client asks for the value of a varbit
+     * @param varbitId - The Varbit ID
+     * @param conVarId - The ConVarID that the varbit is stored in
+     * @param value - The Value of the requested Varbit
+     */
+
+    public void onVarbitRequest(int varbitId, int conVarId, int value) {
+
+        if(!requestedVarbits.containsKey(varbitId)) {
+            requestedVarbits.put(varbitId, new VarbitRequest(varbitId, conVarId, value));
+        } else {
+            VarbitRequest req = requestedVarbits.get(varbitId);
+            req.setValue(value);
+        }
 
     }
 
