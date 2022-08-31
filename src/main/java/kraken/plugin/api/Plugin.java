@@ -89,8 +89,27 @@ public abstract class Plugin {
 
     }
 
+    public void test() {
+
+        attributes.addListener("agility_course", (oldValue, newValue) -> {
+            switch (newValue) {
+                case "gnome":
+                    //Walk to gnome
+                    break;
+                case "other":
+                    //Walk to this one
+                    break;
+            }
+        });
+
+        //Remembers values after crashes/restarts
+        persistentAttributes.put("agility_course", "gnome");
+
+    }
+
     /**
      * Called when logs are pushed to the imgui console
+     *
      * @param log The Log that was printed
      */
 
@@ -100,14 +119,15 @@ public abstract class Plugin {
 
     /**
      * Called when the runescape client asks for the value of a varbit
+     *
      * @param varbitId - The Varbit ID
      * @param conVarId - The ConVarID that the varbit is stored in
-     * @param value - The Value of the requested Varbit
+     * @param value    - The Value of the requested Varbit
      */
 
     public void onVarbitRequest(int varbitId, int conVarId, int value) {
 
-        if(!requestedVarbits.containsKey(varbitId)) {
+        if (!requestedVarbits.containsKey(varbitId)) {
             requestedVarbits.put(varbitId, new VarbitRequest(varbitId, conVarId, value));
         } else {
             VarbitRequest req = requestedVarbits.get(varbitId);
