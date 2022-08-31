@@ -1,19 +1,19 @@
 package kraken.plugin.api;
 
+import abyss.plugin.api.extensions.SimpleExtensionContainer;
+import abyss.plugin.api.widgets.InventoryWidgetExtension;
+
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Provides access to the local player's inventory.
  */
-public final class Inventory {
-
-    private static final int ITEM_CONTAINER_ID = 93;
-    private static final int WIDGET_ID = 1473;
-    private static final int WIDGET_CONTAINER_CHILD = 5;
-    private static final int WIDGET_INTERACT_ID = (WIDGET_ID << 16) + WIDGET_CONTAINER_CHILD;
+public final class Inventory extends SimpleExtensionContainer {
+    public static final Inventory INVENTORY = new Inventory();
 
     private Inventory() {
+        setExtension(new InventoryWidgetExtension(1473, 93, 5));
     }
 
     /**
@@ -22,7 +22,12 @@ public final class Inventory {
      * @return All items in the inventory.
      */
     public static WidgetItem[] getItems() {
-        ItemContainer container = ItemContainers.byId(ITEM_CONTAINER_ID);
+        if(!INVENTORY.hasExtension(InventoryWidgetExtension.class)) {
+            return new WidgetItem[0];
+        }
+        InventoryWidgetExtension ext = (InventoryWidgetExtension) INVENTORY.getExt(InventoryWidgetExtension.class);
+
+        ItemContainer container = ItemContainers.byId(ext.getContainerId());
         if (container == null) {
             return new WidgetItem[0];
         }
@@ -33,7 +38,7 @@ public final class Inventory {
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(new WidgetItem(item.getId(), item.getAmount(), i, WIDGET_INTERACT_ID, container));
+                list.add(new WidgetItem(item.getId(), item.getAmount(), i, Widgets.hash(ext.getRootId(), ext.getContainerChildId()), container));
             }
         }
         return list.toArray(new WidgetItem[0]);
@@ -120,7 +125,12 @@ public final class Inventory {
     }
 
     public static int getVarbitValue(int slot, int varbitId) {
-        ItemContainer inventory = ItemContainers.byId(93);
+        if(!INVENTORY.hasExtension(InventoryWidgetExtension.class)) {
+            return -1;
+        }
+        InventoryWidgetExtension ext = (InventoryWidgetExtension) INVENTORY.getExt(InventoryWidgetExtension.class);
+
+        ItemContainer inventory = ItemContainers.byId(ext.getContainerId());
         if(inventory == null) return -1;
         return inventory.getVarbitById(slot, varbitId);
     }
