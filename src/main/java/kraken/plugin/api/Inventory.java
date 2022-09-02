@@ -1,6 +1,7 @@
 package kraken.plugin.api;
 
 import abyss.plugin.api.extensions.SimpleExtensionContainer;
+import abyss.plugin.api.variables.Variables;
 import abyss.plugin.api.widgets.InventoryWidgetExtension;
 
 import java.util.LinkedList;
@@ -122,6 +123,23 @@ public final class Inventory extends SimpleExtensionContainer {
                 cb.call(item);
             }
         }
+    }
+
+    public static int getVarbitValueForItem(int itemId, Variables var) {
+        return getVarbitValueForItem(itemId, var.getVariableId());
+    }
+
+    public static int getVarbitValueForItem(int itemId, int varbitId) {
+        for (WidgetItem item : getItems()) {
+            if(itemId == item.getId()) {
+                return getVarbitValue(item.getSlot(), varbitId);
+            }
+        }
+        return -1;
+    }
+
+    public static int getVarbitValue(int slot, Variables var) {
+        return getVarbitValue(slot, var.getVariableId());
     }
 
     public static int getVarbitValue(int slot, int varbitId) {

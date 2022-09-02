@@ -4,6 +4,7 @@ import abyss.plugin.api.actions.attributes.DefaultPluginAttributeSerializer;
 import abyss.plugin.api.actions.attributes.PluginAttributes;
 import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.ExtensionContainer;
+import abyss.plugin.api.widgets.InventoryWidgetExtension;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayInputStream;
@@ -47,7 +48,8 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
     /**
      * Called when this plugin is enabled in the plugin list.
      */
-    public void onEnabled() {}
+    public void onEnabled() {
+    }
 
     /**
      * Called when this plugin is disabled in the plugin list.
@@ -89,24 +91,6 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
      * Called when a connection variable changes.
      */
     public void onConVarChanged(ConVar conv, int oldValue, int newValue) {
-
-    }
-
-    public void test() {
-
-        attributes.addListener("agility_course", (oldValue, newValue) -> {
-            switch (newValue) {
-                case "gnome":
-                    //Walk to gnome
-                    break;
-                case "other":
-                    //Walk to this one
-                    break;
-            }
-        });
-
-        //Remembers values after crashes/restarts
-        persistentAttributes.put("agility_course", "gnome");
 
     }
 
@@ -158,7 +142,11 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
      * Called when an item in the inventory is changed.
      */
     private void inventoryItemChanged(WidgetItem prev, WidgetItem next) {
-        ItemContainer inventory = ItemContainers.byId(93);
+        if (!Inventory.INVENTORY.hasExtension(InventoryWidgetExtension.class)) {
+            return;
+        }
+        InventoryWidgetExtension ext = (InventoryWidgetExtension) Inventory.INVENTORY.getExt(InventoryWidgetExtension.class);
+        ItemContainer inventory = ItemContainers.byId(ext.getContainerId());
         prev.setContainer(inventory);
         next.setContainer(inventory);
         onInventoryItemChanged(prev, next);
