@@ -199,5 +199,5 @@ public final class Kraken {
      * Captures the game screen and writes it to a file.
      */
 
-    //public static native GameSnapshot takeSnapshot(int x, int y, int width, int height);
+    public static native GameSnapshot takeSnapshot();
 }
