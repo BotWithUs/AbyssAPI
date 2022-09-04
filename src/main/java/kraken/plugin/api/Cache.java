@@ -1,7 +1,6 @@
 package kraken.plugin.api;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -122,7 +121,7 @@ public final class Cache {
      * may not immediately be available if this item has not been
      * retrieved before.
      *
-     * @param id The id of the item to retrieve.
+     * @param id    The id of the item to retrieve.
      * @param async If the request will be performed asynchronously.
      * @return The retrieved item.
      */
@@ -164,7 +163,7 @@ public final class Cache {
      * may not immediately be available if this object has not been
      * retrieved before.
      *
-     * @param id The id of the object to retrieve.
+     * @param id    The id of the object to retrieve.
      * @param async If the request will be performed asynchronously.
      * @return The retrieved object.
      */
@@ -206,7 +205,7 @@ public final class Cache {
      * may not immediately be available if this NPC has not been
      * retrieved before.
      *
-     * @param id The id of the NPC to retrieve.
+     * @param id    The id of the NPC to retrieve.
      * @param async If the request will be performed asynchronously.
      * @return The retrieved NPC.
      */
