@@ -198,6 +198,18 @@ public final class ImGui {
 
     public static native void nextColumn();
 
+    /**
+     * Creates the header of a list box
+     */
+
+    public static native boolean listBoxHeader(String label, int width, int height);
+
+    /**
+     * Creates the footer of a list box
+     */
+
+    public static native void listBoxFooter();
+
     public static void pushStyleColor(ColorStyle col, float a, float a1, float a2, float a3) {
         pushStyleColor(col.getIndex(), a, a1, a2, a3);
     }

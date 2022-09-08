@@ -1,6 +1,9 @@
 package abyss.plugin.api.actions.attributes
 
 import javafx.beans.property.SimpleStringProperty
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.util.function.BiConsumer
@@ -8,7 +11,17 @@ import kotlin.reflect.KProperty
 
 class PluginAttributes(private val map: MutableMap<String, SimpleStringProperty>, private var serializer: PluginAttributeSerializer = DefaultPluginAttributeSerializer) : PluginAttributeSerializer {
 
-    inline infix fun <reified T> default(value: T) = AttributeDelegate(this, value)
+    inline infix fun <reified T : Number> number(value: T) = AttributeDelegate(this, value, false)
+    inline infix fun <reified T> json(value: T) = AttributeDelegate(this, value, true)
+
+    fun boolean(default: Boolean) = AttributeDelegate(this, default, false)
+
+    var json: Json = Json
+        private set
+
+    fun setJsonProvider(json: Json) {
+        this.json = json
+    }
 
     fun addListener(key: String, consumer: BiConsumer<String, String>) {
         val prop = map[key] ?: return
@@ -49,14 +62,36 @@ class PluginAttributes(private val map: MutableMap<String, SimpleStringProperty>
         serializer = pluginAttributeSerializer
     }
 
-    class AttributeDelegate<T>(val attributes: PluginAttributes, val defaultValue: T) {
+    class AttributeDelegate<T>(val attributes: PluginAttributes, val defaultValue: T, val json: Boolean) {
         inline operator fun <reified T> getValue(ref: Any?, prop: KProperty<*>) : T {
             val sprop = attributes.getOrPut(prop.name) { SimpleStringProperty(defaultValue.toString()) }
-            return sprop.value as T
+            return try {
+                if(json) {
+                    return attributes.json.decodeFromString(sprop.value)
+                }
+                when(T::class) {
+                    Int::class -> sprop.value.toInt()
+                    Long::class -> sprop.value.toLong()
+                    Boolean::class -> sprop.value.toBoolean()
+                    Double::class -> sprop.value.toDouble()
+                    Float::class -> sprop.value.toFloat()
+                    UInt::class -> sprop.value.toUInt()
+                    ULong::class -> sprop.value.toULong()
+                    else -> sprop.value
+                } as T
+            } catch (e: Exception) {
+                error("Can't get attribute ${prop.name}")
+            }
         }
 
         inline operator fun <reified T> setValue(ref: Any?, prop: KProperty<*>, value: T) {
-            attributes.getOrPut(prop.name) { SimpleStringProperty() }.set(value.toString())
+            try {
+                if(json) {
+                    attributes.getOrPut(prop.name) { SimpleStringProperty() }.set(attributes.json.encodeToString(value))
+                } else {
+                    attributes.getOrPut(prop.name) { SimpleStringProperty() }.set(value.toString())
+                }
+            } catch (_: Exception) {}
         }
     }
 

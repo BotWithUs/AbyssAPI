@@ -3,6 +3,7 @@ package abyss.plugin.api.game.chat
 class ChatMessage {
 
     private val index: Int = -1
+    private val messageType: Int = 0
     private val rawName: String? = null
     private val name: String? = null
     private val message: String? = null

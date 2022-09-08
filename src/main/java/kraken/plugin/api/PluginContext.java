@@ -44,6 +44,9 @@ public final class PluginContext {
         return new String(getNameBinary());
     }
 
+    public native void setCategory(String category);
+    public native String getCategory();
+
     /**
      * Sets the name of the plugin.
      *

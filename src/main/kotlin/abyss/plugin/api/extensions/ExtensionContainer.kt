@@ -7,5 +7,4 @@ interface ExtensionContainer<BASE : Extension> {
     fun hasExtension(clazz: Class<*>) : Boolean
 
     fun setExtension(extension: BASE)
-
 }

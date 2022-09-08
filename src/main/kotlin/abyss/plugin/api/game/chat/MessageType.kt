@@ -1,0 +1,26 @@
+package abyss.plugin.api.game.chat
+
+import abyss.plugin.extensions.toArray
+
+enum class MessageType(vararg types: Int) {
+
+    PRIORITY_GAME_MESSAGE(0, *(26..29).toArray(), 110, 122, 123, 125, 140),
+    LOW_PRIORITY_GAME_MESSAGE(1, 109, 117, 128),
+    PLAYER_MESSAGE(2, 17),
+    PRIVATE_FROM_MESSAGE(3, 7, 18),
+    PRIVATE_TO_MESSAGE(6, 19),
+    UNKNOWN_GAME_MESSAGE(4, 5),
+    FRIENDS_OR_CLAN_MESSAGE(9, 20, 41, 42, 44, 45),
+    GROUP_TEAM(22),
+    GROUP_TEAM_QUICK_CHAT(23),
+    GROUP_MESSAGE(24),
+    GROUP_QUICK_CHAT_MESSAGE(25),
+    ACCEPT_TRADE_MESSAGE(100),
+    GIVE_ASSISTANCE_MESSAGE(102),
+    ACCEPT_ALLIANCE_MESSAGE(108),
+    OPEN_INVITE_MESSAGE(111),
+    VOTE_MESSAGE(112),
+    NEWS_MESSAGE(115),
+
+
+}

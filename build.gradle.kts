@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.7.10"
+    kotlin("plugin.serialization") version "1.7.10"
     java
     `maven-publish`
     id("org.openjfx.javafxplugin") version "0.0.10"
@@ -20,6 +21,9 @@ javafx {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+    implementation("io.ktor:ktor-client-core:2.1.0")
+    implementation("io.ktor:ktor-client-cio:2.1.0")
     testImplementation(kotlin("test"))
 }
 
@@ -29,7 +33,7 @@ tasks.test {
 
 tasks.withType<JavaCompile> {
     targetCompatibility = "18"
-    sourceCompatibility = "1.8"
+    sourceCompatibility = "11"
 }
 
 tasks.withType<KotlinCompile> {

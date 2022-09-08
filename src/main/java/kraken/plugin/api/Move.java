@@ -25,6 +25,8 @@ public final class Move {
      *
      * @param context The traversal context.
      */
+
+    @Deprecated(forRemoval = true)
     public static native void traverse(TraverseContext context);
 
     /**
@@ -33,6 +35,7 @@ public final class Move {
      * @param tile The tile to traverse to.
      * @return The traversal context.
      */
+    @Deprecated(forRemoval = true)
     public static TraverseContext startTraverse(Vector3i tile) {
         TraverseContext context = new TraverseContext(tile);
         traverse(context);
@@ -47,6 +50,7 @@ public final class Move {
      * @param tile The tile to traverse to.
      * @param timeout The movement timeout.
      */
+    @Deprecated(forRemoval = true)
     public static boolean traverseBlocking(Vector3i tile, long timeout) {
         long end = System.currentTimeMillis() + timeout;
 
@@ -99,6 +103,7 @@ public final class Move {
      *
      * @param tile The tile to traverse to.
      */
+    @Deprecated(forRemoval = true)
     public static boolean traverseBlocking(Vector3i tile) {
         return traverseBlocking(tile, 10000);
     }

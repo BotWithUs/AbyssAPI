@@ -1,11 +1,13 @@
 package abyss.plugin.api.actions.attributes
 
+import kotlinx.serialization.json.Json
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.DataInputStream
 import java.io.DataOutputStream
 
 object DefaultPluginAttributeSerializer : PluginAttributeSerializer {
+
     override fun serialize(attributes: PluginAttributes): ByteArrayOutputStream {
         val formatStream = ByteArrayOutputStream()
         val data = DataOutputStream(formatStream)
