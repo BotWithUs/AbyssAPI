@@ -8,6 +8,12 @@ class ChatMessage {
     private val name: String? = null
     private val message: String? = null
 
+    fun getMessageType() = messageType
+
+    fun isMessage(type: MessageType) : Boolean {
+        return messageType in type.types
+    }
+
     fun getRawMessage() = message
     fun getMessage() : String? {
         if(message == null) return null

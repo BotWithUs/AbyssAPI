@@ -2,7 +2,7 @@ package abyss.plugin.api.game.chat
 
 import abyss.plugin.extensions.toArray
 
-enum class MessageType(vararg types: Int) {
+enum class MessageType(vararg val types: Int) {
 
     PRIORITY_GAME_MESSAGE(0, *(26..29).toArray(), 110, 122, 123, 125, 140),
     LOW_PRIORITY_GAME_MESSAGE(1, 109, 117, 128),

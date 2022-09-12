@@ -202,13 +202,33 @@ public final class ImGui {
      * Creates the header of a list box
      */
 
-    public static native boolean listBoxHeader(String label, int width, int height);
+    public static native boolean listBoxHeader(String label, float width, float height);
 
     /**
      * Creates the footer of a list box
      */
 
     public static native void listBoxFooter();
+
+    /**
+     * Sets the next imgui item width
+     */
+    public static native void setNextItemWidth(float width);
+
+    /**
+     * Creates a dummy item with width and height (used normally to provide spacing)
+     */
+    public static native void dummy(float width, float height);
+
+    /**
+     * Pushes and ImGui ID to the ID stack
+     */
+    public static native void pushID(int id);
+
+    /**
+     * Pops and ImGui ID from the ID stack
+     */
+    public static native void popID();
 
     public static void pushStyleColor(ColorStyle col, float a, float a1, float a2, float a3) {
         pushStyleColor(col.getIndex(), a, a1, a2, a3);
