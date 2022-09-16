@@ -12,7 +12,8 @@ enum class MenuAction(override val type: Int) : ActionType {
     ),
     SELECTABLE_WIDGET(17), SELECT_WIDGET_ITEM(18), SELECT_GROUND_ITEM(23), SELECT_NPC(24), SELECT_OBJECT(25), SELECT_PLAYER(
         28
-    );
+    ),
+    SELECT_TILE(36);
 
     override val actionIndex: Int
         get() = -1

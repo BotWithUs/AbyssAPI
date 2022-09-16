@@ -30,6 +30,10 @@ class WebEdge(val a: WebVertex, val b: WebVertex, val ext: WebEdgeExtension = Wa
         return extensions.containsKey(clazz)
     }
 
+    override fun getExtensions(): List<Extension> {
+        return extensions.values.toList()
+    }
+
     override fun setExtension(extension: Extension) {
         if(extension is WebEdgeExtension) {
             extensions[WebEdgeExtension::class.java] = extension
