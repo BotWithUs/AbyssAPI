@@ -1,5 +1,8 @@
 package kraken.plugin.api;
 
+import abyss.plugin.api.extensions.Extension;
+import abyss.plugin.api.variables.VariableManager;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -71,7 +74,14 @@ public final class Loot {
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(new WidgetItem(item.getId(), item.getAmount(), i, WIDGET_INTERACT_ID, container));
+                WidgetItem wItem = new WidgetItem(item.getId(), item.getAmount(), i, WIDGET_INTERACT_ID, container);
+
+                Extension itemExt = VariableManager.getExt(item.getId());
+                if(itemExt != null) {
+                    wItem.setExtension(itemExt);
+                }
+
+                list.add(wItem);
             }
         }
         return list.toArray(new WidgetItem[0]);

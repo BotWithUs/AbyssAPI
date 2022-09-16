@@ -76,7 +76,12 @@ public final class Bank implements ExtensionContainer<Extension> {
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(new WidgetItem(item.getId(), item.getAmount(), i, Widgets.hash(ext.getRootId(), ext.getWithdrawButtonId()), container));
+                WidgetItem wItem = new WidgetItem(item.getId(), item.getAmount(), i, Widgets.hash(ext.getRootId(), ext.getWithdrawButtonId()), container);
+                Extension itemExt = VariableManager.getExt(item.getId());
+                if (itemExt != null) {
+                    wItem.setExtension(itemExt);
+                }
+                list.add(wItem);
             }
         }
         return list.toArray(new WidgetItem[0]);
@@ -231,5 +236,11 @@ public final class Bank implements ExtensionContainer<Extension> {
         if (isWithdrawingNotes() != notes) {
             Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Widgets.hash(ext.getRootId(), ext.getToggleNotesButtonId()), 0);
         }
+    }
+
+    @NotNull
+    @Override
+    public List<Extension> getExtensions() {
+        return extensions.values().stream().toList();
     }
 }

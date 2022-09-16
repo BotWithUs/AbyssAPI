@@ -1,4 +1,4 @@
-package abyss.plugin.api.world
+package abyss.plugin.api.world.projectiles
 
 import kraken.plugin.api.Vector3
 import kraken.plugin.api.Vector3i

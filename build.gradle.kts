@@ -33,7 +33,7 @@ tasks.test {
 
 tasks.withType<JavaCompile> {
     targetCompatibility = "18"
-    sourceCompatibility = "11"
+    sourceCompatibility = "16"
 }
 
 tasks.withType<KotlinCompile> {

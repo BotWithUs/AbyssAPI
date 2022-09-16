@@ -11,6 +11,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.security.SecureRandom;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -262,5 +263,11 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
     @Override
     public void setExtension(@NotNull Extension extension) {
         pluginExtensions.put(extension.getClass(), extension);
+    }
+
+    @NotNull
+    @Override
+    public List<Extension> getExtensions() {
+        return pluginExtensions.values().stream().toList();
     }
 }

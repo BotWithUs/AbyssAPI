@@ -1,6 +1,8 @@
 package kraken.plugin.api;
 
+import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.SimpleExtensionContainer;
+import abyss.plugin.api.variables.VariableManager;
 import abyss.plugin.api.widgets.EquipmentWidgetExtension;
 
 import java.util.LinkedList;
@@ -47,7 +49,14 @@ public final class Equipment extends SimpleExtensionContainer {
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(new WidgetItem(item.getId(), item.getAmount(), i, Widgets.hash(ext.getRootId(), ext.getChildId()), container));
+                WidgetItem wItem = new WidgetItem(item.getId(), item.getAmount(), i, Widgets.hash(ext.getRootId(), ext.getChildId()), container);
+
+                Extension itemExt = VariableManager.getExt(item.getId());
+                if(itemExt != null) {
+                    wItem.setExtension(itemExt);
+                }
+
+                list.add(wItem);
             }
         }
         return list.toArray(new WidgetItem[0]);

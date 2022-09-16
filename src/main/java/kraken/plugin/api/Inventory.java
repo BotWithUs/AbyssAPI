@@ -1,6 +1,8 @@
 package kraken.plugin.api;
 
+import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.SimpleExtensionContainer;
+import abyss.plugin.api.variables.VariableManager;
 import abyss.plugin.api.variables.Variables;
 import abyss.plugin.api.widgets.InventoryWidgetExtension;
 
@@ -15,6 +17,8 @@ public final class Inventory extends SimpleExtensionContainer {
 
     private Inventory() {
         setExtension(new InventoryWidgetExtension(1473, 93, 5));
+
+
     }
 
     /**
@@ -39,7 +43,14 @@ public final class Inventory extends SimpleExtensionContainer {
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(new WidgetItem(item.getId(), item.getAmount(), i, Widgets.hash(ext.getRootId(), ext.getContainerChildId()), container));
+                WidgetItem wItem = new WidgetItem(item.getId(), item.getAmount(), i, Widgets.hash(ext.getRootId(), ext.getContainerChildId()), container);
+
+                Extension itemExt = VariableManager.getExt(item.getId());
+                if(itemExt != null) {
+                    wItem.setExtension(itemExt);
+                }
+
+                list.add(wItem);
             }
         }
         return list.toArray(new WidgetItem[0]);

@@ -1,4 +1,4 @@
-package abyss.plugin.api.world
+package abyss.plugin.api.world.projectiles
 
 import abyss.plugin.api.variables.AbyssAPI
 

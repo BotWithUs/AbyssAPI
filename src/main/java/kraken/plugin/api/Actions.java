@@ -43,6 +43,8 @@ public final class Actions {
     public static final int MENU_EXECUTE_GROUND_ITEM5 = 34;
     public static final int MENU_EXECUTE_GROUND_ITEM6 = 35;
 
+    public static final int MENU_EXECUTE_SELECT_TILE = 36;
+
     /**
      * All actions that are valid on NPCs.
      */
@@ -142,5 +144,10 @@ public final class Actions {
         }
 
         Actions.menu(type, item.getId(), item.getGlobalPosition().getX(), item.getGlobalPosition().getY(), 0);
+    }
+
+    public static void selectTile(Vector3i tile) {
+        if(tile == null) return;
+        Actions.menu(MENU_EXECUTE_SELECT_TILE, 0, tile.getX(), tile.getY(), 1);
     }
 }

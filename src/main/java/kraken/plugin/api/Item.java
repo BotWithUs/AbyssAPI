@@ -1,11 +1,13 @@
 package kraken.plugin.api;
 
+import abyss.plugin.api.extensions.SimpleExtensionContainer;
+
 import java.util.Objects;
 
 /**
  * A generic item.
  */
-public class Item {
+public class Item extends SimpleExtensionContainer {
 
     private int id;
     private int amount;
