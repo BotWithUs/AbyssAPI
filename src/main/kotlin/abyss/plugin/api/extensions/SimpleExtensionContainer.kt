@@ -12,6 +12,10 @@ open class SimpleExtensionContainer : ExtensionContainer<Extension> {
         return extensions.containsKey(clazz)
     }
 
+    override fun getExtensions(): List<Extension> {
+        return extensions.values.toList()
+    }
+
     override fun setExtension(extension: Extension) {
         extensions[extension::class.java] = extension
     }
