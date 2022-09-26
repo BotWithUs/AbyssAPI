@@ -16,6 +16,8 @@ public final class Player extends Spirit {
     private int totalLevel;
     private int combatLevel;
 
+    private int targetIndex;
+
     /**
      * Do not make instances of this.
      */
@@ -89,6 +91,10 @@ public final class Player extends Spirit {
         }
 
         return getStatusBarFill(STATUS_ADRENALINE);
+    }
+
+    public int getTargetIndex() {
+        return targetIndex;
     }
 
     @Override

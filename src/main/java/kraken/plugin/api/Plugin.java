@@ -71,6 +71,17 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
     }
 
     /**
+     * Called when the server sends the end of tick packet
+     * @param self - The Local Player
+     * @param tickCount - The tick count since login (resets to 0 on logout)
+     * @return - the number of ticks to wait
+     */
+
+    public int onServerTick(Player self, long tickCount) {
+        return 0;
+    }
+
+    /**
      * Called when the plugin's window is being painted.
      */
     public void onPaint() {

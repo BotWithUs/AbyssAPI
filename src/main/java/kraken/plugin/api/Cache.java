@@ -1,5 +1,11 @@
 package kraken.plugin.api;
 
+import abyss.definitions.map.RegionDefinition;
+import abyss.definitions.map.RegionManager;
+import com.rshub.filesystem.Filesystem;
+import com.rshub.filesystem.sqlite.SqliteFilesystem;
+
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -28,6 +34,10 @@ public final class Cache {
      * A lock for accessing the cache.
      */
     private static final ReentrantLock lock = new ReentrantLock();
+
+    private static final Filesystem FS = new SqliteFilesystem(Paths.get("C:\\ProgramData\\Jagex\\RuneScape"));
+
+    private static final RegionManager REGION_MANAGER = new RegionManager(FS);
 
     private Cache() {
     }
@@ -106,12 +116,32 @@ public final class Cache {
         }
     }
 
+    public static void preload() {
+        reset();
+        Arrays.stream(SceneObjects.all())
+                .filter(Objects::nonNull)
+                .map(SceneObject::getId)
+                .forEach(Cache::getObject);
+        Arrays.stream(Npcs.all())
+                .filter(Objects::nonNull)
+                .map(Npc::getId)
+                .forEach(Cache::getNpc);
+        Arrays.stream(ItemContainers.all())
+                .filter(Objects::nonNull)
+                .map(ItemContainer::getItems)
+                .flatMap(Arrays::stream)
+                .map(Item::getId)
+                .forEach(Cache::getItem);
+    }
+
     /**
      * Resets all in-memory caches.
      */
     public static void reset() {
         locked(() -> {
             items.clear();
+            npcs.clear();
+            objects.clear();
             return null;
         });
     }
@@ -269,6 +299,10 @@ public final class Cache {
 
             return false;
         });
+    }
+
+    public static RegionDefinition getRegionDef(int regionId) {
+        return REGION_MANAGER.load(regionId);
     }
 
     private interface LockCallback<T> {

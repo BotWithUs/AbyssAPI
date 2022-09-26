@@ -12,6 +12,14 @@ public final class CacheObject extends AsyncData {
     private byte[] binaryName = Kraken.BAD_DATA_STRING.getBytes(StandardCharsets.US_ASCII);
     private byte[][] binaryOptionNames = new byte[0][];
 
+    private int sizeX;
+    private int sizeY;
+    private boolean accessBlockFlag;
+
+    private boolean blocksProjectile;
+
+    private int solidType;
+
     CacheObject(int id) {
         this.id = id;
     }
@@ -49,6 +57,26 @@ public final class CacheObject extends AsyncData {
             options[i] = binaryOptionNames[i] == null ? "" : new String(binaryOptionNames[i]);
         }
         return options;
+    }
+
+    public int getSizeX() {
+        return sizeX;
+    }
+
+    public int getSizeY() {
+        return sizeY;
+    }
+
+    public boolean getBreakroutefinding() {
+        return accessBlockFlag;
+    }
+
+    public boolean getBlocksProjectile() {
+        return blocksProjectile;
+    }
+
+    public int getSolidType() {
+        return solidType;
     }
 
     /**

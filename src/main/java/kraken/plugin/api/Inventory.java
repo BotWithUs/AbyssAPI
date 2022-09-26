@@ -2,6 +2,7 @@ package kraken.plugin.api;
 
 import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.SimpleExtensionContainer;
+import abyss.plugin.api.variables.ContainerVariables;
 import abyss.plugin.api.variables.VariableManager;
 import abyss.plugin.api.variables.Variables;
 import abyss.plugin.api.widgets.InventoryWidgetExtension;
@@ -17,8 +18,6 @@ public final class Inventory extends SimpleExtensionContainer {
 
     private Inventory() {
         setExtension(new InventoryWidgetExtension(1473, 93, 5));
-
-
     }
 
     /**
@@ -149,8 +148,8 @@ public final class Inventory extends SimpleExtensionContainer {
         return -1;
     }
 
-    public static int getVarbitValue(int slot, Variables var) {
-        return getVarbitValue(slot, var.getVariableId());
+    public static int getVarbitValue(int slot, ContainerVariables var) {
+        return getVarbitValue(slot, var.getVarbitID());
     }
 
     public static int getVarbitValue(int slot, int varbitId) {
