@@ -17,6 +17,77 @@ object ActionBar {
     private val isLocked get() = Variables.ACTION_BAR_LOCKED.value
 
     @JvmStatic
+    fun hasAbility(abilityId: Int) : Boolean {
+        return ActionSlot.values
+            .map { it.getShortcut() }
+            .filter { it.isAbilityShortcut() }
+            .mapNotNull { it.asAbilityShortcut() }
+            .any { it.abilityId == abilityId }
+    }
+    @JvmStatic
+    fun hasTeleport(teleportId: Int) : Boolean {
+        return ActionSlot.values
+            .map { it.getShortcut() }
+            .filter { it.isTeleportShortcut() }
+            .mapNotNull { it.asTeleportShortcut() }
+            .any { it.teleportId == teleportId }
+    }
+
+    @JvmStatic
+    fun hasItem(itemId: Int) : Boolean {
+        return ActionSlot.values
+            .map { it.getShortcut() }
+            .filter { it.isItemShortcut() }
+            .mapNotNull { it.asItemShortcut() }
+            .any { it.item.id == itemId }
+    }
+
+    @JvmStatic
+    fun forAbility(abilityId: Int) : ActionSlot? {
+        if(!hasAbility(abilityId)) return null
+        for (value in ActionSlot.values) {
+            val shortcut = value.getShortcut()
+            if(shortcut.isAbilityShortcut()) {
+                val itemShortcut = shortcut.asAbilityShortcut()
+                if(itemShortcut != null && itemShortcut.abilityId == abilityId) {
+                    return value
+                }
+            }
+        }
+        return null
+    }
+
+    @JvmStatic
+    fun forTeleport(teleportId: Int) : ActionSlot? {
+        if(!hasTeleport(teleportId)) return null
+        for (value in ActionSlot.values) {
+            val shortcut = value.getShortcut()
+            if(shortcut.isTeleportShortcut()) {
+                val itemShortcut = shortcut.asTeleportShortcut()
+                if(itemShortcut != null && itemShortcut.teleportId == teleportId) {
+                    return value
+                }
+            }
+        }
+        return null
+    }
+
+    @JvmStatic
+    fun forItem(itemId: Int) : ActionSlot? {
+        if(!hasItem(itemId)) return null
+        for (value in ActionSlot.values) {
+            val shortcut = value.getShortcut()
+            if(shortcut.isItemShortcut()) {
+                val itemShortcut = shortcut.asItemShortcut()
+                if(itemShortcut != null && itemShortcut.item.id == itemId) {
+                    return value
+                }
+            }
+        }
+        return null
+    }
+
+    @JvmStatic
     fun isLocked() = isLocked == 1
 
     @JvmStatic
