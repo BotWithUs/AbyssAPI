@@ -29,12 +29,4 @@ class Shortcut(val slot: Int, val id: Int, val type: Int) : SimpleExtensionConta
         if(ext === NoOperationExtension) return null
         return ext as ItemShortcut
     }
-
-    companion object {
-        val EMPTY_SHORTCUT = Shortcut(-1, -1, -1)
-
-        fun test() {
-
-        }
-    }
 }

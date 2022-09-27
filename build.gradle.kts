@@ -11,13 +11,20 @@ plugins {
 group = "abyss.plugin.api"
 version = "1.0-SNAPSHOT"
 
-repositories {
-    mavenLocal()
-    mavenCentral()
+allprojects {
+    repositories {
+        mavenCentral()
+    }
 }
 
 javafx {
     modules("javafx.base")
+}
+
+subprojects {
+    apply {
+        plugin("kotlin")
+    }
 }
 
 dependencies {
@@ -25,7 +32,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
     implementation("io.ktor:ktor-client-core:2.1.1")
     implementation("io.ktor:ktor-client-cio:2.1.1")
-    implementation("com.rshub.filesystem:KrakenCommunityFilesystem:1.0-SNAPSHOT")
+    implementation(project(":filesystem"))
     testImplementation(kotlin("test"))
 }
 
