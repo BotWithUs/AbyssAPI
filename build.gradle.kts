@@ -24,6 +24,7 @@ javafx {
 subprojects {
     apply {
         plugin("kotlin")
+        plugin("org.gradle.maven-publish")
     }
 }
 
