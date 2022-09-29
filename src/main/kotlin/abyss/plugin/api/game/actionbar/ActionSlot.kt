@@ -1,9 +1,9 @@
 package abyss.plugin.api.game.actionbar
 
+import abyss.plugin.api.ConfigProvider
 import abyss.plugin.api.actions.ActionHelper
 import abyss.plugin.api.actions.MenuAction
 import abyss.plugin.api.game.actionbar.shortcuts.*
-import abyss.plugin.api.variables.VariableManager
 import abyss.plugin.api.Inventory
 import abyss.plugin.api.Item
 import abyss.plugin.api.Widgets
@@ -26,17 +26,17 @@ enum class ActionSlot(private val buttonId: Int, val type: Int, val id: Int) {
     SLOT_14(233, 1773, 1774);
 
     fun getShortcut(): Shortcut {
-        val shortcutType = VariableManager.getVarbitById(type)
-        val shortcutId = VariableManager.getVarbitById(id)
+        val shortcutType = ConfigProvider.getVarbitValue(type)
+        val shortcutId = ConfigProvider.getVarbitValue(id)
 
         return Shortcut(ordinal, shortcutId, shortcutType).apply {
             when (this.type) {
                 11 -> setExtension(TeleportShortcut(this.id))
                 10 -> setExtension(ItemShortcut(
                     Item(
-                        VariableManager.getConVarById(
+                        ConfigProvider.getVarpValue(
                             823 + slot
-                        )?.valueInt ?: -1
+                        )
                     )
                 ))
                 else -> {

@@ -1,7 +1,7 @@
 package abyss.plugin.api;
 
 
-import abyss.plugin.api.variables.VariableManager;
+import static abyss.plugin.api.ConfigProvider.*;
 
 /**
  * Provides access to various client state.
@@ -100,59 +100,51 @@ public final class Client {
     public static native Stat getStatById(int id);
 
     /**
-     * Retrieves a script variable by id.
-     *
-     * @param id The id of the variable to search for.
-     * @return The found variable with the provided id, or NULL if one was not found.
-     */
-    public static native ScriptVar getScrVarById(int id);
-
-    /**
      * Retrieves the combat mode that the game is in.
      */
     public static GameTheme getCombatMode() {
-        ConVar cv = VariableManager.getConVarById(ConVar.ID_COMBAT_MODE);
-        if (cv == null) {
+        int cv = ConfigProvider.getVarpValue(ID_COMBAT_MODE);
+        if (cv == -1) {
             return GameTheme.NEW;
         }
 
-        return cv.getValueInt() == ConVar.CFG_COMBAT_MODE_LEGACY ? GameTheme.LEGACY : GameTheme.NEW;
+        return cv == CFG_COMBAT_MODE_LEGACY ? GameTheme.LEGACY : GameTheme.NEW;
     }
 
     /**
      * Retrieves the interface mode that the game is in.
      */
     public static GameTheme getInterfaceMode() {
-        ConVar cv = VariableManager.getConVarById(ConVar.ID_INTERFACE_MODE);
-        if (cv == null) {
+        int cv = ConfigProvider.getVarpValue(ID_INTERFACE_MODE);
+        if (cv == -1) {
             return GameTheme.NEW;
         }
 
-        return cv.getValueInt() == ConVar.CFG_INTERFACE_MODE_LEGACY ? GameTheme.LEGACY : GameTheme.NEW;
+        return cv == CFG_INTERFACE_MODE_LEGACY ? GameTheme.LEGACY : GameTheme.NEW;
     }
 
     /**
      * Determines if the local player's weapon is sheathed or not.
      */
     public static boolean isWeaponSheathed() {
-        ConVar cv = VariableManager.getConVarById(ConVar.ID_WEAPON_SHEATHE);
-        if (cv == null) {
+        int cv = ConfigProvider.getVarpValue(ID_WEAPON_SHEATHE);
+        if (cv == -1) {
             return false;
         }
 
-        return cv.getValueInt() != ConVar.CFG_WEAPON_SHEATHE_ACTIVE;
+        return cv != CFG_WEAPON_SHEATHE_ACTIVE;
     }
 
     /**
      * Determines if auto retaliate is enabled.
      */
     public static boolean isAutoRetaliating() {
-        ConVar cv = VariableManager.getConVarById(ConVar.ID_AUTO_RETALIATE);
-        if (cv == null) {
+        int cv = ConfigProvider.getVarpValue(ID_AUTO_RETALIATE);
+        if (cv == -1) {
             return true;
         }
 
-        return cv.getValueInt() == ConVar.CFG_AUTO_RETALIATE_ON;
+        return cv == CFG_AUTO_RETALIATE_ON;
     }
 
     /**
@@ -175,12 +167,12 @@ public final class Client {
      * Determines if running is enabled.
      */
     public static boolean isRunning() {
-        ConVar cv = VariableManager.getConVarById(ConVar.ID_RUNNING);
-        if (cv == null) {
+        int cv = ConfigProvider.getVarpValue(ID_RUNNING);
+        if (cv == -1) {
             return false;
         }
 
-        return cv.getValueInt() == ConVar.CFG_RUNNING_ON;
+        return cv == CFG_RUNNING_ON;
     }
 
     /**
@@ -198,12 +190,12 @@ public final class Client {
      * @return The current health of the local player.
      */
     public static int getCurrentHealth() {
-        ConVar cv = VariableManager.getConVarById(ConVar.ID_LOCAL_STATUS);
-        if (cv == null) {
+        int cv = ConfigProvider.getVarpValue(ID_LOCAL_STATUS);
+        if (cv == -1) {
             return 0;
         }
 
-        return (cv.getValueInt() & 0xffff) / 2;
+        return (cv & 0xffff) / 2;
     }
 
     /**
@@ -212,12 +204,12 @@ public final class Client {
      * @return The maximum health of the local player.
      */
     public static int getMaxHealth() {
-        ConVar cv = VariableManager.getConVarById(ConVar.ID_LOCAL_STATUS);
-        if (cv == null) {
+        int cv = ConfigProvider.getVarpValue(ID_LOCAL_STATUS);
+        if (cv == -1) {
             return 0;
         }
 
-        return (cv.getValueInt() >> 16) & 0xffff;
+        return (cv >> 16) & 0xffff;
     }
 
     /**
@@ -226,19 +218,16 @@ public final class Client {
      * @return The privacy level of the local player.
      */
     public static PrivacyLevel getPrivacyLevel() {
-        ConVar cv = VariableManager.getConVarById(ConVar.ID_PRIVACY);
-        if (cv == null) {
+        int cv = ConfigProvider.getVarpValue(ID_PRIVACY);
+        if (cv == -1) {
             return PrivacyLevel.ANYBODY;
         }
 
-        switch (cv.getValueInt()) {
-            case ConVar.CFG_PRIVACY_FRIENDS_ONLY:
-                return PrivacyLevel.FRIENDS_ONLY;
-            case ConVar.CFG_PRIVACY_NOBODY:
-                return PrivacyLevel.NOBODY;
-            default:
-                return PrivacyLevel.ANYBODY;
-        }
+        return switch (cv) {
+            case CFG_PRIVACY_FRIENDS_ONLY -> PrivacyLevel.FRIENDS_ONLY;
+            case CFG_PRIVACY_NOBODY -> PrivacyLevel.NOBODY;
+            default -> PrivacyLevel.ANYBODY;
+        };
     }
 
     /**

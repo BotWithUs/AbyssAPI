@@ -2,7 +2,6 @@ package abyss.plugin.api;
 
 import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.ExtensionContainer;
-import abyss.plugin.api.variables.VariableManager;
 import abyss.plugin.api.widgets.BankWidgetExtension;
 import org.jetbrains.annotations.NotNull;
 
@@ -78,12 +77,7 @@ public final class Bank implements ExtensionContainer<Extension> {
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                WidgetItem wItem = new WidgetItem(item.getId(), item.getAmount(), i, Widgets.hash(ext.getRootId(), ext.getWithdrawButtonId()), container);
-                Extension itemExt = VariableManager.getExt(item.getId());
-                if (itemExt != null) {
-                    wItem.setExtension(itemExt);
-                }
-                list.add(wItem);
+                list.add(new WidgetItem(item.getId(), item.getAmount(), i, Widgets.hash(ext.getRootId(), ext.getWithdrawButtonId()), container));
             }
         }
         return list.toArray(new WidgetItem[0]);
@@ -217,13 +211,7 @@ public final class Bank implements ExtensionContainer<Extension> {
             return false;
         }
         BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
-
-        ConVar cv = VariableManager.getConVarById(ext.getWithdrawAsNoteConVarId());
-        if (cv == null) {
-            return false;
-        }
-
-        return cv.getValueInt() == 1;
+        return ConfigProvider.getVarpValue(ext.getWithdrawAsNoteConVarId()) == 1;
     }
 
     /**

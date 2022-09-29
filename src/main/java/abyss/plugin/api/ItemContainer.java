@@ -1,7 +1,6 @@
 package abyss.plugin.api;
 
 import abyss.plugin.api.variables.ContainerVariables;
-import abyss.plugin.api.variables.VariableManager;
 
 /**
  * An item container, holds real information about items.
@@ -37,7 +36,7 @@ public final class ItemContainer {
 
     public int getVarbitById(int slot, int varbitId) {
         if(slot < items.length && items[slot].getId() > 0) {
-            return VariableManager.getContainerVarbit(id, slot, varbitId);
+            return ConfigProvider.getVarbitValue(id, slot, varbitId);
         }
         return -1;
     }

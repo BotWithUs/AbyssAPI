@@ -1,10 +1,10 @@
 package abyss.plugin.api.teleport
 
+import abyss.plugin.api.ConfigProvider
 import abyss.plugin.api.actions.ActionHelper
 import abyss.plugin.api.actions.MenuAction
 import abyss.plugin.api.coroutines.delayUntil
 import abyss.plugin.api.input.InputHelper
-import abyss.plugin.api.variables.VariableManager
 import abyss.plugin.api.world.WorldTile
 import abyss.plugin.api.world.tile
 import kotlinx.coroutines.runBlocking
@@ -202,7 +202,7 @@ enum class Lodestones(
         true
     ) {
         override fun isAvailable(): Boolean {
-            return VariableManager.getVarbitById(varbit) >= 15
+            return ConfigProvider.getVarbitValue(varbit) >= 15
         }
     },
     LUNAR_ISLE(
@@ -215,7 +215,7 @@ enum class Lodestones(
         true
     ) {
         override fun isAvailable(): Boolean {
-            return VariableManager.getVarbitById(varbit) >= 100
+            return ConfigProvider.getVarbitValue(varbit) >= 100
         }
     },
     PRIFDDINAS(
@@ -247,7 +247,7 @@ enum class Lodestones(
     );
 
     open override fun isAvailable(): Boolean {
-        return VariableManager.getVarbitById(varbit) == 1
+        return ConfigProvider.getVarbitValue(varbit) == 1
     }
 
     fun interact() = runBlocking { teleport() }

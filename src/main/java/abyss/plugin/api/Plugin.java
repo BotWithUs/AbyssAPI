@@ -95,27 +95,6 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
 
     }
 
-    public void onActionMenuFired(int type, int param1, int param2, int param3, int param4, boolean isSynthetic) {
-
-    }
-
-    /**
-     * Called when a connection variable changes.
-     */
-    public void onConVarChanged(ConVar conv, int oldValue, int newValue) {
-
-    }
-
-    /**
-     * Called when logs are pushed to the imgui console
-     *
-     * @param log The Log that was printed
-     */
-
-    public void onDebugLog(String log) {
-
-    }
-
     /**
      * Called when the runescape client asks for the value of a varbit
      *

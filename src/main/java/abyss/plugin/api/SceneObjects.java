@@ -17,11 +17,6 @@ public final class SceneObjects {
     }
 
     /**
-     * Retrieves all objects at the provided coordinate.
-     */
-    public static native SceneObject[] at(int x, int y);
-
-    /**
      * Retrieves all objects.
      *
      * @return All objects in the scene.
