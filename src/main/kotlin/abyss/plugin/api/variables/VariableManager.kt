@@ -2,7 +2,7 @@ package abyss.plugin.api.variables
 
 import abyss.plugin.api.extensions.Extension
 import abyss.plugin.api.variables.extensions.OreBoxExtension
-import kraken.plugin.api.ConVar
+import abyss.plugin.api.ConVar
 import java.util.function.Supplier
 
 object VariableManager {

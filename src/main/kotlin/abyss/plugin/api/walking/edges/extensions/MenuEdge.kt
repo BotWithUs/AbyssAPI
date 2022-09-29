@@ -5,9 +5,8 @@ import abyss.plugin.api.actions.MenuAction
 import abyss.plugin.api.walking.TraverseContext
 import abyss.plugin.api.walking.WebEdge
 import abyss.plugin.api.walking.edges.WebEdgeExtension
-import abyss.plugin.api.walking.WebVertex
 import abyss.plugin.api.world.WorldTile
-import kraken.plugin.api.Move
+import abyss.plugin.api.Move
 
 class MenuEdge(val action: MenuAction, vararg val args: Int) : WebEdgeExtension {
     override suspend fun process(bestDistance: Double, edge: WebEdge, tile: WorldTile, ctx: TraverseContext): Boolean {

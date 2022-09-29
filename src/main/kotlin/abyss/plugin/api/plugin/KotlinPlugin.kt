@@ -1,8 +1,8 @@
 package abyss.plugin.api.plugin
 
 import kotlinx.coroutines.runBlocking
-import kraken.plugin.api.Player
-import kraken.plugin.api.Plugin
+import abyss.plugin.api.Player
+import abyss.plugin.api.Plugin
 
 abstract class KotlinPlugin : Plugin() {
 

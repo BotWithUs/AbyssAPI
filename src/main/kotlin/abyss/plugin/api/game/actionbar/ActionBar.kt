@@ -5,7 +5,7 @@ import abyss.plugin.api.actions.MenuAction
 import abyss.plugin.api.coroutines.delayUntil
 import abyss.plugin.api.variables.Variables
 import kotlinx.coroutines.runBlocking
-import kraken.plugin.api.Widgets
+import abyss.plugin.api.Widgets
 
 object ActionBar {
     const val ACTION_WIDGET_ID = 1430

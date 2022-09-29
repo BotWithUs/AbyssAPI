@@ -5,11 +5,10 @@ import abyss.plugin.api.actions.ObjectAction
 import abyss.plugin.api.walking.TraverseContext
 import abyss.plugin.api.walking.WebEdge
 import abyss.plugin.api.walking.edges.WebEdgeExtension
-import abyss.plugin.api.walking.WebVertex
 import abyss.plugin.api.world.WorldTile
-import kraken.plugin.api.Move
-import kraken.plugin.api.Players
-import kraken.plugin.api.SceneObjects
+import abyss.plugin.api.Move
+import abyss.plugin.api.Players
+import abyss.plugin.api.SceneObjects
 
 class ObjectEdge(val objectId: Int, val action: ObjectAction, val tile: WorldTile) : WebEdgeExtension {
     override suspend fun process(bestDistance: Double, edge: WebEdge, tile: WorldTile, ctx: TraverseContext): Boolean {

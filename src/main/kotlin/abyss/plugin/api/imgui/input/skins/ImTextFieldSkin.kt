@@ -2,7 +2,7 @@ package abyss.plugin.api.imgui.input.skins
 
 import abyss.plugin.api.imgui.ImSkin
 import abyss.plugin.api.imgui.input.ImTextField
-import kraken.plugin.api.ImGui
+import abyss.plugin.api.ImGui
 
 class ImTextFieldSkin(val textField: ImTextField) : ImSkin {
 

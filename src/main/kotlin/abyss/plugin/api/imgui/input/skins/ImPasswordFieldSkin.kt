@@ -2,7 +2,7 @@ package abyss.plugin.api.imgui.input.skins
 
 import abyss.plugin.api.imgui.ImSkin
 import abyss.plugin.api.imgui.input.ImTextField
-import kraken.plugin.api.ImGui
+import abyss.plugin.api.ImGui
 
 class ImPasswordFieldSkin(val textField: ImTextField) : ImSkin {
     private val textByteArray = ByteArray(textField.inputLength.toInt())

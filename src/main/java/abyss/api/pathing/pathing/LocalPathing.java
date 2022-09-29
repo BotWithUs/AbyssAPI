@@ -19,8 +19,8 @@ package abyss.api.pathing.pathing;
 import abyss.api.pathing.pathing.strategy.EntityStrategy;
 import abyss.api.pathing.pathing.strategy.FixedTileStrategy;
 import abyss.api.pathing.pathing.strategy.ObjectStrategy;
+import abyss.plugin.api.*;
 import abyss.plugin.api.world.WorldTile;
-import kraken.plugin.api.*;
 
 import java.util.ArrayList;
 import java.util.List;

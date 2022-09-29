@@ -1,8 +1,8 @@
 package abyss.plugin.api.coroutines
 
-import kraken.plugin.api.Client
-import kraken.plugin.api.Client.IN_GAME
-import kraken.plugin.api.Rng
+import abyss.plugin.api.Client
+import abyss.plugin.api.Client.IN_GAME
+import abyss.plugin.api.Rng
 
 suspend fun delayUntil(
     timeout: Long = 5000,

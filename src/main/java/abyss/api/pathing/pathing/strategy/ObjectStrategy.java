@@ -18,10 +18,10 @@ package abyss.api.pathing.pathing.strategy;
 
 import abyss.api.pathing.pathing.RouteStrategy;
 import abyss.definitions.map.ObjectType;
-import kraken.plugin.api.Cache;
-import kraken.plugin.api.CacheObject;
-import kraken.plugin.api.SceneObject;
-import kraken.plugin.api.Vector3i;
+import abyss.plugin.api.Cache;
+import abyss.plugin.api.CacheObject;
+import abyss.plugin.api.SceneObject;
+import abyss.plugin.api.Vector3i;
 
 public class ObjectStrategy extends RouteStrategy {
 

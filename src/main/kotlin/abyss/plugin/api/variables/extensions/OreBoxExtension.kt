@@ -2,9 +2,7 @@ package abyss.plugin.api.variables.extensions
 
 import abyss.plugin.api.extensions.Extension
 import abyss.plugin.api.variables.VariableManager
-import kraken.plugin.api.Client
-import kraken.plugin.api.Inventory
-import java.util.function.Supplier
+import abyss.plugin.api.Client
 
 /**
 43188 -> Copper Ore

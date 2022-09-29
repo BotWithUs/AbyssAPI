@@ -2,7 +2,7 @@ package abyss.plugin.api.imgui.tabs.skins
 
 import abyss.plugin.api.imgui.ImSkin
 import abyss.plugin.api.imgui.tabs.ImTabPane
-import kraken.plugin.api.ImGui
+import abyss.plugin.api.ImGui
 
 class ImTabPaneSkin(val pane: ImTabPane) : ImSkin {
     override fun onPaint() {

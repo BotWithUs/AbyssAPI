@@ -4,9 +4,9 @@ import abyss.plugin.api.coroutines.delayRandom
 import abyss.plugin.api.coroutines.delayUntil
 import abyss.plugin.api.world.WorldTile
 import abyss.plugin.api.world.tile
-import kraken.plugin.api.Move
-import kraken.plugin.api.Players
-import kraken.plugin.api.Vector3i
+import abyss.plugin.api.Move
+import abyss.plugin.api.Players
+import abyss.plugin.api.Vector3i
 import kotlin.math.pow
 import kotlin.math.sqrt
 

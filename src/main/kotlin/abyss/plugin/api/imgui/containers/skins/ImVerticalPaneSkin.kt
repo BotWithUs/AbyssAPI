@@ -2,7 +2,7 @@ package abyss.plugin.api.imgui.containers.skins
 
 import abyss.plugin.api.imgui.ImSkin
 import abyss.plugin.api.imgui.containers.ImVerticalPane
-import kraken.plugin.api.ImGui
+import abyss.plugin.api.ImGui
 
 class ImVerticalPaneSkin(val pane: ImVerticalPane) : ImSkin {
     override fun onPaint() {

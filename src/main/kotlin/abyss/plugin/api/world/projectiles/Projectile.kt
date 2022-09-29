@@ -1,7 +1,7 @@
 package abyss.plugin.api.world.projectiles
 
-import kraken.plugin.api.Vector3
-import kraken.plugin.api.Vector3i
+import abyss.plugin.api.Vector3
+import abyss.plugin.api.Vector3i
 
 class Projectile {
 

@@ -7,7 +7,7 @@ import abyss.plugin.api.walking.edges.extensions.MenuEdge
 import abyss.plugin.api.walking.edges.extensions.ObjectEdge
 import abyss.plugin.api.walking.extensions.RequirementExtension
 import abyss.plugin.api.world.WorldTile
-import kraken.plugin.api.Vector3i
+import abyss.plugin.api.Vector3i
 import java.util.*
 import kotlin.math.pow
 import kotlin.math.sqrt

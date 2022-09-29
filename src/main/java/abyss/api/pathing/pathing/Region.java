@@ -20,8 +20,8 @@ import abyss.definitions.map.MapObject;
 import abyss.definitions.map.ObjectType;
 import abyss.definitions.map.RegionDefinition;
 import abyss.plugin.api.world.WorldTile;
-import kraken.plugin.api.Cache;
-import kraken.plugin.api.CacheObject;
+import abyss.plugin.api.Cache;
+import abyss.plugin.api.CacheObject;
 
 import java.util.*;
 

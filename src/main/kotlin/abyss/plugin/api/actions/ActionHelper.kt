@@ -1,6 +1,6 @@
 package abyss.plugin.api.actions
 
-import kraken.plugin.api.Actions
+import abyss.plugin.api.Actions
 
 object ActionHelper {
     fun menu(action: ActionType, param1: Int, param2: Int, param3: Int) {

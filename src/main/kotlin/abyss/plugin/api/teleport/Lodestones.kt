@@ -8,8 +8,8 @@ import abyss.plugin.api.variables.VariableManager
 import abyss.plugin.api.world.WorldTile
 import abyss.plugin.api.world.tile
 import kotlinx.coroutines.runBlocking
-import kraken.plugin.api.Debug
-import kraken.plugin.api.Widgets
+import abyss.plugin.api.Debug
+import abyss.plugin.api.Widgets
 
 enum class Lodestones(
     val param1: Int,

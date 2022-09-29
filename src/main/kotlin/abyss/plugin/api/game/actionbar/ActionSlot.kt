@@ -4,9 +4,9 @@ import abyss.plugin.api.actions.ActionHelper
 import abyss.plugin.api.actions.MenuAction
 import abyss.plugin.api.game.actionbar.shortcuts.*
 import abyss.plugin.api.variables.VariableManager
-import kraken.plugin.api.Inventory
-import kraken.plugin.api.Item
-import kraken.plugin.api.Widgets
+import abyss.plugin.api.Inventory
+import abyss.plugin.api.Item
+import abyss.plugin.api.Widgets
 
 enum class ActionSlot(private val buttonId: Int, val type: Int, val id: Int) {
 
@@ -32,7 +32,13 @@ enum class ActionSlot(private val buttonId: Int, val type: Int, val id: Int) {
         return Shortcut(ordinal, shortcutId, shortcutType).apply {
             when (this.type) {
                 11 -> setExtension(TeleportShortcut(this.id))
-                10 -> setExtension(ItemShortcut(Item(VariableManager.getConVarById(823 + slot)?.valueInt ?: -1)))
+                10 -> setExtension(ItemShortcut(
+                    Item(
+                        VariableManager.getConVarById(
+                            823 + slot
+                        )?.valueInt ?: -1
+                    )
+                ))
                 else -> {
                     val ability = Abilities.fromId(this.type)
                     if(ability != null) {

@@ -17,7 +17,7 @@
 package abyss.api.pathing.pathing.strategy;
 
 import abyss.api.pathing.pathing.RouteStrategy;
-import kraken.plugin.api.*;
+import abyss.plugin.api.*;
 
 public class EntityStrategy extends RouteStrategy {
 

@@ -1,7 +1,7 @@
 package abyss.plugin.api.imgui.tooltip
 
 import abyss.plugin.api.imgui.ImSkin
-import kraken.plugin.api.ImGui
+import abyss.plugin.api.ImGui
 
 class ImTooltipSkin(val tooltip: ImTooltip) : ImSkin {
     override fun onPaint() {

@@ -1,7 +1,7 @@
 package abyss.plugin.api.variables
 
-import kraken.plugin.api.ItemContainer
-import kraken.plugin.api.ItemContainers
+import abyss.plugin.api.ItemContainer
+import abyss.plugin.api.ItemContainers
 import kotlin.reflect.KProperty
 
 enum class Variables(val variable: PlayerVariable) : PlayerVariable by variable {

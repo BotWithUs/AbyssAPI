@@ -2,8 +2,8 @@ package abyss.plugin.api.input
 
 import abyss.plugin.api.coroutines.delayRandom
 import kotlinx.coroutines.delay
-import kraken.plugin.api.Input
-import kraken.plugin.api.Rng
+import abyss.plugin.api.Input
+import abyss.plugin.api.Rng
 import java.util.function.Consumer
 
 object InputHelper {

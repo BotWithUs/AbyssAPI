@@ -1,7 +1,7 @@
 package abyss.plugin.api.imgui.button
 
 import abyss.plugin.api.imgui.ImSkin
-import kraken.plugin.api.ImGui
+import abyss.plugin.api.ImGui
 
 class ImButtonSkin(val button : ImButton) : ImSkin {
     override fun onPaint() {
