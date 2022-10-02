@@ -1,6 +1,5 @@
 package abyss.plugin.api.actions.attributes
 
-import javafx.beans.property.SimpleStringProperty
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -9,7 +8,7 @@ import java.io.ByteArrayOutputStream
 import java.util.function.BiConsumer
 import kotlin.reflect.KProperty
 
-class PluginAttributes(private val map: MutableMap<String, SimpleStringProperty>, private var serializer: PluginAttributeSerializer = abyss.plugin.api.actions.attributes.DefaultPluginAttributeSerializer) : PluginAttributeSerializer {
+class PluginAttributes(private val map: MutableMap<String, String>, private var serializer: PluginAttributeSerializer = DefaultPluginAttributeSerializer) : PluginAttributeSerializer {
 
     inline infix fun <reified T : Number> number(value: T) = AttributeDelegate(this, value, false)
     inline infix fun <reified T> json(value: T) = AttributeDelegate(this, value, true)
@@ -23,27 +22,20 @@ class PluginAttributes(private val map: MutableMap<String, SimpleStringProperty>
         this.json = json
     }
 
-    fun addListener(key: String, consumer: BiConsumer<String, String>) {
-        val prop = map[key] ?: return
-        prop.addListener { _, oldValue, newValue ->
-            consumer.accept(oldValue, newValue)
-        }
-    }
-
     fun containsKey(key: String) = map.containsKey(key)
 
     fun size() = map.size
 
-    fun getOrDefault(key: String, default: String) = map.getOrDefault(key, SimpleStringProperty(default)).value
+    fun getOrDefault(key: String, default: String) = map.getOrDefault(key, default)
 
     fun put(key: String, value: Any) {
-        map[key] = SimpleStringProperty(value.toString())
+        map[key] = value.toString()
     }
 
-    fun get(key: String) = map[key]?.value
+    fun get(key: String) = map[key]
 
-    fun getValue(key: String) : Any? {
-        return map[key]?.value
+    fun getValue(key: String) : String? {
+        return map[key]
     }
 
     inline fun <reified T> get(key: String) : T? {
@@ -51,10 +43,10 @@ class PluginAttributes(private val map: MutableMap<String, SimpleStringProperty>
     }
 
     fun forEach(consumer: BiConsumer<String, String>) = map.forEach { (t, u) ->
-        consumer.accept(t, u.value)
+        consumer.accept(t, u)
     }
 
-    fun getOrPut(key: String, supplier:  () -> SimpleStringProperty) : SimpleStringProperty {
+    fun getOrPut(key: String, supplier:  () -> String) : String {
         return map.getOrPut(key, supplier)
     }
 
@@ -64,20 +56,20 @@ class PluginAttributes(private val map: MutableMap<String, SimpleStringProperty>
 
     class AttributeDelegate<T>(val attributes: PluginAttributes, val defaultValue: T, val json: Boolean) {
         inline operator fun <reified T> getValue(ref: Any?, prop: KProperty<*>) : T {
-            val sprop = attributes.getOrPut(prop.name) { SimpleStringProperty(defaultValue.toString()) }
+            val sprop = attributes.getOrPut(prop.name) { defaultValue.toString() }
             return try {
                 if(json) {
-                    return attributes.json.decodeFromString(sprop.value)
+                    return attributes.json.decodeFromString(sprop)
                 }
                 when(T::class) {
-                    Int::class -> sprop.value.toInt()
-                    Long::class -> sprop.value.toLong()
-                    Boolean::class -> sprop.value.toBoolean()
-                    Double::class -> sprop.value.toDouble()
-                    Float::class -> sprop.value.toFloat()
-                    UInt::class -> sprop.value.toUInt()
-                    ULong::class -> sprop.value.toULong()
-                    else -> sprop.value
+                    Int::class -> sprop.toInt()
+                    Long::class -> sprop.toLong()
+                    Boolean::class -> sprop.toBoolean()
+                    Double::class -> sprop.toDouble()
+                    Float::class -> sprop.toFloat()
+                    UInt::class -> sprop.toUInt()
+                    ULong::class -> sprop.toULong()
+                    else -> sprop
                 } as T
             } catch (e: Exception) {
                 error("Can't get attribute ${prop.name}")
@@ -87,9 +79,9 @@ class PluginAttributes(private val map: MutableMap<String, SimpleStringProperty>
         inline operator fun <reified T> setValue(ref: Any?, prop: KProperty<*>, value: T) {
             try {
                 if(json) {
-                    attributes.getOrPut(prop.name) { SimpleStringProperty() }.set(attributes.json.encodeToString(value))
+                    attributes.getOrPut(prop.name) { attributes.json.encodeToString(value) }
                 } else {
-                    attributes.getOrPut(prop.name) { SimpleStringProperty() }.set(value.toString())
+                    attributes.getOrPut(prop.name) { value.toString() }
                 }
             } catch (_: Exception) {}
         }
