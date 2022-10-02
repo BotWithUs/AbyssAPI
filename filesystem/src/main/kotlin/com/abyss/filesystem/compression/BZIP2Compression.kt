@@ -1,4 +1,4 @@
-package com.rshub.filesystem.compression
+package com.abyss.filesystem.compression
 
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream

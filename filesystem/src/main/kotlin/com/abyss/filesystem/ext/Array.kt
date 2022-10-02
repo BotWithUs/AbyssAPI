@@ -1,4 +1,4 @@
-package com.rshub.filesystem.ext
+package com.abyss.filesystem.ext
 
 fun <T : Any> Array<T?>.isJustNulls(): Boolean {
     return filterNotNull().none { it != "null" }

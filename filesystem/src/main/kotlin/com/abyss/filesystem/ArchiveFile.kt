@@ -1,4 +1,4 @@
-package com.rshub.filesystem
+package com.abyss.filesystem
 
 class ArchiveFile(
     val id: Int,

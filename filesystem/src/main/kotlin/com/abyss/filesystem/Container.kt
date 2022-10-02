@@ -1,6 +1,6 @@
-package com.rshub.filesystem
+package com.abyss.filesystem
 
-import com.rshub.filesystem.compression.*
+import com.abyss.filesystem.compression.*
 import java.nio.ByteBuffer
 
 class Container(

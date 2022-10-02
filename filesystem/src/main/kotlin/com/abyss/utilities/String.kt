@@ -1,6 +1,6 @@
-package com.rshub.utilities
+package com.abyss.utilities
 
-import com.rshub.utilities.TextUtils.charToCp1252
+import com.abyss.utilities.TextUtils.charToCp1252
 
 fun String.toFilesystemHash(): Int {
     val size = length

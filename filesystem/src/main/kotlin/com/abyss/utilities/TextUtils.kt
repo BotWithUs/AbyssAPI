@@ -1,4 +1,4 @@
-package com.rshub.utilities
+package com.abyss.utilities
 
 object TextUtils {
 

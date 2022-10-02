@@ -1,4 +1,4 @@
-package com.rshub.filesystem.ext
+package com.abyss.utilities
 
 import com.rshub.utilities.Whirlpool
 import java.math.BigInteger
@@ -14,11 +14,11 @@ fun ByteBuffer.toByteArray(): ByteArray {
 }
 
 fun ByteBuffer.getCrc32(until: Int = limit()): Int {
-    val crc = CRC32()
-    for (i in 0 until until) {
-        crc.update(get(i).toInt())
-    }
-    return crc.value.toInt()
+        val crc = CRC32()
+        for (i in 0 until until) {
+            crc.update(get(i).toInt())
+        }
+        return crc.value.toInt()
 }
 
 fun ByteBuffer.getWhirlpool(): ByteArray {
@@ -27,6 +27,17 @@ fun ByteBuffer.getWhirlpool(): ByteArray {
     get(data)
     position(pos)
     return Whirlpool.getHash(data, 0, data.size)
+}
+
+fun ByteBuffer.getSmartSizeVar() : Int {
+    var value = 0
+    var curr: Int = unsignedSmart
+    while (curr == 32767) {
+        curr = unsignedSmart
+        value += 32767
+    }
+    value += curr
+    return value
 }
 
 fun ByteBuffer.rsaEncrypt(modulus: BigInteger, exponent: BigInteger): ByteBuffer {
@@ -39,18 +50,17 @@ fun ByteBuffer.rsaEncrypt(modulus: BigInteger, exponent: BigInteger): ByteBuffer
 val ByteBuffer.unsignedByte: Int get() = get().toInt() and 0xff
 val ByteBuffer.unsignedShort: Int get() = short.toInt() and 0xffff
 
-val ByteBuffer.string: String
-    get() {
-        val origPos = position()
-        var length = 0
-        while (get() != 0.toByte()) length++
-        if (length == 0) return ""
-        val byteArray = ByteArray(length)
-        position(origPos)
-        get(byteArray)
-        position(position() + 1)
-        return String(byteArray, CHARSET)
-    }
+val ByteBuffer.string: String get() {
+    val origPos = position()
+    var length = 0
+    while (get() != 0.toByte()) length++
+    if (length == 0) return ""
+    val byteArray = ByteArray(length)
+    position(origPos)
+    get(byteArray)
+    position(position() + 1)
+    return String(byteArray, CHARSET)
+}
 
 fun ByteBuffer.getSmallSmartInt(): Int {
     if (get(position()).toInt() and 0xff < 128)
@@ -70,15 +80,14 @@ fun ByteBuffer.skip(bytes: Int) {
     position(position() + bytes)
 }
 
-val ByteBuffer.unsignedSmart: Int
-    get() {
-        var i: Int = unsignedByte
-        if (i >= 0x80) {
-            i -= 0x80
-            return i shl 8 or unsignedByte
-        }
-        return i
+val ByteBuffer.unsignedSmart: Int get() {
+    var i: Int = unsignedByte
+    if (i >= 0x80) {
+        i -= 0x80
+        return i shl 8 or unsignedByte
     }
+    return i
+}
 
 fun ByteBuffer.getSmartInt(): Int {
     if (get(position()).toInt() < 0) {
@@ -105,30 +114,28 @@ fun ByteBuffer.putMedium(value: Int) {
     put(value.toByte())
 }
 
-val ByteBuffer.decrsmart: Int
-    get() {
-        var first: Int = unsignedByte
-        if (first < 128) {
-            first -= 1
-        } else {
-            first = first shl 8 or unsignedByte
-            first -= 0x8000
-            first -= 1
-        }
-        return first
+val ByteBuffer.decrsmart: Int get() {
+    var first: Int = unsignedByte
+    if (first < 128) {
+        first -= 1
+    } else {
+        first = first shl 8 or unsignedByte
+        first -= 0x8000
+        first -= 1
     }
+    return first
+}
 
-val ByteBuffer.masked: Map<Int, Int>
-    get() {
-        val result: MutableMap<Int, Int> = HashMap()
-        var mask = unsignedByte
-        while (mask > 0) {
-            if (mask and 0x1 == 1) {
-                result[getSmartInt()] = decrsmart
-            } else {
-                result[0] = 0
-            }
-            mask /= 2
+val ByteBuffer.masked: Map<Int, Int> get() {
+    val result: MutableMap<Int, Int> = HashMap()
+    var mask = unsignedByte
+    while (mask > 0) {
+        if (mask and 0x1 == 1) {
+            result[getSmartInt()] = decrsmart
+        } else {
+            result[0] = 0
         }
-        return result
+        mask /= 2
     }
+    return result
+}

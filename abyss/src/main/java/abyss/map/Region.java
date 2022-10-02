@@ -22,11 +22,11 @@ import abyss.plugin.api.Cache;
 import abyss.plugin.api.CacheObject;
 import abyss.plugin.api.Debug;
 import abyss.plugin.api.world.WorldTile;
-import com.rshub.filesystem.Archive;
-import com.rshub.filesystem.ArchiveFile;
-import com.rshub.filesystem.Filesystem;
-import com.rshub.filesystem.ReferenceTable;
-import com.rshub.filesystem.sqlite.SqliteFilesystem;
+import com.abyss.filesystem.Archive;
+import com.abyss.filesystem.ArchiveFile;
+import com.abyss.filesystem.Filesystem;
+import com.abyss.filesystem.ReferenceTable;
+import com.abyss.filesystem.sqlite.SqliteFilesystem;
 
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;

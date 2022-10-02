@@ -1,4 +1,4 @@
-package com.rshub.filesystem
+package com.abyss.filesystem
 
 import java.nio.ByteBuffer
 import java.nio.file.Path

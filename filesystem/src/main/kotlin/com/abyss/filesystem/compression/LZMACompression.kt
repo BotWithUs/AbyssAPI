@@ -1,4 +1,4 @@
-package com.rshub.filesystem.compression
+package com.abyss.filesystem.compression
 
 import lzma.sdk.lzma.Decoder
 import lzma.sdk.lzma.Encoder

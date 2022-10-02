@@ -1,4 +1,4 @@
-package com.rshub.filesystem.compression
+package com.abyss.filesystem.compression
 
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream

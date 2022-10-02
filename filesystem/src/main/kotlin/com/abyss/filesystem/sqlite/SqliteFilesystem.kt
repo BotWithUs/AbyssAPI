@@ -1,7 +1,7 @@
-package com.rshub.filesystem.sqlite
+package com.abyss.filesystem.sqlite
 
-import com.rshub.filesystem.Filesystem
-import com.rshub.filesystem.ext.toFilesystemHash
+import com.abyss.filesystem.Filesystem
+import com.abyss.filesystem.ext.toFilesystemHash
 import java.nio.ByteBuffer
 import java.nio.file.Files
 import java.nio.file.Path

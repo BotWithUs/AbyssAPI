@@ -1,4 +1,4 @@
-package com.rshub.filesystem.compression
+package com.abyss.filesystem.compression
 
 enum class ContainerCompression(val id: Int) {
     NONE(0),

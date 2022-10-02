@@ -1,6 +1,6 @@
-package com.rshub.filesystem
+package com.abyss.filesystem
 
-import com.rshub.filesystem.ext.getSmartInt
+import com.abyss.filesystem.ext.getSmartInt
 import java.nio.ByteBuffer
 
 class ReferenceTable(val filesystem: Filesystem, val index: Int) {

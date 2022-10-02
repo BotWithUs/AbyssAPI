@@ -1,6 +1,6 @@
-package com.rshub.filesystem.sqlite
+package com.abyss.filesystem.sqlite
 
-import com.rshub.filesystem.ReferenceTable
+import com.abyss.filesystem.ReferenceTable
 import org.tmatesoft.sqljet.core.table.SqlJetDb
 import java.io.Closeable
 import java.nio.file.Path
