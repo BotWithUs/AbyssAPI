@@ -1,5 +1,8 @@
 package abyss.plugin.api;
 
+import abyss.map.Region;
+import abyss.map.WorldObject;
+
 import java.util.Objects;
 
 /**

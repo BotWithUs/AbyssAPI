@@ -7,6 +7,9 @@ import static abyss.plugin.api.Rng.i32;
  */
 public final class Move {
 
+    public static int SCREEN_WALK = 0;
+    public static int MINIMAP_WALK = 1;
+
     private Move() {
     }
 
@@ -18,7 +21,11 @@ public final class Move {
      *
      * @param tile The tile to walk to
      */
-    public static native void to(Vector3i tile);
+    public static native void to(Vector3i tile, int type);
+
+    public static void to(Vector3i tile) {
+        to(tile, MINIMAP_WALK);
+    }
 
     /**
      * Traverses the world using a web.

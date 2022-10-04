@@ -36,6 +36,15 @@ public final class Cache {
     private Cache() {
     }
 
+    public static void reset() {
+        locked(() -> {
+            items.clear();
+            npcs.clear();
+            objects.clear();
+            return null;
+        });
+    }
+
     /**
      * Calls some code within the cache lock.
      *
