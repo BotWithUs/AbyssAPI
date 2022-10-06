@@ -1,4 +1,4 @@
-package com.rshub.utilities;
+package abyss.utilities;
 
 import java.util.Arrays;
 

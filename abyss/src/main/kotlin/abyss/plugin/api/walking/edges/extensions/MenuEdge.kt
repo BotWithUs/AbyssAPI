@@ -13,7 +13,7 @@ class MenuEdge(val action: abyss.plugin.api.actions.MenuAction, vararg val args:
         if(args.size < 3 || edge.canSkip(ctx) || (bestDistance > 6000.0)) {
             Move.to(tile)
         } else {
-            abyss.plugin.api.actions.ActionHelper.menu(action, args[0], args[1], args[2])
+            ActionHelper.menu(action, args[0], args[1], args[2])
         }
         return true
     }

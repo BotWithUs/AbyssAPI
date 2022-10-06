@@ -1,4 +1,4 @@
-package com.rshub.utilities;
+package abyss.utilities;
 
 /**
  * @author Graham Edgecombe

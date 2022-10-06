@@ -19,7 +19,7 @@ class ObjectEdge(val objectId: Int, val action: abyss.plugin.api.actions.ObjectA
             val obj = SceneObjects.closest { it.id == objectId && it.globalPosition == this.tile && !it.hidden() }
 
             if(obj != null) {
-                abyss.plugin.api.actions.ActionHelper.menu(action, obj.interactId, this.tile.x, this.tile.y)
+                ActionHelper.menu(action, obj.interactId, this.tile.x, this.tile.y)
                 return true
             }
         }

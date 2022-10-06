@@ -6,7 +6,7 @@ import abyss.plugin.api.Input
 import abyss.plugin.api.Widgets
 import abyss.plugin.api.coroutines.delayUntil
 import abyss.plugin.api.world.WorldTile
-import abyss.plugin.api.world.tile
+import abyss.plugin.api.world.WorldTile.Companion.tile
 import kotlinx.coroutines.runBlocking
 
 enum class Lodestones(

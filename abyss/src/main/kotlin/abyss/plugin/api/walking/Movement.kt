@@ -3,10 +3,10 @@ package abyss.plugin.api.walking
 import abyss.plugin.api.coroutines.delayRandom
 import abyss.plugin.api.coroutines.delayUntil
 import abyss.plugin.api.world.WorldTile
-import abyss.plugin.api.world.tile
 import abyss.plugin.api.Move
 import abyss.plugin.api.Players
 import abyss.plugin.api.Vector3i
+import abyss.plugin.api.world.WorldTile.Companion.tile
 import kotlin.math.pow
 import kotlin.math.sqrt
 

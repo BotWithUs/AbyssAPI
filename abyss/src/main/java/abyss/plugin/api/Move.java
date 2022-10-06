@@ -11,6 +11,7 @@ public final class Move {
     public static int MINIMAP_WALK = 1;
 
     private Move() {
+
     }
 
     /**

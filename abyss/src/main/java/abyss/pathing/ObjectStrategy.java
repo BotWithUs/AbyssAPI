@@ -17,6 +17,7 @@
 package abyss.pathing;
 
 import abyss.map.WorldObject;
+import com.abyss.definitions.ObjectType;
 
 public class ObjectStrategy extends RouteStrategy {
 
@@ -37,24 +38,23 @@ public class ObjectStrategy extends RouteStrategy {
         this.rotation = object.getRotation();
         this.sizeX = rotation == 0 || rotation == 2 ? object.getDef().getSizeX() : object.getDef().getSizeY();
         this.sizeY = rotation == 0 || rotation == 2 ? object.getDef().getSizeY() : object.getDef().getSizeX();
-        this.accessBlockFlag = object.getDef().isAccessBlockFlag() ? 1 : 0;
+        this.accessBlockFlag = object.getDef().getAccessBlockFlag();
         if (rotation != 0)
             accessBlockFlag = ((accessBlockFlag << rotation) & 0xF) + (accessBlockFlag >> (4 - rotation));
     }
 
     @Override
     public boolean canExit(int currentX, int currentY, int sizeXY, int[][] clip, int clipBaseX, int clipBaseY) {
-        switch (routeType) {
-            case 0:
-                return RouteStrategy.checkWallInteract(clip, currentX - clipBaseX, currentY - clipBaseY, sizeXY, x - clipBaseX, y - clipBaseY, type, rotation);
-            case 1:
-                return RouteStrategy.checkWallDecorationInteract(clip, currentX - clipBaseX, currentY - clipBaseY, sizeXY, x - clipBaseX, y - clipBaseY, type, rotation);
-            case 2:
-                return RouteStrategy.checkFilledRectangularInteract(clip, currentX - clipBaseX, currentY - clipBaseY, sizeXY, sizeXY, x - clipBaseX, y - clipBaseY, sizeX, sizeY, accessBlockFlag);
-            case 3:
-                return currentX == x && currentY == y;
-        }
-        return false;
+        return switch (routeType) {
+            case 0 ->
+                    RouteStrategy.checkWallInteract(clip, currentX - clipBaseX, currentY - clipBaseY, sizeXY, x - clipBaseX, y - clipBaseY, type, rotation);
+            case 1 ->
+                    RouteStrategy.checkWallDecorationInteract(clip, currentX - clipBaseX, currentY - clipBaseY, sizeXY, x - clipBaseX, y - clipBaseY, type, rotation);
+            case 2 ->
+                    RouteStrategy.checkFilledRectangularInteract(clip, currentX - clipBaseX, currentY - clipBaseY, sizeXY, sizeXY, x - clipBaseX, y - clipBaseY, sizeX, sizeY, accessBlockFlag);
+            case 3 -> currentX == x && currentY == y;
+            default -> false;
+        };
     }
 
     @Override

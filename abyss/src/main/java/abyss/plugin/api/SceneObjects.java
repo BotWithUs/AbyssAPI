@@ -51,9 +51,13 @@ public final class SceneObjects {
         }
 
         Vector3 center = self.getScenePosition();
+        Vector3i pos = self.getGlobalPosition();
         SceneObject closest = null;
         float closestDistance = 0.f;
         for (SceneObject o : all(filter)) {
+            if (o.getGlobalPosition().getZ() != pos.getZ()) {
+                continue;
+            }
             float distance = o.getScenePosition().distance(center);
             if (closest == null || distance < closestDistance) {
                 closest = o;

@@ -17,11 +17,11 @@
 package abyss.map;
 
 import abyss.Utils;
-import abyss.pathing.ObjectType;
 import abyss.plugin.api.Cache;
-import abyss.plugin.api.CacheObject;
 import abyss.plugin.api.Debug;
 import abyss.plugin.api.world.WorldTile;
+import com.abyss.definitions.ObjectDefinition;
+import com.abyss.definitions.ObjectType;
 import com.abyss.filesystem.Archive;
 import com.abyss.filesystem.ArchiveFile;
 import com.abyss.filesystem.Filesystem;
@@ -77,10 +77,12 @@ public class Region {
         }
         ArchiveFile objects = archive.getFiles().get(OBJECTS);
         ArchiveFile tiles = archive.getFiles().get(TILES);
-        if (objects != null)
-            decodeObjectData(objects);
-        if (tiles != null)
+        if (tiles != null) {
             decodeTileData(tiles);
+        }
+        if (objects != null) {
+            decodeObjectData(objects);
+        }
         loaded = true;
     }
 
@@ -171,7 +173,7 @@ public class Region {
                     boolean flag = (objectData & 0x80) != 0;
                     int type = objectData >> 2 & 0x1f;
                     int rotation = objectData & 0x3;
-                    int metaDataFlag = 0;
+                    int metaDataFlag;
                     if (flag) {
                         metaDataFlag = stream.get() & 0xff;
 //						if (metaDataFlag != 0)
@@ -268,8 +270,7 @@ public class Region {
         int rotation = object.getRotation();
         if (x < 0 || y < 0 || x >= clipMap.getMasks()[plane].length || y >= clipMap.getMasks()[plane][x].length)
             return;
-        CacheObject defs = object.getDef();
-
+        ObjectDefinition defs = object.getDef();
         if (defs.getClipType() == 0)
             return;
 
@@ -278,9 +279,12 @@ public class Region {
             case WALL_DIAGONAL_CORNER:
             case WALL_WHOLE_CORNER:
             case WALL_STRAIGHT_CORNER:
-                clipMap.addWall(plane, x, y, type, rotation, defs.isBlocksProjectile(), !defs.isIgnoreAltClip());
-                if (defs.isBlocksProjectile())
-                    clipMapProj.addWall(plane, x, y, type, rotation, defs.isBlocksProjectile(), !defs.isIgnoreAltClip());
+                clipMap.addWall(plane, x, y, type, rotation, defs.getBlocksProjectile(), !defs.getIgnoreAltClip());
+                if (defs.getBlocksProjectile())
+                    clipMapProj.addWall(plane, x, y, type, rotation, true, !defs.getIgnoreAltClip());
+                if(defs.getClipType() == 1) {
+                    clipMap.addBlockWalkAndProj(plane, x, y);
+                }
                 break;
             case WALL_INTERACT:
             case SCENERY_INTERACT:
@@ -304,9 +308,9 @@ public class Region {
                     sizeX = defs.getSizeY();
                     sizeY = defs.getSizeX();
                 }
-                clipMap.addObject(plane, x, y, sizeX, sizeY, defs.isBlocksProjectile(), !defs.isIgnoreAltClip());
+                clipMap.addObject(plane, x, y, sizeX, sizeY, defs.getBlocksProjectile(), !defs.getIgnoreAltClip());
                 if (defs.getClipType() != 0)
-                    clipMapProj.addObject(plane, x, y, sizeX, sizeY, defs.isBlocksProjectile(), !defs.isIgnoreAltClip());
+                    clipMapProj.addObject(plane, x, y, sizeX, sizeY, defs.getBlocksProjectile(), !defs.getIgnoreAltClip());
                 break;
             case GROUND_DECORATION:
                 if (defs.getClipType() == 1)

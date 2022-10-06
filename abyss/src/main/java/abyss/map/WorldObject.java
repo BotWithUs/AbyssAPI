@@ -1,6 +1,7 @@
 package abyss.map;
 
-import abyss.pathing.ObjectType;
+import com.abyss.definitions.ObjectDefinition;
+import com.abyss.definitions.ObjectType;
 import abyss.plugin.api.Cache;
 import abyss.plugin.api.CacheObject;
 import abyss.plugin.api.Vector3i;
@@ -29,8 +30,8 @@ public class WorldObject extends Vector3i {
         return type;
     }
 
-    public CacheObject getDef() {
-        return Cache.getObject(id);
+    public ObjectDefinition getDef() {
+        return Cache.getFilesystem().getObjectDefinition(id);
     }
 
     public int getRotation() {
@@ -44,6 +45,8 @@ public class WorldObject extends Vector3i {
     public int getSlot() {
         return type.slot;
     }
+
+
 
     @Override
     public String toString() {

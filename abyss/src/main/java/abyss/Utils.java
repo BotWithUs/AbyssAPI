@@ -224,19 +224,62 @@ public class Utils {
         return result;
     }
 
+    public static boolean isGroundItemReachable(GroundItem item) {
+        if(item == null) {
+            return false;
+        }
+        Player self = Players.self();
+        if(self == null) {
+            return false;
+        }
+        if(self.getGlobalPosition().getZ() != item.getGlobalPosition().getZ()) {
+            return false;
+        }
+        return Utils.getRouteDistanceTo(self.getGlobalPosition(), item) != -1;
+    }
+
+    public static boolean isNpcReachable(Npc npc) {
+        if(npc == null) {
+            return false;
+        }
+        Player self = Players.self();
+        if(self == null) {
+            return false;
+        }
+        if(self.getGlobalPosition().getZ() != npc.getGlobalPosition().getZ()) {
+            return false;
+        }
+        return Utils.getRouteDistanceTo(self.getGlobalPosition(), npc) != -1;
+    }
+
     public static boolean isSceneObjectReachable(SceneObject so) {
+        if(so == null) {
+            return false;
+        }
+        Player self = Players.self();
+        if(self == null) {
+            return false;
+        }
+        if(self.getGlobalPosition().getZ() != so.getGlobalPosition().getZ()) {
+            return false;
+        }
         Vector3i pos = so.getGlobalPosition();
         Region region = Region.get(pos.getRegionId());
-        WorldObject obj = region.objects[pos.getZ()][pos.getXInRegion()][pos.getYInRegion()][2];
-        Debug.log(obj.toString());
+        WorldObject obj = null;
+        for (WorldObject wo : region.objects[pos.getZ()][pos.getXInRegion()][pos.getYInRegion()]) {
+            if(wo != null && wo.getId() == so.getId()) {
+                obj = wo;
+                break;
+            }
+        }
+        if(obj == null) {
+            return false;
+        }
         int steps = getRouteDistanceTo(Players.self().getGlobalPosition(), obj);
         return steps != -1;
     }
 
     public static int getRouteDistanceTo(Vector3i start, GroundItem item) {
-        if (Variables.ADRENALINE_AMOUNT.getValue() >= 50) {
-
-        }
         return LocalPathing.getLocalStepsTo(start, 1, new FixedTileStrategy(item.getGlobalPosition()), false);
     }
 

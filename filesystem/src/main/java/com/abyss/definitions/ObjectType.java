@@ -1,4 +1,4 @@
-package abyss.pathing;
+package com.abyss.definitions;
 
 import java.util.HashMap;
 import java.util.Map;

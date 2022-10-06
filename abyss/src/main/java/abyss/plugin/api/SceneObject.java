@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.Utils;
+
 import static abyss.plugin.api.Actions.*;
 
 /**
@@ -123,6 +125,10 @@ public class SceneObject extends Entity {
         }
 
         return type.getName();
+    }
+
+    public boolean isReachable() {
+        return Utils.isSceneObjectReachable(this);
     }
 
     @Override

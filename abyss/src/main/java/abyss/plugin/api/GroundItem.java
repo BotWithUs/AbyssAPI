@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.Utils;
+
 import java.util.Objects;
 
 import static abyss.plugin.api.Actions.*;
@@ -100,6 +102,10 @@ public final class GroundItem extends Entity {
         }
 
         return false;
+    }
+
+    public boolean isReachable() {
+        return Utils.isGroundItemReachable(this);
     }
 
     @Override

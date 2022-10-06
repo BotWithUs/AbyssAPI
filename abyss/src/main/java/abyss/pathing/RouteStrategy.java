@@ -16,6 +16,8 @@
 //
 package abyss.pathing;
 
+import com.abyss.definitions.ObjectType;
+
 public abstract class RouteStrategy {
 
 	public abstract boolean canExit(int currentX, int currentY, int sizeXY, int[][] clip, int clipBaseX, int clipBaseY);
@@ -324,26 +326,26 @@ public abstract class RouteStrategy {
 		int destEndX = targetX + targetSizeX;
 		int destEndY = targetY + targetSizeY;
 		if (destEndX == currentX && (accessBlockFlag & BLOCK_FLAG_EAST) == 0) {
-			int maxY = currentY > targetY ? currentY : targetY;
-			for (int y = srcEndY < destEndY ? srcEndY : destEndY; maxY < y; maxY++) {
+			int maxY = Math.max(currentY, targetY);
+			for (int y = Math.min(srcEndY, destEndY); maxY < y; maxY++) {
 				if (((clip[destEndX - 1][maxY]) & 0x8) == 0)
 					return true;
 			}
 		} else if (srcEndX == targetX && (accessBlockFlag & BLOCK_FLAG_WEST) == 0) {
-			int minY = currentY > targetY ? currentY : targetY;
-			for (int y = srcEndY < destEndY ? srcEndY : destEndY; minY < y; minY++) {
+			int minY = Math.max(currentY, targetY);
+			for (int y = Math.min(srcEndY, destEndY); minY < y; minY++) {
 				if (((clip[targetX][minY]) & 0x80) == 0)
 					return true;
 			}
 		} else if (currentY == destEndY && (accessBlockFlag & BLOCK_FLAG_NORTH) == 0) {
-			int maxX = currentX > targetX ? currentX : targetX;
-			for (int x = srcEndX < destEndX ? srcEndX : destEndX; maxX < x; maxX++) {
+			int maxX = Math.max(currentX, targetX);
+			for (int x = Math.min(srcEndX, destEndX); maxX < x; maxX++) {
 				if (((clip[maxX][destEndY - 1]) & 0x2) == 0)
 					return true;
 			}
 		} else if (targetY == srcEndY && (accessBlockFlag & BLOCK_FLAG_SOUTH) == 0) {
-			int minX = currentX > targetX ? currentX : targetX;
-			for (int x = srcEndX < destEndX ? srcEndX : destEndX; minX < x; minX++) {
+			int minX = Math.max(currentX, targetX);
+			for (int x = Math.min(srcEndX, destEndX); minX < x; minX++) {
 				if (((clip[minX][targetY]) & 0x20) == 0)
 					return true;
 			}

@@ -1,6 +1,6 @@
 package com.abyss.utilities
 
-import com.rshub.utilities.Whirlpool
+import abyss.utilities.Whirlpool
 import java.math.BigInteger
 import java.nio.ByteBuffer
 import java.util.zip.CRC32

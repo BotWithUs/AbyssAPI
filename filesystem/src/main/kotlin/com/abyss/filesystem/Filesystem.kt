@@ -1,5 +1,8 @@
 package com.abyss.filesystem
 
+import com.abyss.definitions.DefinitionManager
+import com.abyss.definitions.ObjectDefinition
+import com.abyss.definitions.ObjectLoader
 import java.nio.ByteBuffer
 import java.nio.file.Path
 
@@ -8,6 +11,10 @@ abstract class Filesystem(val path: Path) {
     private val checkedReferenceTables = BooleanArray(255)
 
     private val cachedReferenceTables = arrayOfNulls<ReferenceTable>(255)
+
+    private val objectManager: DefinitionManager<ObjectDefinition> by lazy {
+        DefinitionManager(this, 16, -1, 8, ObjectLoader())
+    }
 
     abstract fun exists(index: Int, archive: Int): Boolean
 
@@ -36,4 +43,8 @@ abstract class Filesystem(val path: Path) {
     }
 
     abstract fun numIndices(): Int
+
+    fun getObjectDefinition(id: Int) : ObjectDefinition {
+        return objectManager[id]
+    }
 }

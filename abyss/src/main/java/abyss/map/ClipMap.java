@@ -16,7 +16,7 @@
 //
 package abyss.map;
 
-import abyss.pathing.ObjectType;
+import com.abyss.definitions.ObjectType;
 import abyss.plugin.api.world.WorldTile;
 
 public class ClipMap {
@@ -152,7 +152,7 @@ public class ClipMap {
         }
         if (solid) {
             switch (type) {
-                case WALL_STRAIGHT:
+                case WALL_STRAIGHT -> {
                     if (rotation == 0) {
                         addFlag(plane, x, y, ClipFlag.BP_W);
                         addFlag(plane, x - 1, y, ClipFlag.BP_E);
@@ -169,9 +169,8 @@ public class ClipMap {
                         addFlag(plane, x, y, ClipFlag.BP_S);
                         addFlag(plane, x, y - 1, ClipFlag.BP_N);
                     }
-                    break;
-                case WALL_DIAGONAL_CORNER:
-                case WALL_STRAIGHT_CORNER:
+                }
+                case WALL_DIAGONAL_CORNER, WALL_STRAIGHT_CORNER -> {
                     if (rotation == 0) {
                         addFlag(plane, x, y, ClipFlag.BP_NW);
                         addFlag(plane, x - 1, y + 1, ClipFlag.BP_SE);
@@ -188,8 +187,8 @@ public class ClipMap {
                         addFlag(plane, x, y, ClipFlag.BP_SW);
                         addFlag(plane, x - 1, y - 1, ClipFlag.BP_NE);
                     }
-                    break;
-                case WALL_WHOLE_CORNER:
+                }
+                case WALL_WHOLE_CORNER -> {
                     if (rotation == 0) {
                         addFlag(plane, x, y, ClipFlag.BP_N, ClipFlag.BP_W);
                         addFlag(plane, x - 1, y, ClipFlag.BP_E);
@@ -210,14 +209,14 @@ public class ClipMap {
                         addFlag(plane, x, y - 1, ClipFlag.BP_N);
                         addFlag(plane, x - 1, y, ClipFlag.BP_E);
                     }
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
         }
         if (notAlternative) {
             switch (type) {
-                case WALL_STRAIGHT:
+                case WALL_STRAIGHT -> {
                     if (rotation == 0) {
                         addFlag(plane, x, y, ClipFlag.PF_W);
                         addFlag(plane, x - 1, y, ClipFlag.PF_E);
@@ -234,9 +233,8 @@ public class ClipMap {
                         addFlag(plane, x, y, ClipFlag.PF_S);
                         addFlag(plane, x, y - 1, ClipFlag.PF_N);
                     }
-                    break;
-                case WALL_DIAGONAL_CORNER:
-                case WALL_STRAIGHT_CORNER:
+                }
+                case WALL_DIAGONAL_CORNER, WALL_STRAIGHT_CORNER -> {
                     if (rotation == 0) {
                         addFlag(plane, x, y, ClipFlag.PF_NW);
                         addFlag(plane, x - 1, y + 1, ClipFlag.PF_SE);
@@ -253,8 +251,8 @@ public class ClipMap {
                         addFlag(plane, x, y, ClipFlag.PF_SW);
                         addFlag(plane, x - 1, y - 1, ClipFlag.PF_NE);
                     }
-                    break;
-                case WALL_WHOLE_CORNER:
+                }
+                case WALL_WHOLE_CORNER -> {
                     if (rotation == 0) {
                         addFlag(plane, x, y, ClipFlag.PF_N, ClipFlag.PF_W);
                         addFlag(plane, x - 1, y, ClipFlag.PF_E);
@@ -275,9 +273,9 @@ public class ClipMap {
                         addFlag(plane, x, y - 1, ClipFlag.PF_N);
                         addFlag(plane, x - 1, y, ClipFlag.PF_E);
                     }
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
         }
     }

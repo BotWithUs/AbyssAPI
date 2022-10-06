@@ -4,7 +4,8 @@ import com.abyss.filesystem.Filesystem;
 import com.abyss.filesystem.sqlite.SqliteFilesystem;
 
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -32,6 +33,8 @@ public final class Cache {
      * A lock for accessing the cache.
      */
     private static final ReentrantLock lock = new ReentrantLock();
+
+    private static final Filesystem FS = new SqliteFilesystem(Paths.get("C:\\ProgramData\\Jagex\\RuneScape"));
 
     private Cache() {
     }
@@ -262,6 +265,10 @@ public final class Cache {
 
             return false;
         });
+    }
+
+    public static Filesystem getFilesystem() {
+        return FS;
     }
 
     private interface LockCallback<T> {

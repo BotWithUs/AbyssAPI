@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.Utils;
+
 import static abyss.plugin.api.Actions.*;
 
 /**
@@ -105,6 +107,10 @@ public final class Npc extends Spirit {
 
     public CacheNpc getType() {
         return type;
+    }
+
+    public boolean isReachable() {
+        return Utils.isNpcReachable(this);
     }
 
     @Override
