@@ -1,6 +1,8 @@
 package abyss.plugin.api;
 
+import abyss.Utils;
 import abyss.plugin.api.variables.Variables;
+import abyss.plugin.api.world.WorldTile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +23,15 @@ public final class Player extends Spirit {
      * Do not make instances of this.
      */
     private Player() {
+    }
+
+    @Override
+    public boolean isReachable() {
+        Player self = Players.self();
+        if(self == null) {
+            return false;
+        }
+        return Utils.getRouteDistanceTo(self.getGlobalPosition(), new WorldTile(getGlobalPosition().getX(), getGlobalPosition().getY(), getGlobalPosition().getZ())) != -1;
     }
 
     /**

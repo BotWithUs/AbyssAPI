@@ -1,10 +1,14 @@
 package abyss.plugin.api;
 
+import abyss.map.Region;
+import abyss.map.WorldObject;
 import abyss.plugin.api.actions.attributes.DefaultPluginAttributeSerializer;
 import abyss.plugin.api.actions.attributes.PluginAttributes;
 import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.ExtensionContainer;
 import abyss.plugin.api.widgets.InventoryWidgetExtension;
+import abyss.plugin.api.world.WorldTile;
+import com.abyss.definitions.ObjectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayInputStream;
@@ -141,6 +145,66 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
      */
     public void onLocalPlayerChanged(Player self) {
 
+    }
+
+    /**
+     * Called when RuneScape gets a spawn object packet
+     * @param objectId The object id
+     * @param x The x coordinate where the object is being spawned
+     * @param y The y coordinate where the object is being spawned
+     * @param type The type of object (wall, groun decor, etc)
+     */
+
+    public void onSceneObjectSpawned(int objectId, int x, int y, int type) {
+
+    }
+
+    private void onSceneObjectAdded(int objectId, int x, int y, int type) {
+        Player self = Players.self();
+        if(self == null) {
+            return;
+        }
+        Vector3i pos = self.getGlobalPosition();
+        WorldTile tile = new WorldTile(x, y, 0);
+        Region region = Region.get(tile.getRegionId());
+        ObjectType otype = ObjectType.forId(type);
+        if(otype == null) {
+            return;
+        }
+        WorldObject wo = new WorldObject(x, y, pos.getZ(), objectId, otype);
+        region.spawnObject(wo, pos.getZ(), tile.getXInRegion(), tile.getYInRegion());
+
+        onSceneObjectSpawned(objectId, x, y, type);
+    }
+
+    /**
+     * Called when RuneScape sends destroy scene object packet.
+     * @param objectId The object id to be destroyed
+     * @param x The x coordinate of the scene object to be destroyed
+     * @param y The y coordinate of the scene object to be destroyed
+     * @param type The type of the scene object to be destroyed
+     */
+
+    public void onSceneObjectDestroyed(int objectId, int x, int y, int type) {
+
+    }
+
+    private void onSceneObjectRemoved(int x, int y, int type) {
+        Player self = Players.self();
+        if(self == null) {
+            return;
+        }
+        Vector3i pos = self.getGlobalPosition();
+        WorldTile tile = new WorldTile(x, y, 0);
+        Region region = Region.get(tile.getRegionId());
+        ObjectType otype = ObjectType.forId(type);
+        if(otype == null) {
+            return;
+        }
+        WorldObject wo = region.objects[pos.getZ()][tile.getXInRegion()][tile.getYInRegion()][otype.slot];
+        region.destroyObject(wo, pos.getZ(), tile.getXInRegion(), tile.getYInRegion());
+
+        onSceneObjectDestroyed(wo.getId(), wo.getX(), wo.getY(), wo.getType().id);
     }
 
     /**

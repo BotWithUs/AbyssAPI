@@ -2,7 +2,7 @@ package abyss.plugin.api.actions
 
 import abyss.plugin.api.Vector3i
 
-enum class MenuAction(override val type: Int) : abyss.plugin.api.actions.ActionType {
+enum class MenuAction(override val type: Int) : ActionType {
     WALK(0), PLAYER1(1), PLAYER2(2), PLAYER3(3), PLAYER4(4), PLAYER5(26), PLAYER6(27), PLAYER7(29), PLAYER8(30), NPC1(5), NPC2(
         6
     ),

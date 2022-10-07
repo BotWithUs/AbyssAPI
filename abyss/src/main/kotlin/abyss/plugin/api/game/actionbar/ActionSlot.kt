@@ -7,6 +7,7 @@ import abyss.plugin.api.game.actionbar.shortcuts.*
 import abyss.plugin.api.Inventory
 import abyss.plugin.api.Item
 import abyss.plugin.api.Widgets
+import abyss.plugin.api.actions.ActionType
 
 enum class ActionSlot(private val buttonId: Int, val type: Int, val id: Int) {
 
@@ -49,8 +50,8 @@ enum class ActionSlot(private val buttonId: Int, val type: Int, val id: Int) {
         }
     }
 
-    fun interact(action: abyss.plugin.api.actions.MenuAction) {
-        abyss.plugin.api.actions.ActionHelper.menu(action, 1, -1, Widgets.hash(ActionBar.ACTION_WIDGET_ID, buttonId))
+    fun interact(action: ActionType) {
+        ActionHelper.menu(action, 1, -1, Widgets.hash(ActionBar.ACTION_WIDGET_ID, buttonId))
     }
 
     fun drop() : Boolean {
@@ -58,7 +59,7 @@ enum class ActionSlot(private val buttonId: Int, val type: Int, val id: Int) {
         if(!shortcut.isItemShortcut()) return false
         val itemShortcut = shortcut.asItemShortcut() ?: return false
         if(!Inventory.contains { it.id == itemShortcut.item.id }) return false
-        abyss.plugin.api.actions.ActionHelper.menu(abyss.plugin.api.actions.MenuAction.WIDGET, 8, -1, Widgets.hash(ActionBar.ACTION_WIDGET_ID, buttonId))
+        ActionHelper.menu(MenuAction.WIDGET, 8, -1, Widgets.hash(ActionBar.ACTION_WIDGET_ID, buttonId))
         return true
     }
 

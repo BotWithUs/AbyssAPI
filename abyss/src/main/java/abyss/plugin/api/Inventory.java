@@ -6,10 +6,14 @@ import abyss.plugin.api.variables.ContainerVariables;
 import abyss.plugin.api.variables.Variables;
 import abyss.plugin.api.widgets.InventoryWidgetExtension;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Provides access to the local player's inventory.
@@ -157,5 +161,8 @@ public final class Inventory extends SimpleExtensionContainer {
         return inventory.getVarbitById(slot, varbitId);
     }
 
+    public static Stream<WidgetItem> stream() {
+        return Arrays.stream(getItems());
+    }
 
 }

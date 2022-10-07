@@ -258,6 +258,79 @@ public class Region {
         clip(obj, localX, localY);
     }
 
+    public void destroyObject(WorldObject obj, int plane, int localX, int localY) {
+        if(objects == null)
+            return;
+        if(objectList == null)
+            return;
+        objectList.remove(obj);
+        objects[plane][localX][localY][obj.getSlot()] = null;
+        unclip(obj, localX, localY);
+    }
+
+    public void unclip(WorldObject object, int x, int y) {
+        if (object.getId() == -1)
+            return;
+        if (clipMap == null)
+            clipMap = new ClipMap(regionId, false);
+        if (clipMapProj == null)
+            clipMapProj = new ClipMap(regionId, true);
+        int plane = object.getZ();
+        ObjectType type = object.getType();
+        int rotation = object.getRotation();
+        if (x < 0 || y < 0 || x >= clipMap.getMasks()[plane].length || y >= clipMap.getMasks()[plane][x].length)
+            return;
+        ObjectDefinition defs = object.getDef();
+        if (defs.getClipType() == 0)
+            return;
+
+        switch (type) {
+            case WALL_STRAIGHT:
+            case WALL_DIAGONAL_CORNER:
+            case WALL_WHOLE_CORNER:
+            case WALL_STRAIGHT_CORNER:
+                clipMap.removeWall(plane, x, y, type, rotation, defs.getBlocksProjectile(), !defs.getIgnoreAltClip());
+                if (defs.getBlocksProjectile())
+                    clipMapProj.removeWall(plane, x, y, type, rotation, true, !defs.getIgnoreAltClip());
+                if(defs.getClipType() == 1) {
+                    clipMap.removeBlockWalkAndProj(plane, x, y);
+                }
+                break;
+            case WALL_INTERACT:
+            case SCENERY_INTERACT:
+            case GROUND_INTERACT:
+            case STRAIGHT_SLOPE_ROOF:
+            case DIAGONAL_SLOPE_ROOF:
+            case DIAGONAL_SLOPE_CONNECT_ROOF:
+            case STRAIGHT_SLOPE_CORNER_CONNECT_ROOF:
+            case STRAIGHT_SLOPE_CORNER_ROOF:
+            case STRAIGHT_FLAT_ROOF:
+            case STRAIGHT_BOTTOM_EDGE_ROOF:
+            case DIAGONAL_BOTTOM_EDGE_CONNECT_ROOF:
+            case STRAIGHT_BOTTOM_EDGE_CONNECT_ROOF:
+            case STRAIGHT_BOTTOM_EDGE_CONNECT_CORNER_ROOF:
+                int sizeX;
+                int sizeY;
+                if (rotation != 1 && rotation != 3) {
+                    sizeX = defs.getSizeX();
+                    sizeY = defs.getSizeY();
+                } else {
+                    sizeX = defs.getSizeY();
+                    sizeY = defs.getSizeX();
+                }
+                clipMap.removeObject(plane, x, y, sizeX, sizeY, defs.getBlocksProjectile(), !defs.getIgnoreAltClip());
+                if (defs.getClipType() != 0)
+                    clipMapProj.removeObject(plane, x, y, sizeX, sizeY, defs.getBlocksProjectile(), !defs.getIgnoreAltClip());
+                break;
+            case GROUND_DECORATION:
+                if (defs.getClipType() == 1)
+                    clipMap.removeBlockWalkAndProj(plane, x, y);
+                break;
+            default:
+                break;
+        }
+    }
+
     public void clip(WorldObject object, int x, int y) {
         if (object.getId() == -1)
             return;

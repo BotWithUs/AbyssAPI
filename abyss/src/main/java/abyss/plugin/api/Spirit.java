@@ -136,6 +136,9 @@ public abstract class Spirit extends Entity {
         Actions.entity(this, type);
     }
 
+
+    public abstract boolean isReachable();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

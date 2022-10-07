@@ -1,6 +1,6 @@
 package abyss.plugin.api.actions
 
-enum class ObjectAction(override val type: Int) : abyss.plugin.api.actions.ActionType {
+enum class ObjectAction(override val type: Int) : ActionType {
     OBJECT1(13), OBJECT2(12), OBJECT3(19), OBJECT4(20), OBJECT5(21), OBJECT6(22);
 
     override val actionIndex: Int
@@ -15,7 +15,7 @@ enum class ObjectAction(override val type: Int) : abyss.plugin.api.actions.Actio
                     return value
                 }
             }
-            return abyss.plugin.api.actions.ObjectAction.OBJECT1
+            return OBJECT1
         }
     }
 }

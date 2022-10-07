@@ -16,12 +16,6 @@ public final class PluginContext {
     }
 
     /**
-     * Retrieves the plugin id
-     * @return plugin id
-     */
-    public native int getPluginId();
-
-    /**
      * Retrieves the entry-point plugin object.
      *
      * @return The entry-point plugin object.

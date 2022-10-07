@@ -109,6 +109,7 @@ public final class Npc extends Spirit {
         return type;
     }
 
+    @Override
     public boolean isReachable() {
         return Utils.isNpcReachable(this);
     }

@@ -23,7 +23,7 @@ public final class Abyss {
      * @param entry The entry-point of the plugin to load.
      * @return The context of the loaded plugin.
      */
-    public static native PluginContext loadNewPlugin(Class<?> entry, int pluginId);
+    public static native PluginContext loadNewPlugin(Class<?> entry);
 
     /**
      * Retrieves the path to the plugin directory.

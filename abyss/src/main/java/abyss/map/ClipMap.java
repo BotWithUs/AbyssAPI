@@ -87,6 +87,199 @@ public class ClipMap {
         }
     }
 
+    public void removeWall(int plane, int x, int y, ObjectType type, int rotation, boolean solid, boolean notAlternative) {
+        switch (type) {
+            case WALL_STRAIGHT -> {
+                if (rotation == 0) {
+                    removeFlag(plane, x, y, ClipFlag.BW_W);
+                    removeFlag(plane, x - 1, y, ClipFlag.BW_E);
+                }
+                if (rotation == 1) {
+                    removeFlag(plane, x, y, ClipFlag.BW_N);
+                    removeFlag(plane, x, y + 1, ClipFlag.BW_S);
+                }
+                if (rotation == 2) {
+                    removeFlag(plane, x, y, ClipFlag.BW_E);
+                    removeFlag(plane, x + 1, y, ClipFlag.BW_W);
+                }
+                if (rotation == 3) {
+                    removeFlag(plane, x, y, ClipFlag.BW_S);
+                    removeFlag(plane, x, y - 1, ClipFlag.BW_N);
+                }
+            }
+            case WALL_DIAGONAL_CORNER, WALL_STRAIGHT_CORNER -> {
+                if (rotation == 0) {
+                    removeFlag(plane, x, y, ClipFlag.BW_NW);
+                    removeFlag(plane, x - 1, y + 1, ClipFlag.BW_SE);
+                }
+                if (rotation == 1) {
+                    removeFlag(plane, x, y, ClipFlag.BW_NE);
+                    removeFlag(plane, x + 1, y + 1, ClipFlag.BW_SW);
+                }
+                if (rotation == 2) {
+                    removeFlag(plane, x, y, ClipFlag.BW_SE);
+                    removeFlag(plane, x + 1, y - 1, ClipFlag.BW_NW);
+                }
+                if (rotation == 3) {
+                    removeFlag(plane, x, y, ClipFlag.BW_SW);
+                    removeFlag(plane, x - 1, y - 1, ClipFlag.BW_NE);
+                }
+            }
+            case WALL_WHOLE_CORNER -> {
+                if (rotation == 0) {
+                    removeFlag(plane, x, y, ClipFlag.BW_N, ClipFlag.BW_W);
+                    removeFlag(plane, x - 1, y, ClipFlag.BW_E);
+                    removeFlag(plane, x, y + 1, ClipFlag.BW_S);
+                }
+                if (rotation == 1) {
+                    removeFlag(plane, x, y, ClipFlag.BW_N, ClipFlag.BW_E);
+                    removeFlag(plane, x, y + 1, ClipFlag.BW_S);
+                    removeFlag(plane, x + 1, y, ClipFlag.BW_W);
+                }
+                if (rotation == 2) {
+                    removeFlag(plane, x, y, ClipFlag.BW_E, ClipFlag.BW_S);
+                    removeFlag(plane, x + 1, y, ClipFlag.BW_W);
+                    removeFlag(plane, x, y - 1, ClipFlag.BW_N);
+                }
+                if (rotation == 3) {
+                    removeFlag(plane, x, y, ClipFlag.BW_S, ClipFlag.BW_W);
+                    removeFlag(plane, x, y - 1, ClipFlag.BW_N);
+                    removeFlag(plane, x - 1, y, ClipFlag.BW_E);
+                }
+            }
+            default -> {
+            }
+        }
+        if (solid) {
+            switch (type) {
+                case WALL_STRAIGHT -> {
+                    if (rotation == 0) {
+                        removeFlag(plane, x, y, ClipFlag.BP_W);
+                        removeFlag(plane, x - 1, y, ClipFlag.BP_E);
+                    }
+                    if (rotation == 1) {
+                        removeFlag(plane, x, y, ClipFlag.BP_N);
+                        removeFlag(plane, x, y + 1, ClipFlag.BP_S);
+                    }
+                    if (rotation == 2) {
+                        removeFlag(plane, x, y, ClipFlag.BP_E);
+                        removeFlag(plane, x + 1, y, ClipFlag.BP_W);
+                    }
+                    if (rotation == 3) {
+                        removeFlag(plane, x, y, ClipFlag.BP_S);
+                        removeFlag(plane, x, y - 1, ClipFlag.BP_N);
+                    }
+                }
+                case WALL_DIAGONAL_CORNER, WALL_STRAIGHT_CORNER -> {
+                    if (rotation == 0) {
+                        removeFlag(plane, x, y, ClipFlag.BP_NW);
+                        removeFlag(plane, x - 1, y + 1, ClipFlag.BP_SE);
+                    }
+                    if (rotation == 1) {
+                        removeFlag(plane, x, y, ClipFlag.BP_NE);
+                        removeFlag(plane, x + 1, y + 1, ClipFlag.BP_SW);
+                    }
+                    if (rotation == 2) {
+                        removeFlag(plane, x, y, ClipFlag.BP_SE);
+                        removeFlag(plane, x + 1, y - 1, ClipFlag.BP_NW);
+                    }
+                    if (rotation == 3) {
+                        removeFlag(plane, x, y, ClipFlag.BP_SW);
+                        removeFlag(plane, x - 1, y - 1, ClipFlag.BP_NE);
+                    }
+                }
+                case WALL_WHOLE_CORNER -> {
+                    if (rotation == 0) {
+                        removeFlag(plane, x, y, ClipFlag.BP_N, ClipFlag.BP_W);
+                        removeFlag(plane, x - 1, y, ClipFlag.BP_E);
+                        removeFlag(plane, x, y + 1, ClipFlag.BP_S);
+                    }
+                    if (rotation == 1) {
+                        removeFlag(plane, x, y, ClipFlag.BP_N, ClipFlag.BP_E);
+                        removeFlag(plane, x, y + 1, ClipFlag.BP_S);
+                        removeFlag(plane, x + 1, y, ClipFlag.BP_W);
+                    }
+                    if (rotation == 2) {
+                        removeFlag(plane, x, y, ClipFlag.BP_E, ClipFlag.BP_S);
+                        removeFlag(plane, x + 1, y, ClipFlag.BP_W);
+                        removeFlag(plane, x, y - 1, ClipFlag.BP_N);
+                    }
+                    if (rotation == 3) {
+                        removeFlag(plane, x, y, ClipFlag.BP_S, ClipFlag.BP_W);
+                        removeFlag(plane, x, y - 1, ClipFlag.BP_N);
+                        removeFlag(plane, x - 1, y, ClipFlag.BP_E);
+                    }
+                }
+                default -> {
+                }
+            }
+        }
+        if (notAlternative) {
+            switch (type) {
+                case WALL_STRAIGHT -> {
+                    if (rotation == 0) {
+                        removeFlag(plane, x, y, ClipFlag.PF_W);
+                        removeFlag(plane, x - 1, y, ClipFlag.PF_E);
+                    }
+                    if (rotation == 1) {
+                        removeFlag(plane, x, y, ClipFlag.PF_N);
+                        removeFlag(plane, x, y + 1, ClipFlag.PF_S);
+                    }
+                    if (rotation == 2) {
+                        removeFlag(plane, x, y, ClipFlag.PF_E);
+                        removeFlag(plane, x + 1, y, ClipFlag.PF_W);
+                    }
+                    if (rotation == 3) {
+                        removeFlag(plane, x, y, ClipFlag.PF_S);
+                        removeFlag(plane, x, y - 1, ClipFlag.PF_N);
+                    }
+                }
+                case WALL_DIAGONAL_CORNER, WALL_STRAIGHT_CORNER -> {
+                    if (rotation == 0) {
+                        removeFlag(plane, x, y, ClipFlag.PF_NW);
+                        removeFlag(plane, x - 1, y + 1, ClipFlag.PF_SE);
+                    }
+                    if (rotation == 1) {
+                        removeFlag(plane, x, y, ClipFlag.PF_NE);
+                        removeFlag(plane, x + 1, y + 1, ClipFlag.PF_SW);
+                    }
+                    if (rotation == 2) {
+                        removeFlag(plane, x, y, ClipFlag.PF_SE);
+                        removeFlag(plane, x + 1, y - 1, ClipFlag.PF_NW);
+                    }
+                    if (rotation == 3) {
+                        removeFlag(plane, x, y, ClipFlag.PF_SW);
+                        removeFlag(plane, x - 1, y - 1, ClipFlag.PF_NE);
+                    }
+                }
+                case WALL_WHOLE_CORNER -> {
+                    if (rotation == 0) {
+                        removeFlag(plane, x, y, ClipFlag.PF_N, ClipFlag.PF_W);
+                        removeFlag(plane, x - 1, y, ClipFlag.PF_E);
+                        removeFlag(plane, x, y + 1, ClipFlag.PF_S);
+                    }
+                    if (rotation == 1) {
+                        removeFlag(plane, x, y, ClipFlag.PF_N, ClipFlag.PF_E);
+                        removeFlag(plane, x, y + 1, ClipFlag.PF_S);
+                        removeFlag(plane, x + 1, y, ClipFlag.PF_W);
+                    }
+                    if (rotation == 2) {
+                        removeFlag(plane, x, y, ClipFlag.PF_E, ClipFlag.PF_S);
+                        removeFlag(plane, x + 1, y, ClipFlag.PF_W);
+                        removeFlag(plane, x, y - 1, ClipFlag.PF_N);
+                    }
+                    if (rotation == 3) {
+                        removeFlag(plane, x, y, ClipFlag.PF_S, ClipFlag.PF_W);
+                        removeFlag(plane, x, y - 1, ClipFlag.PF_N);
+                        removeFlag(plane, x - 1, y, ClipFlag.PF_E);
+                    }
+                }
+                default -> {
+                }
+            }
+        }
+    }
+
     public void addWall(int plane, int x, int y, ObjectType type, int rotation, boolean solid, boolean notAlternative) {
         switch (type) {
             case WALL_STRAIGHT -> {
