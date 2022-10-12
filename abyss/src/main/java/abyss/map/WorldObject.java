@@ -30,6 +30,10 @@ public class WorldObject extends Vector3i {
         return type;
     }
 
+    public void setType(ObjectType type) {
+        this.type = type;
+    }
+
     public ObjectDefinition getDef() {
         return Cache.getFilesystem().getObjectDefinition(id);
     }

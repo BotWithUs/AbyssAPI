@@ -8,7 +8,7 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = "com.rshub.filesystem"
+            groupId = "com.abyss.filesystem"
             artifactId = "RSFileSystem"
             version = "1.0-SNAPSHOT"
             from(components["java"])

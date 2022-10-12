@@ -39,7 +39,7 @@ object ActionBar {
             .map { it.getShortcut() }
             .filter { it.isItemShortcut() }
             .mapNotNull { it.asItemShortcut() }
-            .any { it.item.id == itemId }
+            .any { it.getItem().id == itemId }
     }
 
     @JvmStatic
@@ -79,7 +79,7 @@ object ActionBar {
             val shortcut = value.getShortcut()
             if(shortcut.isItemShortcut()) {
                 val itemShortcut = shortcut.asItemShortcut()
-                if(itemShortcut != null && itemShortcut.item.id == itemId) {
+                if(itemShortcut != null && itemShortcut.getItem().id == itemId) {
                     return value
                 }
             }

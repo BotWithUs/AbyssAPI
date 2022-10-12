@@ -1,5 +1,8 @@
 package abyss.plugin.api;
 
+import java.util.Locale;
+import java.util.function.Predicate;
+
 /**
  * A provider of widgets.
  */

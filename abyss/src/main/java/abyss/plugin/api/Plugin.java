@@ -27,9 +27,6 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
     public final PluginAttributes persistentAttributes = new PluginAttributes(new HashMap<>(), DefaultPluginAttributeSerializer.INSTANCE);
     public final PluginAttributes attributes = new PluginAttributes(new HashMap<>(), DefaultPluginAttributeSerializer.INSTANCE);
 
-    public final Map<Integer, VarbitRequest> requestedVarbits = new HashMap<>();
-    public final Map<Integer, VarpRequest> requestedVarps = new HashMap<>();
-
     private final Map<Class<?>, Extension> pluginExtensions = new HashMap<>();
 
     /**
@@ -104,17 +101,12 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
      * Called when the runescape client asks for the value of a varbit
      *
      * @param varbitId - The Varbit ID
-     * @param conVarId - The ConVarID that the varbit is stored in
+     * @param varpId - The ConVarID that the varbit is stored in
      * @param value    - The Value of the requested Varbit
      */
 
-    public void onVarbitRequest(int varbitId, int conVarId, int value) {
-        if (!requestedVarbits.containsKey(varbitId)) {
-            requestedVarbits.put(varbitId, new VarbitRequest(varbitId, conVarId, value));
-        } else {
-            VarbitRequest req = requestedVarbits.get(varbitId);
-            req.setValue(value);
-        }
+    public void onVarbitRequest(int varbitId, int varpId, int value) {
+
     }
 
     /**
@@ -124,12 +116,7 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
      */
 
     public void onVarpRequest(int varpId, int value) {
-        if(!requestedVarps.containsKey(varpId)) {
-            requestedVarps.put(varpId, new VarpRequest(varpId, value));
-        } else {
-            VarpRequest req = requestedVarps.get(varpId);
-            req.setValue(value);
-        }
+
     }
 
     /**
@@ -202,6 +189,12 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
             return;
         }
         WorldObject wo = region.objects[pos.getZ()][tile.getXInRegion()][tile.getYInRegion()][otype.slot];
+        if(wo == null) {
+            return;
+        }
+        if(wo.getType() == null) { // wtf
+            wo.setType(otype);
+        }
         region.destroyObject(wo, pos.getZ(), tile.getXInRegion(), tile.getYInRegion());
 
         onSceneObjectDestroyed(wo.getId(), wo.getX(), wo.getY(), wo.getType().id);

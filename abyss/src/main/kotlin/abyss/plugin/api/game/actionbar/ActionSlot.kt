@@ -33,13 +33,7 @@ enum class ActionSlot(private val buttonId: Int, val type: Int, val id: Int) {
         return Shortcut(ordinal, shortcutId, shortcutType).apply {
             when (this.type) {
                 11 -> setExtension(TeleportShortcut(this.id))
-                10 -> setExtension(ItemShortcut(
-                    Item(
-                        ConfigProvider.getVarpValue(
-                            823 + slot
-                        )
-                    )
-                ))
+                10 -> setExtension(ItemShortcut(823 + slot))
                 else -> {
                     val ability = Abilities.fromId(this.type)
                     if(ability != null) {
@@ -58,7 +52,7 @@ enum class ActionSlot(private val buttonId: Int, val type: Int, val id: Int) {
         val shortcut = getShortcut()
         if(!shortcut.isItemShortcut()) return false
         val itemShortcut = shortcut.asItemShortcut() ?: return false
-        if(!Inventory.contains { it.id == itemShortcut.item.id }) return false
+        if(!Inventory.contains { it.id == itemShortcut.getItem().id }) return false
         ActionHelper.menu(MenuAction.WIDGET, 8, -1, Widgets.hash(ActionBar.ACTION_WIDGET_ID, buttonId))
         return true
     }

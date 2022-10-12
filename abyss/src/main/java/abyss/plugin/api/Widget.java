@@ -203,6 +203,16 @@ public class Widget {
         return false;
     }
 
+    public void mouseClick() {
+        if(hover()) {
+            Input.clickMouse(0);
+        }
+    }
+
+    public Vector2i getScreenPosition() {
+        return screenPosition;
+    }
+
     /**
      * Interacts with this widget using the provided option.
      *

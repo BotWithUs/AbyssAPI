@@ -248,6 +248,18 @@ public final class ImGui {
      */
     public static native void treePop();
 
+    /**
+     * Creates a selectable node
+     * @param label Label for selected node
+     * @param select Is this already selected
+     * @param flags selectable flags for ImGui
+     * @param sizeX size width of the selectable node
+     * @param sizeY size height of the selectable node
+     * @return if the node was created successfully
+     */
+
+    public static native boolean selectable(String label, boolean select, int flags, float sizeX, float sizeY);
+
     public static void pushStyleColor(ColorStyle col, float a, float a1, float a2, float a3) {
         pushStyleColor(col.getIndex(), a, a1, a2, a3);
     }
@@ -274,6 +286,16 @@ public final class ImGui {
 
     public static void begin(String name, boolean isOpen) {
         begin(name, isOpen, ImGuiWindowFlags_None);
+    }
+
+    public static void label(String label, float red, float green, float blue, float alpha) {
+        pushStyleColor(ColorStyle.ImGuiCol_Text, red, green, blue, alpha);
+        label(label);
+        popStyleColor();
+    }
+
+    public static void freeText(String text, Vector2i pos, int red, int green, int blue, int alpha) {
+        freeText(text, pos, red << 24 | green << 16 | blue << 8 | alpha);
     }
 
     public enum ColorStyle {
