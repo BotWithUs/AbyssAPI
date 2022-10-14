@@ -1,6 +1,7 @@
 package abyss.plugin.api;
 
 import abyss.Utils;
+import abyss.map.Region;
 
 import static abyss.plugin.api.Actions.*;
 
@@ -23,6 +24,7 @@ public class SceneObject extends Entity {
     private int interactId = -1;
 
     private CacheObject type;
+    private CacheObject morphType;
 
     /**
      * Do not make instances of this.
@@ -31,6 +33,10 @@ public class SceneObject extends Entity {
     }
 
     public CacheObject getType() {
+        if(morphType != null) {
+            return morphType;
+        }
+        
         return type;
     }
 
@@ -83,6 +89,7 @@ public class SceneObject extends Entity {
      * Interacts with this object.
      */
     public boolean interact(String option) {
+        CacheObject type = getType();
         if (type == null) {
             return false;
         }
@@ -120,6 +127,7 @@ public class SceneObject extends Entity {
      * @return The name of this object.
      */
     public String getName() {
+        CacheObject type = getType();
         if (type == null) {
             return Abyss.BAD_DATA_STRING;
         }

@@ -13,7 +13,6 @@ public final class Abyss {
     public static final int PROTECTION_ID_DECRYPT_BINARY = 1876334;
     // if any strings are equal to this, they were unavailable or something of the sort.
     public static final String BAD_DATA_STRING = "N/A";
-
     private Abyss() {
     }
 

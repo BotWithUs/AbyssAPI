@@ -1,9 +1,11 @@
 package abyss.plugin.api;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * A provider of objects.
@@ -51,13 +53,9 @@ public final class SceneObjects {
         }
 
         Vector3 center = self.getScenePosition();
-        Vector3i pos = self.getGlobalPosition();
         SceneObject closest = null;
         float closestDistance = 0.f;
         for (SceneObject o : all(filter)) {
-            if (o.getGlobalPosition().getZ() != pos.getZ()) {
-                continue;
-            }
             float distance = o.getScenePosition().distance(center);
             if (closest == null || distance < closestDistance) {
                 closest = o;
@@ -77,6 +75,10 @@ public final class SceneObjects {
         for (SceneObject o : all()) {
             cb.accept(o);
         }
+    }
+
+    public static Stream<SceneObject> stream() {
+        return Arrays.stream(all());
     }
 
 }

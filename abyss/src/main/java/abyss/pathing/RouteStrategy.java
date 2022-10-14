@@ -41,23 +41,19 @@ public abstract class RouteStrategy {
 			if (targetRotation == 0) {
 				if (currentX == (targetX + 1) && currentY == targetY && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_W))
 					return true;
-				if (currentX == targetX && currentY == (targetY - 1) && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_N))
-					return true;
+                return currentX == targetX && currentY == (targetY - 1) && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_N);
 			} else if (targetRotation == 1) {
 				if (currentX == (targetX - 1) && currentY == targetY && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_E))
 					return true;
-				if (currentX == targetX && currentY == (targetY - 1) && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_N))
-					return true;
+                return currentX == targetX && currentY == (targetY - 1) && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_N);
 			} else if (targetRotation == 2) {
 				if (currentX == (targetX - 1) && currentY == targetY && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_E))
 					return true;
-				if (currentX == targetX && currentY == (targetY + 1) && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_S))
-					return true;
+                return currentX == targetX && currentY == (targetY + 1) && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_S);
 			} else if (targetRotation == 3) {
 				if (currentX == (targetX + 1) && currentY == targetY && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_W))
 					return true;
-				if (currentX == targetX && currentY == (targetY + 1) && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_S))
-					return true;
+                return currentX == targetX && currentY == (targetY + 1) && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_S);
 			}
 		} else if (targetType == ObjectType.DIAGONAL_INWALL_DEC) {
 			if (currentX == targetX && currentY == (targetY + 1) && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_S))
@@ -66,8 +62,7 @@ public abstract class RouteStrategy {
 				return true;
 			if (currentX == (targetX - 1) && currentY == targetY && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_E))
 				return true;
-			if (currentX == (targetX + 1) && currentY == targetY && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_W))
-				return true;
+            return currentX == (targetX + 1) && currentY == targetY && !ClipFlag.flagged(clip[currentX][currentY], ClipFlag.BW_W);
 		}
 		return false;
 	}
@@ -77,7 +72,7 @@ public abstract class RouteStrategy {
             if (destX == x && destY == y) {
                 return true;
             }
-        } else if (destX >= x && destX <= size + x - 1 && destY >= destY && destY <= size + destY - 1) {
+        } else if (destX >= x && destX <= size + x - 1 && destY <= size + destY - 1) {
             return true;
         }
         if (size == 1) {
@@ -194,6 +189,7 @@ public abstract class RouteStrategy {
         } else {
             int width = size + x - 1;
             int height = size + y - 1;
+            boolean b = destX >= x && destX <= width && destY + 1 == y;
             if (objectType == ObjectType.WALL_STRAIGHT) {
                 if (rotation == 0) {
                     if (destX - size == x && destY >= y && destY <= height) {
@@ -206,7 +202,7 @@ public abstract class RouteStrategy {
                         return true;
                     }
                 } else if (rotation == 1) {
-                    if (destX >= x && destX <= width && destY + 1 == y) {
+                    if (b) {
                         return true;
                     }
                     if (destX - size == x && destY >= y && destY <= height && !ClipFlag.flagged(clipMap[width][destY], ClipFlag.BW_E, ClipFlag.BW_FULL, ClipFlag.PFBW_GROUND_DECO, ClipFlag.PFBW_FLOOR)) {
@@ -242,7 +238,7 @@ public abstract class RouteStrategy {
                     if (destX - size == x && destY >= y && destY <= height) {
                         return true;
                     }
-                    if (destX >= x && destX <= width && destY + 1 == y) {
+                    if (b) {
                         return true;
                     }
                     if (destX + 1 == x && destY >= y && destY <= height && !ClipFlag.flagged(clipMap[x][destY], ClipFlag.BW_W, ClipFlag.BW_FULL, ClipFlag.PFBW_GROUND_DECO, ClipFlag.PFBW_FLOOR)) {
@@ -255,7 +251,7 @@ public abstract class RouteStrategy {
                     if (destX - size == x && destY >= y && destY <= height && !ClipFlag.flagged(clipMap[width][destY], ClipFlag.BW_E, ClipFlag.BW_FULL, ClipFlag.PFBW_GROUND_DECO, ClipFlag.PFBW_FLOOR)) {
                         return true;
                     }
-                    if (destX >= x && destX <= width && destY + 1 == y) {
+                    if (b) {
                         return true;
                     }
                     if (destX + 1 == x && destY >= y && destY <= height) {
