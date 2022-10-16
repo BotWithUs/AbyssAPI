@@ -58,7 +58,6 @@ public class SceneObject extends Entity {
         if (interactId == -1) {
             return id;
         }
-
         return interactId;
     }
 

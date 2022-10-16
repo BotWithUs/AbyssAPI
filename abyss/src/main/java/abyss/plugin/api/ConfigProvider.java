@@ -7,6 +7,16 @@ package abyss.plugin.api;
 public final class ConfigProvider {
     private ConfigProvider() {}
 
+    public static final int[] BIT_TABLE = new int[32];
+
+    static {
+        int mask = 0;
+        for (int i = 0; i < Integer.SIZE; i++) {
+            mask |= (1 << i);
+            BIT_TABLE[i] = mask;
+        }
+    }
+
     public static final int ID_LOCAL_STATUS = 659;
     public static final int ID_COMBAT_MODE = 3711;
     public static final int ID_INTERFACE_MODE = 3814;
@@ -83,4 +93,11 @@ public final class ConfigProvider {
      */
 
     public static native int getClientVarValue(int id);
+
+
+    public static int getVarbitFromVarp(int varpId, int msb, int bits) {
+        int value = getVarpValue(varpId);
+        return (value >> msb) & BIT_TABLE[bits - 1];
+    }
+    
 }

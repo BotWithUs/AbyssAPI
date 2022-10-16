@@ -74,7 +74,8 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
 
     /**
      * Called when the server sends the end of tick packet
-     * @param self - The Local Player
+     *
+     * @param self      - The Local Player
      * @param tickCount - The tick count since login (resets to 0 on logout)
      * @return - the number of ticks to wait
      */
@@ -101,7 +102,7 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
      * Called when the runescape client asks for the value of a varbit
      *
      * @param varbitId - The Varbit ID
-     * @param varpId - The ConVarID that the varbit is stored in
+     * @param varpId   - The ConVarID that the varbit is stored in
      * @param value    - The Value of the requested Varbit
      */
 
@@ -111,8 +112,9 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
 
     /**
      * Called when the RuneScape client asks for the value of a varp (ConVar)
+     *
      * @param varpId The varp id
-     * @param value The varp value
+     * @param value  The varp value
      */
 
     public void onVarpRequest(int varpId, int value) {
@@ -136,10 +138,11 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
 
     /**
      * Called when RuneScape gets a spawn object packet
+     *
      * @param objectId The object id
-     * @param x The x coordinate where the object is being spawned
-     * @param y The y coordinate where the object is being spawned
-     * @param type The type of object (wall, groun decor, etc)
+     * @param x        The x coordinate where the object is being spawned
+     * @param y        The y coordinate where the object is being spawned
+     * @param type     The type of object (wall, groun decor, etc)
      */
 
     public void onSceneObjectSpawned(int objectId, int x, int y, int type) {
@@ -148,14 +151,14 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
 
     private void onSceneObjectAdded(int objectId, int x, int y, int type) {
         Player self = Players.self();
-        if(self == null) {
+        if (self == null) {
             return;
         }
         Vector3i pos = self.getGlobalPosition();
         WorldTile tile = new WorldTile(x, y, 0);
         Region region = Region.get(tile.getRegionId());
         ObjectType otype = ObjectType.forId(type);
-        if(otype == null) {
+        if (otype == null) {
             return;
         }
         WorldObject wo = new WorldObject(x, y, pos.getZ(), objectId, otype);
@@ -166,10 +169,11 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
 
     /**
      * Called when RuneScape sends destroy scene object packet.
+     *
      * @param objectId The object id to be destroyed
-     * @param x The x coordinate of the scene object to be destroyed
-     * @param y The y coordinate of the scene object to be destroyed
-     * @param type The type of the scene object to be destroyed
+     * @param x        The x coordinate of the scene object to be destroyed
+     * @param y        The y coordinate of the scene object to be destroyed
+     * @param type     The type of the scene object to be destroyed
      */
 
     public void onSceneObjectDestroyed(int objectId, int x, int y, int type) {
@@ -178,21 +182,21 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
 
     private void onSceneObjectRemoved(int x, int y, int type) {
         Player self = Players.self();
-        if(self == null) {
+        if (self == null) {
             return;
         }
         Vector3i pos = self.getGlobalPosition();
         WorldTile tile = new WorldTile(x, y, 0);
         Region region = Region.get(tile.getRegionId());
         ObjectType otype = ObjectType.forId(type);
-        if(otype == null) {
+        if (otype == null) {
             return;
         }
         WorldObject wo = region.objects[pos.getZ()][tile.getXInRegion()][tile.getYInRegion()][otype.slot];
-        if(wo == null) {
+        if (wo == null) {
             return;
         }
-        if(wo.getType() == null) { // wtf
+        if (wo.getType() == null) { // wtf
             wo.setType(otype);
         }
         region.destroyObject(wo, pos.getZ(), tile.getXInRegion(), tile.getYInRegion());
@@ -225,75 +229,15 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
         return false;
     }
 
-    public final void setAttribute(String key, int value) {
-        persistentAttributes.put(key, Integer.toString(value));
-    }
-
-    public final void setAttribute(String key, boolean value) {
-        persistentAttributes.put(key, Boolean.toString(value));
-    }
-
-    public final void setAttribute(String key, double value) {
-        persistentAttributes.put(key, Double.toString(value));
-    }
-
-    public final void setAttribute(String key, float value) {
-        persistentAttributes.put(key, Float.toString(value));
-    }
-
-    public final void setAttribute(String key, String value) {
-        persistentAttributes.put(key, value);
-    }
-
-    public final int getInt(String key) {
-        try {
-            return persistentAttributes.containsKey(key) ? Integer.parseInt(persistentAttributes.getOrDefault(key, "0")) : 0;
-        } catch (NumberFormatException e) {
-            return 0;
-        }
-    }
-
-    public final boolean getBoolean(String key) {
-        try {
-            return persistentAttributes.containsKey(key) && Boolean.parseBoolean(persistentAttributes.get(key));
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public final double getDouble(String key) {
-        try {
-            return persistentAttributes.containsKey(key) ? Double.parseDouble(persistentAttributes.getOrDefault(key, "0.0")) : 0.0;
-        } catch (Exception e) {
-            return 0.0;
-        }
-    }
-
-    public final double getFloat(String key) {
-        try {
-            return persistentAttributes.containsKey(key) ? Float.parseFloat(persistentAttributes.getOrDefault(key, "0.0")) : 0.0;
-        } catch (Exception e) {
-            return 0.0;
-        }
-    }
-
-    public final String getString(String key) {
-        return persistentAttributes.getOrDefault(key, "");
-    }
-
     public final void save(PluginContext context) {
-        pluginExtensions.forEach((key, value) -> {
-            value.save(persistentAttributes);
-        });
+        pluginExtensions.forEach((key, value) -> value.save(persistentAttributes));
         ByteArrayOutputStream out = persistentAttributes.serialize(persistentAttributes);
         context.setPersistentData(out.toByteArray());
     }
 
     public final void load(PluginContext context) {
         persistentAttributes.deserialize(persistentAttributes, new ByteArrayInputStream(context.getPersistentData()));
-        pluginExtensions.forEach((key, value) -> {
-            value.load(persistentAttributes);
-        });
+        pluginExtensions.forEach((key, value) -> value.load(persistentAttributes));
     }
 
     /**

@@ -10,9 +10,6 @@ public abstract class AsyncData {
      */
     private boolean loaded = false;
 
-    AsyncData() {
-    }
-
     /**
      * Determines if the data has been loaded or not.
      *

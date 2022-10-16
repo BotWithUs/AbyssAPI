@@ -1,7 +1,9 @@
 package abyss.plugin.api.game.chat
 
 import abyss.plugin.api.variables.AbyssAPI
+import java.util.*
 import java.util.function.Predicate
+import java.util.stream.Stream
 
 object GameChat {
     @AbyssAPI
@@ -19,6 +21,12 @@ object GameChat {
     }
 
     @JvmStatic
+    fun first() = all().first()
+
+    @JvmStatic
+    fun last() = all().last()
+
+    @JvmStatic
     fun filterByName(name: String) : List<ChatMessage> {
         return filter { it.getName() == name }
     }
@@ -31,4 +39,6 @@ object GameChat {
         }
     }
 
+    @JvmStatic
+    fun stream() : Stream<ChatMessage> = Arrays.stream(all())
 }

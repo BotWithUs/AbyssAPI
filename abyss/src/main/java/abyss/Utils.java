@@ -49,6 +49,15 @@ public class Utils {
         return value;
     }
 
+    public static boolean isTileReachable(Vector3i tile) {
+        if(tile == null)
+            return false;
+        Player self = Players.self();
+        if(self == null)
+            return false;
+        return getRouteDistanceTo(self.getGlobalPosition(), WorldTile.Companion.toTile(tile)) != -1;
+    }
+
     public static boolean isGroundItemReachable(GroundItem item) {
         if(item == null) {
             return false;

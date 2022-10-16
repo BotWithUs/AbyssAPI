@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.params.Struct;
+
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -9,9 +11,12 @@ public final class CacheItem extends AsyncData {
 
     private int id = 0;
     private long address = 0;
+    private long internal1 = 0;
     private byte[] binaryName = Abyss.BAD_DATA_STRING.getBytes(StandardCharsets.US_ASCII);
     private byte[][] binaryOptionNames = new byte[0][];
     private byte[][] binaryGroundOptionNames = new byte[0][];
+
+    private Struct struct;
 
     private boolean isMembers;
     private boolean isStackable;
@@ -33,6 +38,14 @@ public final class CacheItem extends AsyncData {
     }
 
     /**
+     * @return The struct related to this item.
+     */
+
+    public Struct getStruct() {
+        return struct;
+    }
+
+    /**
      * Retrieves the address of this cache descriptor in memory.
      * This will only be valid in developer builds.
      *
@@ -40,6 +53,10 @@ public final class CacheItem extends AsyncData {
      */
     public long getAddress() {
         return address;
+    }
+
+    public long getInternal1() {
+        return internal1;
     }
 
     /**
@@ -69,6 +86,18 @@ public final class CacheItem extends AsyncData {
             options[i] = binaryGroundOptionNames[i] == null ? "" : new String(binaryGroundOptionNames[i]);
         }
         return options;
+    }
+
+    public String[] getEquipmentOptions() {
+        return new String[]{
+                struct.readString(528),
+                struct.readString(529),
+                struct.readString(530),
+                struct.readString(531),
+                struct.readString(1211),
+                struct.readString(6712),
+                struct.readString(6713),
+        };
     }
 
     public boolean isMembers() {

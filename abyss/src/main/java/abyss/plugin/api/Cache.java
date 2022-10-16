@@ -1,5 +1,6 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.params.Struct;
 import com.abyss.filesystem.Filesystem;
 import com.abyss.filesystem.sqlite.SqliteFilesystem;
 
@@ -30,6 +31,12 @@ public final class Cache {
     private static final Map<Integer, CacheNpc> npcs = new HashMap<>();
 
     /**
+     * A cache of Jagex Structs
+     */
+
+    private static final Map<Integer, Struct> structs = new HashMap<>();
+
+    /**
      * A lock for accessing the cache.
      */
     private static final ReentrantLock lock = new ReentrantLock();
@@ -44,6 +51,7 @@ public final class Cache {
             items.clear();
             npcs.clear();
             objects.clear();
+            structs.clear();
             return null;
         });
     }
@@ -59,6 +67,15 @@ public final class Cache {
         lock.unlock();
         return t;
     }
+
+    /**
+     * Loads an struct asynchronously. The struct will be loaded later on
+     * in the engine thread.
+     *
+     * @param struct The struct to load.
+     */
+
+    public static native void asyncLoad(Struct struct);
 
     /**
      * Loads an item asynchronously. The item will be loaded later on
@@ -85,6 +102,17 @@ public final class Cache {
      * @param npc The NPC to load.
      */
     public static native void asyncLoad(CacheNpc npc);
+
+    /**
+     * Loads a struct asynchronously.
+     */
+
+    public static void load(Struct struct) {
+        asyncLoad(struct);
+        while(!struct.isLoaded()) {
+            Time.waitFor(10);
+        }
+    }
 
     /**
      * Loads an item synchronously.
@@ -120,6 +148,49 @@ public final class Cache {
         while (!npc.isLoaded()) {
             Time.waitFor(10);
         }
+    }
+
+    /**
+    * Retrieves an struct from the cache. The fields within this struct
+    * may not immediately be available if this struct has not been
+    * retrieved before.
+    *
+    * @param id    The id of the struct to retrieve.
+    * @param async If the request will be performed asynchronously.
+    * @return The retrieved struct.
+    */
+
+    public static Struct getStruct(int id, boolean async) {
+        if(id < 0) {
+            return null;
+        }
+        return locked(() -> {
+            Struct ret;
+            if (!structs.containsKey(id)) {
+                ret = new Struct(id);
+                if (async) {
+                    asyncLoad(ret);
+                } else {
+                    load(ret);
+                }
+
+                structs.put(id, ret);
+            } else {
+                ret = structs.get(id);
+            }
+            return ret;
+        });
+    }
+
+    /**
+    * Retrieves an struct from the cache.
+    *
+    * @param id The id of the struct to retrieve.
+    * @return The retrieved object.
+    */
+
+    public static Struct getStruct(int id) {
+        return getStruct(id, true);
     }
 
     /**
