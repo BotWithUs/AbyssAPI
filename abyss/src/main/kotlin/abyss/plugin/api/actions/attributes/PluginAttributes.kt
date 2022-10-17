@@ -18,6 +18,74 @@ class PluginAttributes(private val map: MutableMap<String, String>, private var 
     var json: Json = Json
         private set
 
+    fun setBoolean(key: String, value: Boolean) {
+        put(key, value)
+    }
+
+    fun setString(key: String, value: String) {
+        put(key, value)
+    }
+
+    fun getString(key: String) : String {
+        return get(key) ?: ""
+    }
+
+    fun getBoolean(key: String) : Boolean {
+        return try {
+            get(key)?.toBoolean() ?: false
+        } catch (e: Exception) {
+            return false
+        }
+    }
+
+    fun setInt(key: String, value: Int) {
+        put(key, value)
+    }
+
+    fun getInt(key: String) : Int {
+        return try {
+            get(key)?.toInt() ?: 0
+        } catch (_: Exception) {
+            return 0
+        }
+    }
+
+    fun setLong(key: String, value: Long) {
+        put(key, value)
+    }
+
+    fun getLong(key: String) : Long {
+        return try {
+            get(key)?.toLong() ?: 0
+        } catch (_: Exception) {
+            return 0
+        }
+    }
+
+    fun setDouble(key: String, value: Double) {
+        put(key, value)
+    }
+
+    fun getDouble(key: String) : Double {
+        return try {
+            get(key)?.toDouble() ?: 0.0
+        } catch (_: Exception) {
+            return 0.0
+        }
+    }
+
+    fun setFloat(key: String, value: Float) {
+        put(key, value)
+    }
+
+    fun getFloat(key: String) : Float {
+        return try {
+            get(key)?.toFloat() ?: 0.0f
+        } catch (_: Exception) {
+            return 0.0f
+        }
+    }
+
     fun setJsonProvider(json: Json) {
         this.json = json
     }

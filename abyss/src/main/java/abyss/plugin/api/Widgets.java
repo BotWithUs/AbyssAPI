@@ -61,6 +61,38 @@ public final class Widgets {
         return cur;
     }
 
+    public static Widget filter(int groupId, Predicate<Widget> predicate) {
+        WidgetGroup group = getGroupById(groupId);
+        if(group == null)
+            return null;
+        Widget widget = group.getWidget(0);
+        if(widget == null) {
+            return null;
+        }
+        if(predicate.test(widget)) {
+            return widget;
+        }
+        return filter(widget.getChildren(), predicate);
+    }
+
+    public static Widget filter(Widget[] children, Predicate<Widget> predicate) {
+        if(children == null || children.length == 0) {
+            return null;
+        }
+        for (Widget child : children) {
+            if(child == null)
+                continue;
+            if(predicate.test(child)) {
+                return child;
+            }
+            Widget found = filter(child.getChildren(), predicate);
+            if(found != null) {
+                return found;
+            }
+        }
+        return null;
+    }
+
     public static int hash(int parentId, int childId) {
         return (parentId << 16) + childId;
     }
