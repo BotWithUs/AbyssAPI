@@ -17,7 +17,7 @@ public class Attributes implements Flushable {
         this.stream = new ByteArrayOutputStream();
         this.data = new DataOutputStream(this.stream);
     }
-
+    
     public boolean hasBoolean(String key) {
         return attributes.containsKey('Z' + key);
     }
