@@ -219,11 +219,4 @@ public class Attributes implements Flushable {
     public byte[] toByteArray() {
         return stream.toByteArray();
     }
-
-    public void test() throws IOException {
-        Attributes parent = new Attributes();
-        Attributes child = new Attributes();
-
-        parent.flushAndWrite(child.stream);
-    }
 }
