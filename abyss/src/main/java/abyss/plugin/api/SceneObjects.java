@@ -26,6 +26,12 @@ public final class SceneObjects {
     public static native SceneObject[] all();
 
     /**
+     * 
+     */
+
+    public static native SceneObject nearest(Predicate<SceneObject> predicate);
+
+    /**
      * Retrieves all effects that match the provided filter.
      *
      * @return All effects that match the provided filter.

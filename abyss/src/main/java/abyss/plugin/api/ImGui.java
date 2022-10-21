@@ -153,7 +153,7 @@ public final class ImGui {
     /**
      * Pushes an ImGui style variable onto the variable stack.
      */
-    public static native void pushStyleVar(int index, int x, int y);
+    public static native void pushStyleVar(int index, float value);
 
     /**
      * Pops an ImGui style variable from the variable stack.
@@ -276,8 +276,8 @@ public final class ImGui {
         return beginChild(id, 0, 0, hasBorder);
     }
 
-    public static void pushStyleVar(StyleVar var, int x, int y) {
-        pushStyleVar(var.getIndex(), x, y);
+    public static void pushStyleVar(StyleVar var, float value) {
+        pushStyleVar(var.getIndex(), value);
     }
 
     public static void popStyleVar() {

@@ -1,14 +1,14 @@
 package abyss.plugin.api.actions.attributes
 
-import kotlinx.serialization.json.Json
+import abyss.plugin.api.Debug
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.DataInputStream
 import java.io.DataOutputStream
 
-object DefaultPluginAttributeSerializer : abyss.plugin.api.actions.attributes.PluginAttributeSerializer {
+object DefaultPluginAttributeSerializer : PluginAttributeSerializer {
 
-    override fun serialize(attributes: abyss.plugin.api.actions.attributes.PluginAttributes): ByteArrayOutputStream {
+    override fun serialize(attributes: PluginAttributes): ByteArrayOutputStream {
         val formatStream = ByteArrayOutputStream()
         val data = DataOutputStream(formatStream)
         data.writeShort(attributes.size())
@@ -17,12 +17,12 @@ object DefaultPluginAttributeSerializer : abyss.plugin.api.actions.attributes.Pl
             data.writeUTF(value)
         }
         if(formatStream.size() > 2047) {
-            error("File Too Large... Max Size is 2045 Bytes (2 kb)")
+            Debug.log("File Too Large... Max Size is 2045 Bytes (2 kb)")
         }
         return formatStream
     }
 
-    override fun deserialize(attributes: abyss.plugin.api.actions.attributes.PluginAttributes, inputStream: ByteArrayInputStream) {
+    override fun deserialize(attributes: PluginAttributes, inputStream: ByteArrayInputStream) {
         val data = DataInputStream(inputStream)
         val size = data.readUnsignedShort()
         repeat(size) {

@@ -1,5 +1,6 @@
 package abyss.plugin.api.actions.attributes
 
+import abyss.plugin.api.Debug
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -18,7 +19,20 @@ class PluginAttributes(private val map: MutableMap<String, String>, private var 
     var json: Json = Json
         private set
 
-    fun setBoolean(key: String, value: Boolean) {
+    fun setBoolean(key: String, value: Boolean) = put(key, value)
+    fun getBoolean(key: String): Boolean {
+        if(!map.containsKey(key))
+            return false
+        val value = map[key] ?: return false
+        return try {
+            value.toBoolean()
+        } catch (e: java.lang.Exception) {
+            Debug.log("Failed to parse boolean attribute $key")
+            false
+        }
+    }
+
+    /*fun setBoolean(key: String, value: Boolean) {
         put(key, value)
     }
 
@@ -34,6 +48,7 @@ class PluginAttributes(private val map: MutableMap<String, String>, private var 
         return try {
             get(key)?.toBoolean() ?: false
         } catch (e: Exception) {
+            Debug.log("Failed to load boolean attribut $key")
             return false
         }
     }
@@ -46,6 +61,7 @@ class PluginAttributes(private val map: MutableMap<String, String>, private var 
         return try {
             get(key)?.toInt() ?: 0
         } catch (_: Exception) {
+            Debug.log("Failed to load int attribut $key")
             return 0
         }
     }
@@ -58,6 +74,7 @@ class PluginAttributes(private val map: MutableMap<String, String>, private var 
         return try {
             get(key)?.toLong() ?: 0
         } catch (_: Exception) {
+            Debug.log("Failed to load long attribut $key")
             return 0
         }
     }
@@ -70,6 +87,7 @@ class PluginAttributes(private val map: MutableMap<String, String>, private var 
         return try {
             get(key)?.toDouble() ?: 0.0
         } catch (_: Exception) {
+            Debug.log("Failed to load double attribut $key")
             return 0.0
         }
     }
@@ -82,9 +100,10 @@ class PluginAttributes(private val map: MutableMap<String, String>, private var 
         return try {
             get(key)?.toFloat() ?: 0.0f
         } catch (_: Exception) {
+            Debug.log("Failed to load float attribut $key")
             return 0.0f
         }
-    }
+    }*/
 
     fun setJsonProvider(json: Json) {
         this.json = json

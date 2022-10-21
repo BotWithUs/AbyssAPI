@@ -32,11 +32,7 @@ public class SceneObject extends Entity {
     private SceneObject() {
     }
 
-    public CacheObject getType() {
-        if(morphType != null) {
-            return morphType;
-        }
-        
+    public CacheObject getType() {        
         return type;
     }
 
