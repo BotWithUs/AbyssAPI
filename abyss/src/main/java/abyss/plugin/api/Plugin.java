@@ -2,17 +2,16 @@ package abyss.plugin.api;
 
 import abyss.map.Region;
 import abyss.map.WorldObject;
-import abyss.plugin.api.actions.attributes.DefaultPluginAttributeSerializer;
-import abyss.plugin.api.actions.attributes.PluginAttributes;
 import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.ExtensionContainer;
+import abyss.plugin.api.plugin.attributes.Attributes;
 import abyss.plugin.api.widgets.InventoryWidgetExtension;
 import abyss.plugin.api.world.WorldTile;
 import com.abyss.definitions.ObjectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +23,8 @@ import java.util.Random;
  */
 public abstract class Plugin implements ExtensionContainer<Extension> {
 
-    public final PluginAttributes persistentAttributes = new PluginAttributes(new HashMap<>(), DefaultPluginAttributeSerializer.INSTANCE);
-    public final PluginAttributes attributes = new PluginAttributes(new HashMap<>(), DefaultPluginAttributeSerializer.INSTANCE);
+    public final Attributes persistentAttributes = new Attributes();
+    public final Attributes attributes = new Attributes();
 
     private final Map<Class<?>, Extension> pluginExtensions = new HashMap<>();
 
@@ -230,14 +229,20 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
     }
 
     public final void save(PluginContext context) {
-        pluginExtensions.forEach((key, value) -> value.save(persistentAttributes));
-        ByteArrayOutputStream out = persistentAttributes.serialize(persistentAttributes);
-        context.setPersistentData(out.toByteArray());
+        try {
+            attributes.flush();
+            context.setPersistentData(attributes.toByteArray());
+        } catch (IOException e) {
+            Debug.printStackTrace("Attributes failed to serialize", e);
+        }
     }
 
     public final void load(PluginContext context) {
-        persistentAttributes.deserialize(persistentAttributes, new ByteArrayInputStream(context.getPersistentData()));
-        pluginExtensions.forEach((key, value) -> value.load(persistentAttributes));
+        try {
+            attributes.read(new ByteArrayInputStream(context.getPersistentData()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

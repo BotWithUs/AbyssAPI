@@ -1,10 +1,10 @@
 package abyss.plugin.api.extensions
 
-import abyss.plugin.api.actions.attributes.PluginAttributes
+import javax.xml.stream.events.Attribute
 
 interface Extension {
 
-    fun save(attributes: PluginAttributes) {}
-    fun load(attributes: PluginAttributes) {}
+    fun save(attributes: Attribute) {}
+    fun load(attributes: Attribute) {}
 
 }
