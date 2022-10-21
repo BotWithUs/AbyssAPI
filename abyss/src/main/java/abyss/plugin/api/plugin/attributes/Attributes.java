@@ -211,4 +211,8 @@ public class Attributes implements Flushable {
             }
         }
     }
+
+    public byte[] toByteArray() {
+        return stream.toByteArray();
+    }
 }

@@ -3,7 +3,6 @@ package abyss.plugin.api;
 import java.util.Objects;
 
 import static abyss.plugin.api.Rng.i32;
-import static abyss.plugin.api.Rng.ui32;
 
 /**
  * A 3-dimensional area of integers.
