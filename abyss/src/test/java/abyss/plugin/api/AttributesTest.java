@@ -46,5 +46,13 @@ public class AttributesTest {
         Assertions.assertTrue(attr.getBoolean("running"));
         Assertions.assertEquals(attr.getInt("count"), 77);
         Assertions.assertEquals(attr.getString("name"), "david");
+
+        attr.onIntChanged("count", (old, nw) -> {
+            Assertions.assertEquals(old, 77);
+            Assertions.assertEquals(nw, 90);
+        });
+
+        attr.setInt("count", 90);
+
     }
 }

@@ -5,19 +5,28 @@ import abyss.plugin.api.Debug;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class Attributes implements Flushable {
 
     private final Map<String, Object> attributes;
+
+    private final Map<String, BiConsumer<?, ?>> listeners;
+
     private final ByteArrayOutputStream stream;
     private final DataOutputStream data;
 
     public Attributes() {
         this.attributes = new HashMap<>();
+        this.listeners = new HashMap<>();
         this.stream = new ByteArrayOutputStream();
         this.data = new DataOutputStream(this.stream);
     }
     
+    public void onIntChanged(String key, BiConsumer<Integer, Integer> consumer) {
+        this.listeners.put('I' + key, consumer);
+    }
+
     public boolean hasBoolean(String key) {
         return attributes.containsKey('Z' + key);
     }
@@ -58,7 +67,11 @@ public class Attributes implements Flushable {
 
     public void setBoolean(String key, boolean value) {
         if (key == null) return;
-        attributes.put("Z" + key, value);
+        Object oldValue = this.attributes.put("Z" + key, value);
+        BiConsumer<Boolean, Boolean> consumer = (BiConsumer<Boolean, Boolean>) listeners.get('Z' + key);
+        if(consumer != null) {
+            consumer.accept(oldValue != null && (boolean) oldValue, value);
+        }
     }
 
     public int getInt(String key) {
@@ -77,7 +90,11 @@ public class Attributes implements Flushable {
 
     public void setInt(String key, int value) {
         if (key == null) return;
-        this.attributes.put("I" + key, value);
+        Object oldValue = this.attributes.put("I" + key, value);
+        BiConsumer<Integer, Integer> consumer = (BiConsumer<Integer, Integer>) listeners.get('I' + key);
+        if(consumer != null) {
+            consumer.accept(oldValue == null ? 0 : (int) oldValue, value);
+        }
     }
 
     public long getLong(String key) {
@@ -96,7 +113,11 @@ public class Attributes implements Flushable {
 
     public void setLong(String key, long value) {
         if (key == null) return;
-        this.attributes.put("J" + key, value);
+        Object oldValue = this.attributes.put("J" + key, value);
+        BiConsumer<Long, Long> consumer = (BiConsumer<Long, Long>) listeners.get('J' + key);
+        if(consumer != null) {
+            consumer.accept(oldValue == null ? 0L : (long) oldValue, value);
+        }
     }
 
     public float getFloat(String key) {
@@ -115,7 +136,11 @@ public class Attributes implements Flushable {
 
     public void setFloat(String key, float value) {
         if (key == null) return;
-        this.attributes.put('F' + key, value);
+        Object oldValue = this.attributes.put("F" + key, value);
+        BiConsumer<Float, Float> consumer = (BiConsumer<Float, Float>) listeners.get('F' + key);
+        if(consumer != null) {
+            consumer.accept(oldValue == null ? 0.0f : (float) oldValue, value);
+        }
     }
 
     public double getDouble(String key) {
@@ -134,13 +159,17 @@ public class Attributes implements Flushable {
 
     public void setDouble(String key, double value) {
         if (key == null) return;
-        this.attributes.put('D' + key, value);
+        Object oldValue = this.attributes.put("D" + key, value);
+        BiConsumer<Double, Double> consumer = (BiConsumer<Double, Double>) listeners.get('D' + key);
+        if(consumer != null) {
+            consumer.accept(oldValue == null ? 0.0 : (double) oldValue, value);
+        }
     }
 
     public String getString(String key) {
         if (key == null) return "";
         String k = 'S' + key;
-        if (!this.attributes.containsKey(k)) {
+        if(!hasString(key)) {
             return "";
         }
         return (String) this.attributes.get(k);
@@ -150,7 +179,11 @@ public class Attributes implements Flushable {
         if (key == null || value == null) {
             return;
         }
-        this.attributes.put('S' + key, value);
+        Object oldValue = this.attributes.put("S" + key, value);
+        BiConsumer<String, String> consumer = (BiConsumer<String, String>) listeners.get('S' + key);
+        if(consumer != null) {
+            consumer.accept(oldValue == null ? "" : (String) oldValue, value);
+        }
     }
 
     public void write(OutputStream out) throws IOException {
