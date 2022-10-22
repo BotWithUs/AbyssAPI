@@ -23,8 +23,28 @@ public class Attributes implements Flushable {
         this.data = new DataOutputStream(this.stream);
     }
     
+    public void onBooleanChanged(String key, BiConsumer<Boolean, Boolean> consumer) {
+        this.listeners.put('Z' + key, consumer);
+    }
+
     public void onIntChanged(String key, BiConsumer<Integer, Integer> consumer) {
         this.listeners.put('I' + key, consumer);
+    }
+
+    public void onLongChanged(String key, BiConsumer<Long, Long> consumer) {
+        this.listeners.put('J' + key, consumer);
+    }
+
+    public void onFloatChanged(String key, BiConsumer<Float, Float> consumer) {
+        this.listeners.put('F' + key, consumer);
+    }
+
+    public void onDoubleChanged(String key, BiConsumer<Double, Double> consumer) {
+        this.listeners.put('D' + key, consumer);
+    }
+
+    public void onStringChanged(String key, BiConsumer<String, String> consumer) {
+        this.listeners.put('S' + key, consumer);
     }
 
     public boolean hasBoolean(String key) {
