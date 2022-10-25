@@ -11,6 +11,7 @@ public class WidgetItem extends Item {
 
     private int slot;
     private int widgetId = -1;
+    private int childId = -1;
 
     private ItemContainer container;
 
@@ -60,6 +61,7 @@ public class WidgetItem extends Item {
 
     /**
      * The Item Container this item belongs too
+     *
      * @return ItemContainer
      */
 
@@ -84,15 +86,18 @@ public class WidgetItem extends Item {
         if (widgetId == -1) {
             return false;
         }
-
-        Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot, widgetId, 0);
+        if (widgetId > Short.MAX_VALUE) {
+            Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot, widgetId, 0);
+        } else {
+            Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot, Widgets.hash(widgetId, childId), 0);
+        }
         return true;
     }
 
     public boolean interact(String option) {
         for (int i = 0; i < getOptionNames().length; i++) {
             String opt = getOptionNames()[i];
-            if(option.equalsIgnoreCase(opt)) {
+            if (option.equalsIgnoreCase(opt)) {
                 return interact(i);
             }
         }
@@ -109,7 +114,7 @@ public class WidgetItem extends Item {
     }
 
     public int getVarbitValue(int varbitID) {
-        if(container == null) return 0;
+        if (container == null) return 0;
         return container.getVarbitById(slot, varbitID);
     }
 

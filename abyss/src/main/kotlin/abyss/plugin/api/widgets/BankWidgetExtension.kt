@@ -1,5 +1,6 @@
 package abyss.plugin.api.widgets
 
+import abyss.plugin.api.Debug
 import abyss.plugin.api.extensions.Extension
 
 class BankWidgetExtension(
@@ -12,3 +13,11 @@ class BankWidgetExtension(
     val toggleNotesButtonId: Int,
     val withdrawAsNoteConVarId: Int
 ) : Extension
+
+class CustomBankExntesion : Extension {
+
+    fun test() {
+        Debug.log("")
+    }
+
+}

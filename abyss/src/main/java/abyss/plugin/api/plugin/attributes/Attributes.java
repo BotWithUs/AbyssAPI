@@ -261,6 +261,7 @@ public class Attributes implements Flushable {
                 case 'F' -> data.writeFloat((float) entry.getValue());
                 case 'D' -> data.writeDouble((double) entry.getValue());
                 case 'S' -> data.writeUTF((String) entry.getValue());
+                default -> { Debug.log("Unknown type " + type + " value " + entry.getValue()); }
             }
         }
     }

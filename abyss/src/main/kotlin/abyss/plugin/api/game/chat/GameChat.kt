@@ -1,11 +1,14 @@
 package abyss.plugin.api.game.chat
 
+import abyss.plugin.api.query.Queries
 import abyss.plugin.api.variables.AbyssAPI
 import java.util.*
 import java.util.function.Predicate
 import java.util.stream.Stream
 
+@Deprecated("for removal use quries", replaceWith = ReplaceWith("Queries.newChatQuery()", "abyss.plugin.api.query.Queries"))
 object GameChat {
+
     @AbyssAPI
     external fun all() : Array<ChatMessage>
 

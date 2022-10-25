@@ -11,6 +11,7 @@ import com.abyss.definitions.ObjectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.HashMap;
@@ -229,19 +230,21 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
     }
 
     public final void save(PluginContext context) {
-        try {
-            attributes.flush();
-            context.setPersistentData(attributes.toByteArray());
-        } catch (IOException e) {
-            Debug.printStackTrace("Attributes failed to serialize", e);
+        boolean isDev = Boolean.parseBoolean(System.getProperty("abyssDevMode"));
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        attributes.flushAndWrite(out);
+        byte[] data = out.toByteArray();
+        if (isDev) {
+            Debug.log("Saving " + data.length);
         }
+        context.setPersistentData(data);
     }
 
     public final void load(PluginContext context) {
         try {
             attributes.read(new ByteArrayInputStream(context.getPersistentData()));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Debug.printStackTrace("Attributes failed to load", e);
         }
     }
 

@@ -3,6 +3,7 @@ package abyss.plugin.api;
 import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.ExtensionContainer;
 import abyss.plugin.api.widgets.BankWidgetExtension;
+import abyss.plugin.api.widgets.CustomBankExntesion;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;

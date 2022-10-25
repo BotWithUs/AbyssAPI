@@ -12,6 +12,8 @@ public class Item extends SimpleExtensionContainer {
     private int id;
     private int amount;
 
+    private CacheItem type;
+
     public Item() {
     }
 
@@ -46,12 +48,14 @@ public class Item extends SimpleExtensionContainer {
      * @return The name of this item.
      */
     public String getName() {
-        CacheItem item = Cache.getItem(id, true);
-        if (item == null) {
+        if(type == null) {
+            type = Cache.getItem(id, true);
+        }
+        if (type == null) {
             return Abyss.BAD_DATA_STRING;
         }
 
-        return item.getName();
+        return type.getName();
     }
 
     /**
@@ -60,12 +64,13 @@ public class Item extends SimpleExtensionContainer {
      * @return The names of all options on this item.
      */
     public String[] getOptionNames() {
-        CacheItem item = Cache.getItem(id, true);
-        if (item == null) {
+        if(type == null) {
+            type = Cache.getItem(id, true);
+        }
+        if(type == null) {
             return new String[0];
         }
-
-        return item.getOptionNames();
+        return type.getOptionNames();
     }
 
     @Override

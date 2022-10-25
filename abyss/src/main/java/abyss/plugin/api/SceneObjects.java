@@ -1,5 +1,8 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.query.Queries;
+import abyss.plugin.api.query.objects.ObjectQuery;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,10 +16,13 @@ import java.util.stream.Stream;
  * These methods may increase RAM usage significantly due to the amount of objects available
  * in the scene.
  */
+@Deprecated(forRemoval = true)
 public final class SceneObjects {
 
     private SceneObjects() {
     }
+
+    private static final ObjectQuery all = Queries.newObjectQuery();
 
     /**
      * Retrieves all objects.
@@ -24,12 +30,6 @@ public final class SceneObjects {
      * @return All objects in the scene.
      */
     public static native SceneObject[] all();
-
-    /**
-     * 
-     */
-
-    public static native SceneObject nearest(Predicate<SceneObject> predicate);
 
     /**
      * Retrieves all effects that match the provided filter.

@@ -24,7 +24,6 @@ public class SceneObject extends Entity {
     private int interactId = -1;
 
     private CacheObject type;
-    private CacheObject morphType;
 
     /**
      * Do not make instances of this.

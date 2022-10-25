@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 /**
  * A provider of ground items.
  */
+@Deprecated(forRemoval = true)
 public final class GroundItems {
 
     private GroundItems() {

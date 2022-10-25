@@ -34,6 +34,8 @@ public class Widget {
     private int parentId = -1;
     private int childId = -1;
 
+    private int slot = -1;
+
     /**
      * Do not make instances of this.
      */
@@ -196,7 +198,7 @@ public class Widget {
     }
 
     public boolean hover() {
-        if(screenPosition != null) {
+        if (screenPosition != null) {
             Input.moveMouse(screenPosition.getX(), screenPosition.getY());
             return true;
         }
@@ -204,7 +206,7 @@ public class Widget {
     }
 
     public void mouseClick() {
-        if(hover()) {
+        if (hover()) {
             Input.clickMouse(0);
         }
     }
@@ -219,7 +221,11 @@ public class Widget {
      * @param option The option to use.
      */
     public void interact(int option) {
-        Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, option, getInteractId(), 0);
+        if (slot != -1) {
+            Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot, getInteractId(), 0);
+        } else {
+            Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, option, getInteractId(), 0);
+        }
     }
 
     /**

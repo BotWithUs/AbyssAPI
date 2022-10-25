@@ -1,19 +1,14 @@
 package abyss.plugin.api.query;
 
-import abyss.plugin.api.Area3di;
+import abyss.plugin.api.*;
 import abyss.plugin.api.world.WorldTile;
 
 import java.util.regex.Pattern;
 
-public interface EntityQuery<T extends EntityQuery<T>> {
+public interface EntityQuery<T extends EntityQuery<T>> extends IdentityQuery<T> {
 
-    T id(int id);
+    T names(String... names);
 
-    T name(String name);
+    T names(Pattern pattern);
 
-    T name(Pattern pattern);
-
-    T within(Area3di area);
-
-    T tile(WorldTile tile);
 }

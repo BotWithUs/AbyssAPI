@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 /**
  * A provider for effects.
  */
+@Deprecated(forRemoval = true)
 public final class Effects {
 
     private Effects() {

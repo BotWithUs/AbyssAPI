@@ -1,5 +1,8 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.query.Queries;
+import abyss.plugin.api.query.npc.NpcQuery;
+
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -7,10 +10,13 @@ import java.util.function.Predicate;
 /**
  * A provider of NPCs.
  */
+@Deprecated(forRemoval = true)
 public final class Npcs {
 
     private Npcs() {
     }
+
+    private static final NpcQuery all = Queries.newNpcQuery();
 
     /**
      * Retrieves all NPCs.
@@ -24,6 +30,7 @@ public final class Npcs {
      *
      * @return All NPCs that match the provided filter.
      */
+    @Deprecated(forRemoval = true)
     public static Npc[] all(Predicate<Npc> filter) {
         List<Npc> filtered = new LinkedList<>();
         for (Npc n : all()) {

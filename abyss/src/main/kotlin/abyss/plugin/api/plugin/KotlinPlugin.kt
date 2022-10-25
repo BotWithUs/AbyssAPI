@@ -1,11 +1,10 @@
 package abyss.plugin.api.plugin
 
-import kotlinx.coroutines.runBlocking
 import abyss.plugin.api.Player
 import abyss.plugin.api.Plugin
+import kotlinx.coroutines.runBlocking
 
 abstract class KotlinPlugin : Plugin() {
-
     override fun onLoop(): Int {
         return runBlocking {
             loop()
