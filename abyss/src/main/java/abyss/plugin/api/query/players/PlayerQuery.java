@@ -119,4 +119,6 @@ public final class PlayerQuery implements SpiritQuery<PlayerQuery> {
     }
 
     public native List<Player> results();
+
+    public static native Player self();
 }

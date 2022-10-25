@@ -19,8 +19,6 @@ public final class Players {
     private Players() {
     }
 
-    private static final PlayerQuery all = Queries.newPlayerQuery();
-
     /**
      * Retrieves the local player.
      *
