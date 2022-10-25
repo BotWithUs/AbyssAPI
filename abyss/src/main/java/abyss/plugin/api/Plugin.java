@@ -230,19 +230,17 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
     }
 
     public final void save(PluginContext context) {
-        boolean isDev = Boolean.parseBoolean(System.getProperty("abyssDevMode"));
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        attributes.flushAndWrite(out);
-        byte[] data = out.toByteArray();
-        if (isDev) {
-            Debug.log("Saving " + data.length);
+        try {
+            persistentAttributes.flush();
+            context.setPersistentData(persistentAttributes.toByteArray());
+        } catch (IOException e) {
+            Debug.printStackTrace("Failed to save persistent attributes", e);
         }
-        context.setPersistentData(data);
     }
 
     public final void load(PluginContext context) {
         try {
-            attributes.read(new ByteArrayInputStream(context.getPersistentData()));
+            persistentAttributes.read(new ByteArrayInputStream(context.getPersistentData()));
         } catch (IOException e) {
             Debug.printStackTrace("Attributes failed to load", e);
         }
