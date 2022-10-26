@@ -30,6 +30,13 @@ public class WidgetItem extends Item {
         this.container = container;
     }
 
+    public WidgetItem(int id, int amount, int slot, int widgetId, CacheItem type, ItemContainer container) {
+        super(id, amount, type);
+        this.slot = slot;
+        this.widgetId = widgetId;
+        this.container = container;
+    }
+
     /**
      * Retrieves the item container slot that this item is in within
      * the widget.
