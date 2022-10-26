@@ -86,11 +86,7 @@ public class WidgetItem extends Item {
         if (widgetId == -1) {
             return false;
         }
-        if (widgetId > Short.MAX_VALUE) {
-            Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot, widgetId, 0);
-        } else {
-            Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot, Widgets.hash(widgetId, childId), 0);
-        }
+        Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot, widgetId, 0);
         return true;
     }
 
