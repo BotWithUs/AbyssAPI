@@ -7,15 +7,6 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
-tasks.create("copyJar", Copy::class) {
-    from(tasks.withType<Jar>())
-    into("C:\\Users\\david\\IdeaProjects\\AbyssFiles")
-}
-
-tasks.withType<Jar> {
-    finalizedBy(tasks.named("copyJar"))
-}
-
 publishing {
     publications {
         create<MavenPublication>("maven") {
