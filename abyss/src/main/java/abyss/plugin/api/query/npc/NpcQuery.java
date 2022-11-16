@@ -1,6 +1,7 @@
 package abyss.plugin.api.query.npc;
 
 import abyss.plugin.api.*;
+import abyss.plugin.api.query.EntityResultSet;
 import abyss.plugin.api.query.SpiritQuery;
 import abyss.plugin.api.world.WorldTile;
 
@@ -72,12 +73,6 @@ public final class NpcQuery implements SpiritQuery<NpcQuery> {
     }
 
     @Override
-    public NpcQuery nearest(Vector3 pos) {
-        this.nearest = pos;
-        return this;
-    }
-
-    @Override
     public NpcQuery health(int value, int deviation) {
         this.health = value;
         this.healthDeviation = deviation;
@@ -114,5 +109,9 @@ public final class NpcQuery implements SpiritQuery<NpcQuery> {
         return this;
     }
 
-    public native List<Npc> results();
+    public EntityResultSet<Npc> result() {
+        return new EntityResultSet<>(results());
+    }
+
+    private native List<Npc> results();
 }

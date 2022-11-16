@@ -1,6 +1,5 @@
 package abyss.plugin.api.query;
 
-import abyss.plugin.api.Player;
 import abyss.plugin.api.query.chat.ChatQuery;
 import abyss.plugin.api.query.effects.EffectsQuery;
 import abyss.plugin.api.query.items.GroundItemQuery;

@@ -67,6 +67,10 @@ public final class WidgetQuery {
         return this;
     }
 
-    public native List<WidgetComponent> results();
+    public WidgetResultSet result() {
+        return new WidgetResultSet(results());
+    }
+
+    private native List<WidgetComponent> results();
 
 }

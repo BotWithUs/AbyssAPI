@@ -4,6 +4,7 @@ import abyss.plugin.api.Area3di;
 import abyss.plugin.api.Player;
 import abyss.plugin.api.Vector3;
 import abyss.plugin.api.Vector3i;
+import abyss.plugin.api.query.EntityResultSet;
 import abyss.plugin.api.query.SpiritQuery;
 import abyss.plugin.api.world.WorldTile;
 
@@ -75,12 +76,6 @@ public final class PlayerQuery implements SpiritQuery<PlayerQuery> {
     }
 
     @Override
-    public PlayerQuery nearest(Vector3 pos) {
-        this.nearest = pos;
-        return this;
-    }
-
-    @Override
     public PlayerQuery health(int value, int deviation) {
         this.health = value;
         this.healthDeviation = deviation;
@@ -118,7 +113,11 @@ public final class PlayerQuery implements SpiritQuery<PlayerQuery> {
         return this;
     }
 
-    public native List<Player> results();
+    public EntityResultSet<Player> result() {
+        return new EntityResultSet<>(results());
+    }
+    
+    private native List<Player> results();
 
     public static native Player self();
 }

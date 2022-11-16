@@ -3,6 +3,7 @@ package abyss.plugin.api.query.effects;
 import abyss.plugin.api.Area3di;
 import abyss.plugin.api.Effect;
 import abyss.plugin.api.Vector3;
+import abyss.plugin.api.query.EntityResultSet;
 import abyss.plugin.api.query.IdentityQuery;
 import abyss.plugin.api.world.WorldTile;
 
@@ -40,11 +41,9 @@ public final class EffectsQuery implements IdentityQuery<EffectsQuery> {
         return this;
     }
 
-    @Override
-    public EffectsQuery nearest(Vector3 scenePos) {
-        this.nearest = scenePos;
-        return this;
+    public EntityResultSet<Effect> result() {
+        return new EntityResultSet<>(results());
     }
 
-    public native List<Effect> results();
+    private native List<Effect> results();
 }
