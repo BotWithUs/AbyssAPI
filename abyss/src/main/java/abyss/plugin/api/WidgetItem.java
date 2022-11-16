@@ -16,6 +16,7 @@ public class WidgetItem extends Item {
     private ItemContainer container;
 
     public WidgetItem() {
+        this.slot = -1;
     }
 
     public WidgetItem(int itemId, int amount, int slot) {
@@ -93,7 +94,7 @@ public class WidgetItem extends Item {
         if (widgetId == -1) {
             return false;
         }
-        Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot, widgetId, 0);
+        Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot == -1 ? 1 : slot, widgetId, 0);
         return true;
     }
 
