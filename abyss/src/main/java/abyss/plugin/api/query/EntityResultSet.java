@@ -23,7 +23,11 @@ public final class EntityResultSet<T extends Locatable> implements ResultSet<T> 
         if (player == null) {
             return Optional.empty();
         }
-        List<T> results = sortedByDistance(player.getGlobalPosition());
+        return nearestTo(player.getGlobalPosition());
+    }
+
+    public Optional<T> nearestTo(Vector3i vector3i) {
+        List<T> results = sortedByDistance(vector3i);
         if (results.isEmpty()) {
             return Optional.empty();
         }
