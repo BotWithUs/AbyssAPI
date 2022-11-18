@@ -22,6 +22,11 @@ public class Item extends SimpleExtensionContainer {
         this.amount = amount;
     }
 
+    public Item(int id, int amount, CacheItem type) {
+        this(id, amount);
+        this.type = type;
+    }
+
     public Item(int id) {
         this(id, 1);
     }
@@ -43,10 +48,10 @@ public class Item extends SimpleExtensionContainer {
     }
 
     /**
-     * Retrieves the name of this item.
-     *
-     * @return The name of this item.
-     */
+    * Retrieves the name of this item.
+    *
+    * @return The name of this item.
+    */
     public String getName() {
         if(type == null) {
             type = Cache.getItem(id, true);
@@ -59,10 +64,10 @@ public class Item extends SimpleExtensionContainer {
     }
 
     /**
-     * Retrieves the names of all options on this item.
-     *
-     * @return The names of all options on this item.
-     */
+    * Retrieves the names of all options on this item.
+    *
+    * @return The names of all options on this item.
+    */
     public String[] getOptionNames() {
         if(type == null) {
             type = Cache.getItem(id, true);
@@ -76,9 +81,9 @@ public class Item extends SimpleExtensionContainer {
     @Override
     public String toString() {
         return "Item{" +
-                "id=" + id +
-                ", amount=" + amount +
-                '}';
+               "id=" + id +
+               ", amount=" + amount +
+               '}';
     }
 
     @Override
@@ -87,11 +92,15 @@ public class Item extends SimpleExtensionContainer {
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
         return id == item.id &&
-                amount == item.amount;
+               amount == item.amount;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, amount);
+    }
+
+    public WidgetItem toWidgetItem(int slot, int widgetId, ItemContainer container) {
+        return new WidgetItem(id, amount, slot, widgetId, type, container);
     }
 }

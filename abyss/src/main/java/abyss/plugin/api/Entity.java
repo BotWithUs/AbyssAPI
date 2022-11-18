@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.entities.Locatable;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
@@ -8,7 +10,7 @@ import static abyss.plugin.api.Text.filterSpecialChars;
 /**
  * An entity.
  */
-public abstract class Entity {
+public abstract class Entity implements Locatable {
 
     // internal values, attempting to use these will break the client
 
@@ -63,6 +65,7 @@ public abstract class Entity {
      *
      * @return This entity's global position within the world.
      */
+    @Override
     public Vector3i getGlobalPosition() {
         return globalPosition;
     }

@@ -2,6 +2,7 @@ package abyss.plugin.api.query.projectiles;
 
 import abyss.plugin.api.Area3di;
 import abyss.plugin.api.Vector3;
+import abyss.plugin.api.query.EntityResultSet;
 import abyss.plugin.api.query.IdentityQuery;
 import abyss.plugin.api.world.WorldTile;
 import abyss.plugin.api.world.projectiles.Projectile;
@@ -40,11 +41,9 @@ public final class ProjectileQuery implements IdentityQuery<ProjectileQuery> {
         return this;
     }
 
-    @Override
-    public ProjectileQuery nearest(Vector3 scenePos) {
-        this.nearest = scenePos;
-        return this;
+    public EntityResultSet<Projectile> result() {
+        return new EntityResultSet<>(results());
     }
 
-    public native List<Projectile> results();
+    private native List<Projectile> results();
 }

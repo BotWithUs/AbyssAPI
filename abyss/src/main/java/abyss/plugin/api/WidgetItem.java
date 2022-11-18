@@ -16,6 +16,7 @@ public class WidgetItem extends Item {
     private ItemContainer container;
 
     public WidgetItem() {
+        this.slot = -1;
     }
 
     public WidgetItem(int itemId, int amount, int slot) {
@@ -25,6 +26,13 @@ public class WidgetItem extends Item {
 
     public WidgetItem(int id, int amount, int slot, int widgetId, ItemContainer container) {
         super(id, amount);
+        this.slot = slot;
+        this.widgetId = widgetId;
+        this.container = container;
+    }
+
+    public WidgetItem(int id, int amount, int slot, int widgetId, CacheItem type, ItemContainer container) {
+        super(id, amount, type);
         this.slot = slot;
         this.widgetId = widgetId;
         this.container = container;
@@ -86,11 +94,7 @@ public class WidgetItem extends Item {
         if (widgetId == -1) {
             return false;
         }
-        if (widgetId > Short.MAX_VALUE) {
-            Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot, widgetId, 0);
-        } else {
-            Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot, Widgets.hash(widgetId, childId), 0);
-        }
+        Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot == -1 ? 1 : slot, widgetId, 0);
         return true;
     }
 

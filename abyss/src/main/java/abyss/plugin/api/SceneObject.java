@@ -79,6 +79,8 @@ public class SceneObject extends Entity {
         entity(this, type, xOff, yOff);
     }
 
+
+
     /**
      * Interacts with this object.
      */
@@ -91,7 +93,7 @@ public class SceneObject extends Entity {
         String[] options = type.getOptionNames();
         int m = Math.min(OPTION_NAME_MAP.length, options.length);
         for (int i = 0; i < m; i++) {
-            if (option.equalsIgnoreCase(options[i])) {
+            if (option.contains(options[i])) {
                 interact(OPTION_NAME_MAP[i]);
                 return true;
             }

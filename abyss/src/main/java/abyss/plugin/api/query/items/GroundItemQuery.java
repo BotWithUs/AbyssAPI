@@ -4,6 +4,7 @@ import abyss.plugin.api.Area3di;
 import abyss.plugin.api.GroundItem;
 import abyss.plugin.api.Vector3;
 import abyss.plugin.api.query.EntityQuery;
+import abyss.plugin.api.query.EntityResultSet;
 import abyss.plugin.api.world.WorldTile;
 
 import java.util.List;
@@ -60,16 +61,14 @@ public class GroundItemQuery implements EntityQuery<GroundItemQuery> {
         return this;
     }
 
-    @Override
-    public GroundItemQuery nearest(Vector3 scenePos) {
-        this.nearest = scenePos;
-        return this;
-    }
-
     public GroundItemQuery options(String... options) {
         this.options = options;
         return this;
     }
 
-    public native List<GroundItem> results();
+    public EntityResultSet<GroundItem> result() {
+        return new EntityResultSet<>(results());
+    }
+    
+    private native List<GroundItem> results();
 }

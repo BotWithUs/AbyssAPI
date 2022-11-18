@@ -4,6 +4,7 @@ import abyss.plugin.api.Area3di;
 import abyss.plugin.api.SceneObject;
 import abyss.plugin.api.Vector3;
 import abyss.plugin.api.query.EntityQuery;
+import abyss.plugin.api.query.EntityResultSet;
 import abyss.plugin.api.world.WorldTile;
 
 import java.util.List;
@@ -68,12 +69,6 @@ public final class ObjectQuery implements EntityQuery<ObjectQuery> {
         return this;
     }
 
-    @Override
-    public ObjectQuery nearest(Vector3 pos) {
-        this.nearest = pos;
-        return this;
-    }
-
     public ObjectQuery options(String... options) {
         this.options = options;
         return this;
@@ -84,5 +79,9 @@ public final class ObjectQuery implements EntityQuery<ObjectQuery> {
         return this;
     }
 
-    public native List<SceneObject> results();
+    public EntityResultSet<SceneObject> result() {
+        return new EntityResultSet<>(results());
+    }
+
+    private native List<SceneObject> results();
 }

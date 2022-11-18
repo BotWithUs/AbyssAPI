@@ -44,7 +44,7 @@ public final class Inventory extends SimpleExtensionContainer {
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(new WidgetItem(item.getId(), item.getAmount(), i, Widgets.hash(ext.getRootId(), ext.getContainerChildId()), container));
+                list.add(item.toWidgetItem(i, Widgets.hash(ext.getRootId(), ext.getContainerChildId()), container));
             }
         }
         return list.toArray(new WidgetItem[0]);

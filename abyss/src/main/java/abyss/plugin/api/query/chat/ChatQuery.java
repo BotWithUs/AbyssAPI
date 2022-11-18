@@ -53,6 +53,10 @@ public class ChatQuery {
         return this;
     }
 
-    public native List<ChatMessage> results();
+    public ChatResultSet result() {
+        return new ChatResultSet(results());
+    }
+
+    private native List<ChatMessage> results();
 
 }

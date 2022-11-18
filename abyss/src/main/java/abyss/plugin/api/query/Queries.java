@@ -47,5 +47,4 @@ public class Queries {
     public static WidgetQuery newWidgetQuery(int groupId) {
         return new WidgetQuery(groupId);
     }
-
 }
