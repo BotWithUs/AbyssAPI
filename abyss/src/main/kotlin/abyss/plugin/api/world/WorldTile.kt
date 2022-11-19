@@ -4,6 +4,9 @@ import abyss.plugin.api.Move
 import abyss.plugin.api.Vector3i
 
 class WorldTile(x: Int, y: Int, z: Int) : Vector3i(x, y, z) {
+
+    constructor(vector3i: Vector3i) : this(vector3i.x, vector3i.y, vector3i.z)
+
     fun transform(x: Int, y: Int): WorldTile {
         val tile = WorldTile(this.x, this.y, z);
         tile.add(x, y, 0)
