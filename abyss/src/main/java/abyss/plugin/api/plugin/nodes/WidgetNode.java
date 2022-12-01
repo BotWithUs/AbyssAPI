@@ -1,6 +1,6 @@
 package abyss.plugin.api.plugin.nodes;
 
-import abyss.plugin.api.Widgets;
+import abyss.plugin.api.Interfaces;
 import abyss.plugin.api.plugin.TreeContext;
 import abyss.plugin.api.plugin.TreeNode;
 
@@ -18,7 +18,7 @@ public abstract class WidgetNode implements TreeNode {
 
     @Override
     public final TreeNode execute(TreeContext ctx) {
-        if(Widgets.isOpen(rootId)) {
+        if(Interfaces.isOpen(rootId)) {
             return interact();
         }
         return LEAF;

@@ -1,7 +1,7 @@
 package abyss.plugin.api.variables
 
-import abyss.plugin.api.ItemContainer
-import abyss.plugin.api.ItemContainers
+import abyss.plugin.api.Inventory
+import abyss.plugin.api.Inventories
 import kotlin.reflect.KProperty
 
 enum class Variables(val variable: PlayerVariable) : PlayerVariable by variable {
@@ -61,7 +61,7 @@ enum class Variables(val variable: PlayerVariable) : PlayerVariable by variable 
 
     inline operator fun <reified T> getValue(ref: Any?, prop: KProperty<*>): T = when(T::class)
     {
-        ItemContainer::class -> ItemContainers.byId(value) as T
+        Inventory::class -> Inventories.byId(value) as T
         Boolean::class -> (value == 1) as T
         else -> value as T
     }

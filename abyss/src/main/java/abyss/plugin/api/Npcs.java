@@ -1,7 +1,7 @@
 package abyss.plugin.api;
 
-import abyss.plugin.api.query.Queries;
-import abyss.plugin.api.query.npc.NpcQuery;
+import abyss.plugin.api.queries.Queries;
+import abyss.plugin.api.queries.npc.NpcQuery;
 
 import java.util.*;
 import java.util.function.Consumer;

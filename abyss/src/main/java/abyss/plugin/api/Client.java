@@ -36,7 +36,6 @@ public final class Client {
     public static final int DIVINATION = 25;
     public static final int INVENTION = 26;
     public static final int ARCHAEOLOGY = 27;
-
     public static final int AT_LOGIN = 10;
     public static final int IN_LOBBY = 20;
     public static final int IN_GAME = 30;
@@ -82,7 +81,7 @@ public final class Client {
      *
      * @return The state that the client is currently in.
      */
-    public static native int getState();
+    public static native int getMainState();
 
     /**
      * Determines if the client is in a loading state.
@@ -241,7 +240,7 @@ public final class Client {
         }
 
         int[] indices = new int[] { 1, 3, 5 };
-        if (!Widgets.isOpen(1446)) {
+        if (!Interfaces.isOpen(1446)) {
             Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, 0, 93913094, 0);
         } else {
             Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, 3, 96797338, 0);

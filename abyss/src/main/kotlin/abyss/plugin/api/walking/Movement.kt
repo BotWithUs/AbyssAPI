@@ -4,8 +4,8 @@ import abyss.plugin.api.coroutines.delayRandom
 import abyss.plugin.api.coroutines.delayUntil
 import abyss.plugin.api.world.WorldTile
 import abyss.plugin.api.Move
-import abyss.plugin.api.Players
 import abyss.plugin.api.Vector3i
+import abyss.plugin.api.queries.players.PlayerQuery
 import abyss.plugin.api.world.WorldTile.Companion.tile
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -22,13 +22,13 @@ object Movement {
         val area = dest.expand(Vector3i(8, 8, 0))
         val ctx = TraverseContext()
         delayUntil {
-            val self = Players.self() ?: return@delayUntil true
+            val self = PlayerQuery.self() ?: return@delayUntil true
             return@delayUntil self.isMoving
         }
         var isFinished = false
         var failure = false
         while(!isFinished && System.currentTimeMillis() < end) {
-            val self = Players.self()
+            val self = PlayerQuery.self()
             if(self == null) {
                 isFinished = true
                 failure = true
@@ -42,7 +42,7 @@ object Movement {
             walkTo(dest, ctx, event)
 
             delayUntil {
-                val p = Players.self() ?: return@delayUntil true
+                val p = PlayerQuery.self() ?: return@delayUntil true
                 return@delayUntil p.isMoving
             }
 
@@ -62,7 +62,7 @@ object Movement {
             ctx.lastTile = WorldTile(0, 0, 0)
             ctx.lastWalk = WorldTile(0, 0, 0)
         }
-        val self = Players.self() ?: return MovementType.TRAVERSE_INVALID
+        val self = PlayerQuery.self() ?: return MovementType.TRAVERSE_INVALID
         val lastWalk = ctx.lastWalk
 
         val scenePos = self.scenePosition

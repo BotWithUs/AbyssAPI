@@ -1,6 +1,5 @@
 package abyss.plugin.api;
 
-import abyss.plugin.api.extensions.Extension;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -42,7 +41,7 @@ public final class Loot {
      * @return If the looting widget is open.
      */
     public static boolean isOpen() {
-        return Widgets.isOpen(WIDGET_ID) && ItemContainers.isAvailable(ITEM_CONTAINER_ID);
+        return Interfaces.isOpen(WIDGET_ID) && Inventories.isAvailable(ITEM_CONTAINER_ID);
     }
 
     /**
@@ -61,22 +60,22 @@ public final class Loot {
      *
      * @return All items displayed in the loot container.
      */
-    public static WidgetItem[] getItems() {
-        ItemContainer container = ItemContainers.byId(ITEM_CONTAINER_ID);
+    public static ComponentItem[] getItems() {
+        Inventory container = Inventories.byId(ITEM_CONTAINER_ID);
         if (container == null) {
-            return new WidgetItem[0];
+            return new ComponentItem[0];
         }
 
 
-        List<WidgetItem> list = new LinkedList<>();
+        List<ComponentItem> list = new LinkedList<>();
         Item[] containerItems = container.getItems();
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(new WidgetItem(item.getId(), item.getAmount(), i, WIDGET_INTERACT_ID, container));
+                list.add(new ComponentItem(item.getId(), item.getAmount(), i, WIDGET_INTERACT_ID, container));
             }
         }
-        return list.toArray(new WidgetItem[0]);
+        return list.toArray(new ComponentItem[0]);
     }
 
     /**
@@ -85,9 +84,9 @@ public final class Loot {
      * @param filter The filter to use for counting.
      * @return The number of items that passed the filter.
      */
-    public static int count(Predicate<WidgetItem> filter) {
+    public static int count(Predicate<ComponentItem> filter) {
         int count = 0;
-        for (WidgetItem item : getItems()) {
+        for (ComponentItem item : getItems()) {
             if (filter.test(item)) {
                 count += item.getAmount();
             }
@@ -101,8 +100,8 @@ public final class Loot {
      * @param filter The filter that items must pass through in order to be accepted.
      * @return The first item that passed the filter.
      */
-    public static WidgetItem first(Predicate<WidgetItem> filter) {
-        for (WidgetItem item : getItems()) {
+    public static ComponentItem first(Predicate<ComponentItem> filter) {
+        for (ComponentItem item : getItems()) {
             if (filter.test(item)) {
                 return item;
             }
@@ -117,7 +116,7 @@ public final class Loot {
      * @param filter The filter.
      * @return If any items in the widget pass the provided filter.
      */
-    public static boolean contains(Predicate<WidgetItem> filter) {
+    public static boolean contains(Predicate<ComponentItem> filter) {
         return first(filter) != null;
     }
 

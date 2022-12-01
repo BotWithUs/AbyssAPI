@@ -23,6 +23,7 @@ import abyss.pathing.FixedTileStrategy;
 import abyss.pathing.LocalPathing;
 import abyss.pathing.ObjectStrategy;
 import abyss.plugin.api.*;
+import abyss.plugin.api.queries.players.PlayerQuery;
 import abyss.plugin.api.world.WorldTile;
 
 import java.nio.ByteBuffer;
@@ -52,7 +53,7 @@ public class Utils {
     public static boolean isTileReachable(Vector3i tile) {
         if(tile == null)
             return false;
-        Player self = Players.self();
+        Player self = PlayerQuery.self();
         if(self == null)
             return false;
         return getRouteDistanceTo(self.getGlobalPosition(), WorldTile.Companion.toTile(tile)) != -1;
@@ -62,7 +63,7 @@ public class Utils {
         if(item == null) {
             return false;
         }
-        Player self = Players.self();
+        Player self = PlayerQuery.self();
         if(self == null) {
             return false;
         }
@@ -76,7 +77,7 @@ public class Utils {
         if(npc == null) {
             return false;
         }
-        Player self = Players.self();
+        Player self = PlayerQuery.self();
         if(self == null) {
             return false;
         }
@@ -90,7 +91,7 @@ public class Utils {
         if(so == null) {
             return false;
         }
-        Player self = Players.self();
+        Player self = PlayerQuery.self();
         if(self == null) {
             return false;
         }
@@ -109,7 +110,7 @@ public class Utils {
         if(obj == null) {
             return false;
         }
-        int steps = getRouteDistanceTo(Players.self().getGlobalPosition(), obj);
+        int steps = getRouteDistanceTo(PlayerQuery.self().getGlobalPosition(), obj);
         return steps != -1;
     }
 

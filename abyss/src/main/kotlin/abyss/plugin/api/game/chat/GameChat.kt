@@ -1,6 +1,5 @@
 package abyss.plugin.api.game.chat
 
-import abyss.plugin.api.query.Queries
 import abyss.plugin.api.variables.AbyssAPI
 import java.util.*
 import java.util.function.Predicate

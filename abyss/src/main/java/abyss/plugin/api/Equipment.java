@@ -23,35 +23,35 @@ public final class Equipment extends SimpleExtensionContainer {
      *
      * @return All items displayed in the equipment widget.
      */
-    public static WidgetItem[] getItems() {
+    public static ComponentItem[] getItems() {
         return getItems(false);
     }
 
-    public static WidgetItem[] getItems(boolean showCosmetic) {
+    public static ComponentItem[] getItems(boolean showCosmetic) {
         if(!EQUIPMENT.hasExtension(EquipmentWidgetExtension.class)) {
-            return new WidgetItem[0];
+            return new ComponentItem[0];
         }
 
         EquipmentWidgetExtension ext = (EquipmentWidgetExtension)EQUIPMENT.getExt(EquipmentWidgetExtension.class);
-        int containerId = ext.getEquipmentContainerId();
+        int inventoryId = ext.getEquipmentInventoryId();
         if(showCosmetic) {
-            containerId = ext.getCosmeticContainerId();
+            inventoryId = ext.getCosmeticInventoryId();
         }
 
-        ItemContainer container = ItemContainers.byId(containerId);
-        if (container == null) {
-            return new WidgetItem[0];
+        Inventory inventory = Inventories.byId(inventoryId);
+        if (inventory == null) {
+            return new ComponentItem[0];
         }
 
-        List<WidgetItem> list = new LinkedList<>();
-        Item[] containerItems = container.getItems();
+        List<ComponentItem> list = new LinkedList<>();
+        Item[] containerItems = inventory.getItems();
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(new WidgetItem(item.getId(), item.getAmount(), i, Widgets.hash(ext.getRootId(), ext.getChildId()), container));
+                list.add(new ComponentItem(item.getId(), item.getAmount(), i, Interfaces.hash(ext.getInterfaceId(), ext.getComponentId()), inventory));
             }
         }
-        return list.toArray(new WidgetItem[0]);
+        return list.toArray(new ComponentItem[0]);
     }
 
 
@@ -61,8 +61,8 @@ public final class Equipment extends SimpleExtensionContainer {
      * @param filter The filter that items must pass through in order to be accepted.
      * @return The first item that passed the filter.
      */
-    public static WidgetItem first(Predicate<WidgetItem> filter) {
-        for (WidgetItem item : getItems()) {
+    public static ComponentItem first(Predicate<ComponentItem> filter) {
+        for (ComponentItem item : getItems()) {
             if (filter.test(item)) {
                 return item;
             }

@@ -25,7 +25,7 @@ public final class Dialogue {
      * @return If the dialogue widget is open.
      */
     public static boolean isOpen() {
-        return Widgets.isOpen(WIDGET_ID) || Widgets.isOpen(WIDGET_ID_NPC_TALKING) || Widgets.isOpen(WIDGET_ID_PLAYER_TALKING);
+        return Interfaces.isOpen(WIDGET_ID) || Interfaces.isOpen(WIDGET_ID_NPC_TALKING) || Interfaces.isOpen(WIDGET_ID_PLAYER_TALKING);
     }
 
     /**
@@ -34,26 +34,29 @@ public final class Dialogue {
      * @return All dialogue options.
      */
     public static String[] getOptions() {
-        Widget optionList = Widgets.getChild(WIDGET_ID, 0, 1, 0);
-        if (optionList == null || optionList.getType() != Widget.CONTAINER) {
+        Component optionList = Interfaces.getComponent(WIDGET_ID, 0, 1);
+        if (optionList == null) {
+            optionList = Interfaces.getComponent(WIDGET_ID, 0, 0);
+        }
+        if (optionList == null || optionList.getType() != Component.LAYER) {
             return new String[0];
         }
 
         String[] options = new String[5];
 
         int index = 0;
-        for (Widget optWidget : optionList.getChildren()) {
-            if (optWidget.getType() != Widget.CONTAINER) {
+        for (Component optComponent : optionList.getChildren()) {
+            if (optComponent.getType() != Component.LAYER) {
                 continue;
             }
 
-            Widget textWrapper = optWidget.getChild(3);
-            if (textWrapper.getType() != Widget.CONTAINER) {
+            Component textWrapper = optComponent.getChild(3);
+            if (textWrapper.getType() != Component.LAYER) {
                 continue;
             }
 
-            Widget optionName = textWrapper.getChild(0);
-            if (optionName.getType() != Widget.TEXT || !optionName.isVisible()) {
+            Component optionName = textWrapper.getChild(0);
+            if (optionName.getType() != Component.TEXT || !optionName.isVisible()) {
                 continue;
             }
 
@@ -81,9 +84,9 @@ public final class Dialogue {
      * Clicks to the next dialogue.
      */
     public static void next() {
-        if (Widgets.isOpen(WIDGET_ID_NPC_TALKING)) {
+        if (Interfaces.isOpen(WIDGET_ID_NPC_TALKING)) {
             Actions.menu(Actions.MENU_EXECUTE_DIALOGUE, 0, -1, 77594639, 0);
-        } else if (Widgets.isOpen(WIDGET_ID_PLAYER_TALKING)) {
+        } else if (Interfaces.isOpen(WIDGET_ID_PLAYER_TALKING)) {
             Actions.menu(Actions.MENU_EXECUTE_DIALOGUE, 0, -1, 78053391, 0);
         }
     }

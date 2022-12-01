@@ -5,7 +5,8 @@ import abyss.map.WorldObject;
 import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.ExtensionContainer;
 import abyss.plugin.api.plugin.attributes.Attributes;
-import abyss.plugin.api.widgets.InventoryWidgetExtension;
+import abyss.plugin.api.queries.players.PlayerQuery;
+import abyss.plugin.api.widgets.BackpackWidgetExtension;
 import abyss.plugin.api.world.WorldTile;
 import com.abyss.definitions.ObjectType;
 import org.jetbrains.annotations.NotNull;
@@ -149,7 +150,7 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
     }
 
     private void onSceneObjectAdded(int objectId, int x, int y, int type) {
-        Player self = Players.self();
+        Player self = PlayerQuery.self();
         if (self == null) {
             return;
         }
@@ -180,7 +181,7 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
     }
 
     private void onSceneObjectRemoved(int x, int y, int type) {
-        Player self = Players.self();
+        Player self = PlayerQuery.self();
         if (self == null) {
             return;
         }
@@ -206,18 +207,18 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
     /**
      * Called when an item in the inventory is changed.
      */
-    private void inventoryItemChanged(WidgetItem prev, WidgetItem next) {
-        if (!Inventory.INVENTORY.hasExtension(InventoryWidgetExtension.class)) {
+    private void inventoryItemChanged(ComponentItem prev, ComponentItem next) {
+        if (!Backpack.BACKPACK.hasExtension(BackpackWidgetExtension.class)) {
             return;
         }
-        InventoryWidgetExtension ext = (InventoryWidgetExtension) Inventory.INVENTORY.getExt(InventoryWidgetExtension.class);
-        ItemContainer inventory = ItemContainers.byId(ext.getContainerId());
-        prev.setContainer(inventory);
-        next.setContainer(inventory);
+        BackpackWidgetExtension ext = (BackpackWidgetExtension) Backpack.BACKPACK.getExt(BackpackWidgetExtension.class);
+        Inventory inventory = Inventories.byId(ext.getContainerId());
+        prev.setInventory(inventory);
+        next.setInventory(inventory);
         onInventoryItemChanged(prev, next);
     }
 
-    public void onInventoryItemChanged(WidgetItem prev, WidgetItem next) {
+    public void onInventoryItemChanged(ComponentItem prev, ComponentItem next) {
 
     }
 

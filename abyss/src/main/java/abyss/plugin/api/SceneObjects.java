@@ -1,7 +1,8 @@
 package abyss.plugin.api;
 
-import abyss.plugin.api.query.Queries;
-import abyss.plugin.api.query.objects.ObjectQuery;
+import abyss.plugin.api.queries.Queries;
+import abyss.plugin.api.queries.objects.ObjectQuery;
+import abyss.plugin.api.queries.players.PlayerQuery;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -53,7 +54,7 @@ public final class SceneObjects {
      * @return The found object, or NULL if one was not found.
      */
     public static SceneObject closest(Predicate<SceneObject> filter) {
-        Player self = Players.self();
+        Player self = PlayerQuery.self();
         if (self == null) {
             return null;
         }

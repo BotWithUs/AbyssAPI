@@ -3,7 +3,7 @@ package abyss.plugin.api.teleport
 import abyss.plugin.api.ConfigProvider
 import abyss.plugin.api.Debug
 import abyss.plugin.api.Input
-import abyss.plugin.api.Widgets
+import abyss.plugin.api.Interfaces
 import abyss.plugin.api.coroutines.delayUntil
 import abyss.plugin.api.world.WorldTile
 import abyss.plugin.api.world.WorldTile.Companion.tile
@@ -251,10 +251,10 @@ enum class Lodestones(
     fun interact() = runBlocking { teleport() }
 
     override suspend fun teleport(): Boolean {
-        if (!Widgets.isOpen(LODESTONE_ID)) {
+        if (!Interfaces.isOpen(LODESTONE_ID)) {
             Input.type('T')
         }
-        if (delayUntil(3000) { Widgets.isOpen(LODESTONE_ID) }) {
+        if (delayUntil(3000) { Interfaces.isOpen(LODESTONE_ID) }) {
             if (!isAvailable()) {
                 Debug.log("Lodestone $name not unlocked!")
                 return false
@@ -262,10 +262,10 @@ enum class Lodestones(
             if (key != ' ') {
                 Input.type(key)
             }
-            if (delayUntil { !Widgets.isOpen(LODESTONE_ID) }) {
+            if (delayUntil { !Interfaces.isOpen(LODESTONE_ID) }) {
                 return true
             }
-            if (Widgets.isOpen(LODESTONE_ID)) {
+            if (Interfaces.isOpen(LODESTONE_ID)) {
                 abyss.plugin.api.actions.ActionHelper.menu(
                     abyss.plugin.api.actions.MenuAction.WIDGET,
                     param1, param2, param3
@@ -279,7 +279,7 @@ enum class Lodestones(
                 -1,
                 96010258
             )
-            if (delayUntil { Widgets.isOpen(LODESTONE_ID) }) {
+            if (delayUntil { Interfaces.isOpen(LODESTONE_ID) }) {
                 if (!isAvailable()) {
                     Debug.log("Lodestone $name not unlocked!")
                     return false
@@ -287,10 +287,10 @@ enum class Lodestones(
                 if (key != ' ') {
                     Input.type(key)
                 }
-                if (delayUntil { !Widgets.isOpen(LODESTONE_ID) }) {
+                if (delayUntil { !Interfaces.isOpen(LODESTONE_ID) }) {
                     return true
                 }
-                if (Widgets.isOpen(LODESTONE_ID)) {
+                if (Interfaces.isOpen(LODESTONE_ID)) {
                     abyss.plugin.api.actions.ActionHelper.menu(
                         abyss.plugin.api.actions.MenuAction.WIDGET,
                         param1, param2, param3

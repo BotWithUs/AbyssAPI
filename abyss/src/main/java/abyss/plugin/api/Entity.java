@@ -5,7 +5,7 @@ import abyss.plugin.api.entities.Locatable;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-import static abyss.plugin.api.Text.filterSpecialChars;
+import static abyss.plugin.api.TextUtils.filterSpecialChars;
 
 /**
  * An entity.

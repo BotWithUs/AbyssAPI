@@ -3,7 +3,6 @@ package abyss.plugin.api;
 import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.ExtensionContainer;
 import abyss.plugin.api.widgets.BankWidgetExtension;
-import abyss.plugin.api.widgets.CustomBankExntesion;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -51,7 +50,7 @@ public final class Bank implements ExtensionContainer<Extension> {
     public static boolean isOpen() {
         if(BANK.hasExtension(BankWidgetExtension.class)) {
             BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
-            return ItemContainers.isAvailable(ext.getContainerId());
+            return Inventories.isAvailable(ext.getContainerId());
         }
         return false;
     }
@@ -61,27 +60,27 @@ public final class Bank implements ExtensionContainer<Extension> {
      *
      * @return All items in the bank.
      */
-    public static WidgetItem[] getItems() {
+    public static ComponentItem[] getItems() {
         if(!BANK.hasExtension(BankWidgetExtension.class)) {
-            return new WidgetItem[0];
+            return new ComponentItem[0];
         }
         BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
 
-        ItemContainer container = ItemContainers.byId(ext.getContainerId());
+        Inventory container = Inventories.byId(ext.getContainerId());
         if (container == null) {
-            return new WidgetItem[0];
+            return new ComponentItem[0];
         }
 
 
-        List<WidgetItem> list = new LinkedList<>();
+        List<ComponentItem> list = new LinkedList<>();
         Item[] containerItems = container.getItems();
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(new WidgetItem(item.getId(), item.getAmount(), i, Widgets.hash(ext.getRootId(), ext.getWithdrawButtonId()), container));
+                list.add(new ComponentItem(item.getId(), item.getAmount(), i, Interfaces.hash(ext.getRootId(), ext.getWithdrawButtonId()), container));
             }
         }
-        return list.toArray(new WidgetItem[0]);
+        return list.toArray(new ComponentItem[0]);
     }
 
     /**
@@ -89,9 +88,9 @@ public final class Bank implements ExtensionContainer<Extension> {
      *
      * @return The number of items that pass the filter.
      */
-    public static int count(Predicate<WidgetItem> filter) {
+    public static int count(Predicate<ComponentItem> filter) {
         int count = 0;
-        for (WidgetItem item : getItems()) {
+        for (ComponentItem item : getItems()) {
             if (filter.test(item)) {
                 count += item.getAmount();
             }
@@ -105,8 +104,8 @@ public final class Bank implements ExtensionContainer<Extension> {
      * @param filter The filter that items must pass through in order to be accepted.
      * @return The first item that passed the filter.
      */
-    public static WidgetItem first(Predicate<WidgetItem> filter) {
-        for (WidgetItem item : getItems()) {
+    public static ComponentItem first(Predicate<ComponentItem> filter) {
+        for (ComponentItem item : getItems()) {
             if (filter.test(item)) {
                 return item;
             }
@@ -129,7 +128,7 @@ public final class Bank implements ExtensionContainer<Extension> {
      *
      * @return If the bank contains an item that passes the provided filter.
      */
-    public static boolean contains(Predicate<WidgetItem> filter) {
+    public static boolean contains(Predicate<ComponentItem> filter) {
         return count(filter) > 0;
     }
 
@@ -138,8 +137,8 @@ public final class Bank implements ExtensionContainer<Extension> {
      *
      * @param cb The callback to invoke with each element.
      */
-    public static void forEach(Consumer<WidgetItem> cb) {
-        for (WidgetItem item : getItems()) {
+    public static void forEach(Consumer<ComponentItem> cb) {
+        for (ComponentItem item : getItems()) {
             if (item != null) {
                 cb.accept(item);
             }
@@ -152,7 +151,7 @@ public final class Bank implements ExtensionContainer<Extension> {
      * @param filter The filter items must pass through in order to be withdrawn.
      * @param option The menu option to use for withdrawing.
      */
-    public static void withdraw(Predicate<WidgetItem> filter, int option) {
+    public static void withdraw(Predicate<ComponentItem> filter, int option) {
         forEach((item) -> {
             if (filter.test(item)) {
                 item.interact(option);
@@ -166,15 +165,15 @@ public final class Bank implements ExtensionContainer<Extension> {
      * @param filter The filter items must pass through in order to be deposited.
      * @param option The menu option to use for depositing.
      */
-    public static void deposit(Predicate<WidgetItem> filter, int option) {
+    public static void deposit(Predicate<ComponentItem> filter, int option) {
         if(!BANK.hasExtension(BankWidgetExtension.class)) {
             return;
         }
         BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
 
-        Inventory.forEach((item) -> {
+        Backpack.forEach((item) -> {
             if (filter.test(item)) {
-                item.setWidgetId(Widgets.hash(ext.getRootId(), ext.getDepositButtonId()));
+                item.setComponentId(Interfaces.hash(ext.getRootId(), ext.getDepositButtonId()));
                 item.interact(option);
             }
         });
@@ -189,7 +188,7 @@ public final class Bank implements ExtensionContainer<Extension> {
         }
         BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
 
-        Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Widgets.hash(ext.getRootId(), ext.getDepositInventoryButtonId()), 0);
+        Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Interfaces.hash(ext.getRootId(), ext.getDepositInventoryButtonId()), 0);
     }
 
     /**
@@ -201,7 +200,7 @@ public final class Bank implements ExtensionContainer<Extension> {
         }
         BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
 
-        Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Widgets.hash(ext.getRootId(), ext.getDepositEquipmentButtonId()), 0);
+        Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Interfaces.hash(ext.getRootId(), ext.getDepositEquipmentButtonId()), 0);
     }
 
     /**
@@ -225,7 +224,7 @@ public final class Bank implements ExtensionContainer<Extension> {
         BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
 
         if (isWithdrawingNotes() != notes) {
-            Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Widgets.hash(ext.getRootId(), ext.getToggleNotesButtonId()), 0);
+            Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Interfaces.hash(ext.getRootId(), ext.getToggleNotesButtonId()), 0);
         }
     }
 

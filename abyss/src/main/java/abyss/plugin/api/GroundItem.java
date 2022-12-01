@@ -7,7 +7,7 @@ import java.util.Objects;
 import static abyss.plugin.api.Actions.*;
 
 /**
- * An item on the ground.
+ * An item on the ground. And ObjStackEntry
  */
 public final class GroundItem extends Entity {
 

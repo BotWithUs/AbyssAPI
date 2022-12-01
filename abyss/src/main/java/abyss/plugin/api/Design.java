@@ -23,7 +23,7 @@ public final class Design {
      * Determines if the design widget is open or not.
      */
     public static boolean isOpen() {
-        return Widgets.isOpen(DESIGN_WIDGET_ID);
+        return Interfaces.isOpen(DESIGN_WIDGET_ID);
     }
 
 

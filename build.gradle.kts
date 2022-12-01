@@ -23,12 +23,12 @@ subprojects {
         plugin("org.gradle.maven-publish")
     }
     tasks.withType<JavaCompile> {
-        targetCompatibility = "18"
-        sourceCompatibility = "16"
+        targetCompatibility = "17"
+        sourceCompatibility = "17"
     }
 
     tasks.withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "18"
+        kotlinOptions.jvmTarget = "17"
     }
 
     tasks.test {

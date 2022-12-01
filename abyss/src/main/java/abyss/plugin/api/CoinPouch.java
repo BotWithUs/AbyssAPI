@@ -16,7 +16,7 @@ public final class CoinPouch {
      * @return The amount of coins currently in the coin pouch.
      */
     public static int getCoins() {
-        ItemContainer cv = ItemContainers.byId(ITEM_CONTAINER_ID);
+        Inventory cv = Inventories.byId(ITEM_CONTAINER_ID);
         if (cv == null) {
             return 0;
         }

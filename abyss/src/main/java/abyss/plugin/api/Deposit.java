@@ -21,7 +21,7 @@ public final class Deposit {
      * @return If the deposit widget is open.
      */
     public static boolean isOpen() {
-        return Widgets.isOpen(11);
+        return Interfaces.isOpen(11);
     }
 
     /**
@@ -57,10 +57,10 @@ public final class Deposit {
      *
      * @return All items in the deposit widget.
      */
-    public static WidgetItem[] getItems() {
-        WidgetItem[] items = Inventory.getItems();
-        for (WidgetItem item : items) {
-            item.setWidgetId(WIDGET_INTERACT_ID);
+    public static ComponentItem[] getItems() {
+        ComponentItem[] items = Backpack.getItems();
+        for (ComponentItem item : items) {
+            item.setComponentId(WIDGET_INTERACT_ID);
         }
         return items;
     }

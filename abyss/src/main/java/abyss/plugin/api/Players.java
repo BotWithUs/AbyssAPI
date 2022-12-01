@@ -1,8 +1,5 @@
 package abyss.plugin.api;
 
-import abyss.plugin.api.query.Queries;
-import abyss.plugin.api.query.players.PlayerQuery;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;

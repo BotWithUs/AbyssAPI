@@ -1,6 +1,7 @@
 package abyss.plugin.api;
 
 import abyss.Utils;
+import abyss.plugin.api.queries.players.PlayerQuery;
 import abyss.plugin.api.variables.Variables;
 import abyss.plugin.api.world.WorldTile;
 
@@ -27,7 +28,7 @@ public final class Player extends Spirit {
 
     @Override
     public boolean isReachable() {
-        Player self = Players.self();
+        Player self = PlayerQuery.self();
         if(self == null) {
             return false;
         }

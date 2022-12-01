@@ -100,7 +100,7 @@ public class Item extends SimpleExtensionContainer {
         return Objects.hash(id, amount);
     }
 
-    public WidgetItem toWidgetItem(int slot, int widgetId, ItemContainer container) {
-        return new WidgetItem(id, amount, slot, widgetId, type, container);
+    public ComponentItem toWidgetItem(int slot, int widgetId, Inventory container) {
+        return new ComponentItem(id, amount, slot, widgetId, type, container);
     }
 }

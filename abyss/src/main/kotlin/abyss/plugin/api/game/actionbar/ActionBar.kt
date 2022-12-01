@@ -5,7 +5,7 @@ import abyss.plugin.api.actions.MenuAction
 import abyss.plugin.api.coroutines.delayUntil
 import abyss.plugin.api.variables.Variables
 import kotlinx.coroutines.runBlocking
-import abyss.plugin.api.Widgets
+import abyss.plugin.api.Interfaces
 
 object ActionBar {
     const val ACTION_WIDGET_ID = 1430
@@ -117,7 +117,7 @@ object ActionBar {
 
     suspend fun lock() : Boolean {
         if(!isLocked()) {
-            abyss.plugin.api.actions.ActionHelper.menu(abyss.plugin.api.actions.MenuAction.WIDGET, 1, -1, Widgets.hash(ACTION_WIDGET_ID, LOCK_BAR_BUTTON_ID))
+            abyss.plugin.api.actions.ActionHelper.menu(abyss.plugin.api.actions.MenuAction.WIDGET, 1, -1, Interfaces.hash(ACTION_WIDGET_ID, LOCK_BAR_BUTTON_ID))
             return delayUntil { isLocked() }
         }
         return true
@@ -125,7 +125,7 @@ object ActionBar {
 
     suspend fun unlock() : Boolean {
         if(isLocked()) {
-            abyss.plugin.api.actions.ActionHelper.menu(abyss.plugin.api.actions.MenuAction.WIDGET, 1, -1, Widgets.hash(ACTION_WIDGET_ID, LOCK_BAR_BUTTON_ID))
+            abyss.plugin.api.actions.ActionHelper.menu(abyss.plugin.api.actions.MenuAction.WIDGET, 1, -1, Interfaces.hash(ACTION_WIDGET_ID, LOCK_BAR_BUTTON_ID))
             return delayUntil { !isLocked() }
         }
         return false
@@ -133,13 +133,13 @@ object ActionBar {
 
     suspend fun next() : Boolean {
         val current: Int by Variables.ACTION_BAR_NUMBER
-        abyss.plugin.api.actions.ActionHelper.menu(abyss.plugin.api.actions.MenuAction.WIDGET, 1, -1, Widgets.hash(ACTION_WIDGET_ID, NEXT_BAR_BUTTON_ID))
+        abyss.plugin.api.actions.ActionHelper.menu(abyss.plugin.api.actions.MenuAction.WIDGET, 1, -1, Interfaces.hash(ACTION_WIDGET_ID, NEXT_BAR_BUTTON_ID))
         return delayUntil { barNumber == (current + 1) }
     }
 
     suspend fun previous() : Boolean {
         val current: Int by Variables.ACTION_BAR_NUMBER
-        abyss.plugin.api.actions.ActionHelper.menu(abyss.plugin.api.actions.MenuAction.WIDGET, 1, -1, Widgets.hash(ACTION_WIDGET_ID, PREV_BAR_BUTTON_ID))
+        abyss.plugin.api.actions.ActionHelper.menu(abyss.plugin.api.actions.MenuAction.WIDGET, 1, -1, Interfaces.hash(ACTION_WIDGET_ID, PREV_BAR_BUTTON_ID))
         return delayUntil { barNumber == (current - 1) }
     }
 }

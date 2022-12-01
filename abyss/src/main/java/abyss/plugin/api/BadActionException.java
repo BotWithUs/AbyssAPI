@@ -1,6 +1,6 @@
 package abyss.plugin.api;
 
-public final class BadActionException extends KrakenRuntimeException {
+public final class BadActionException extends AbyssRuntimeException {
 
     public BadActionException() {
     }

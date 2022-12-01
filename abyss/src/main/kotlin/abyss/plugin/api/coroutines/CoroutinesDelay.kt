@@ -12,7 +12,7 @@ suspend fun delayUntil(
     if (predicate()) return true
     val begin = System.currentTimeMillis()
     while (System.currentTimeMillis() < (begin + timeout)) {
-        if(Client.getState() != IN_GAME)
+        if(Client.getMainState() != IN_GAME)
             return false
         kotlinx.coroutines.delay(delay)
         if (predicate()) {
