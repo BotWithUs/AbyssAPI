@@ -5,7 +5,7 @@ import abyss.map.WorldObject;
 import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.ExtensionContainer;
 import abyss.plugin.api.plugin.attributes.Attributes;
-import abyss.plugin.api.queries.players.PlayerQuery;
+import abyss.plugin.api.query.players.PlayerQuery;
 import abyss.plugin.api.widgets.BackpackWidgetExtension;
 import abyss.plugin.api.world.WorldTile;
 import com.abyss.definitions.ObjectType;

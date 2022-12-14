@@ -1,4 +1,4 @@
-package abyss.plugin.api.queries;
+package abyss.plugin.api.query;
 
 import abyss.plugin.api.Area3di;
 import abyss.plugin.api.world.WorldTile;

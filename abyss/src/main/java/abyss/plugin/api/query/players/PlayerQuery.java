@@ -1,14 +1,17 @@
-package abyss.plugin.api.queries.npc;
+package abyss.plugin.api.query.players;
 
-import abyss.plugin.api.*;
-import abyss.plugin.api.queries.results.EntityResultSet;
-import abyss.plugin.api.queries.PathingEntityQuery;
+import abyss.plugin.api.Area3di;
+import abyss.plugin.api.Player;
+import abyss.plugin.api.Vector3;
+import abyss.plugin.api.query.results.EntityResultSet;
+import abyss.plugin.api.query.PathingEntityQuery;
 import abyss.plugin.api.world.WorldTile;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
-public final class NpcQuery implements PathingEntityQuery<NpcQuery> {
+public final class PlayerQuery implements PathingEntityQuery<PlayerQuery> {
+
     private int[] ids;
     private String[] names;
     private String[] options;
@@ -19,8 +22,12 @@ public final class NpcQuery implements PathingEntityQuery<NpcQuery> {
     private int healthDeviation;
     private int serverIndex;
     private int interactIndex;
+    private float statusBarMin;
+    private float statusBarMax;
+    private int statusBarId;
+    private Vector3 nearest;
 
-    public NpcQuery() {
+    public PlayerQuery() {
         this.ids = null;
         this.names = null;
         this.options = null;
@@ -31,79 +38,85 @@ public final class NpcQuery implements PathingEntityQuery<NpcQuery> {
         this.healthDeviation = 0;
         this.serverIndex = -1;
         this.interactIndex = -1;
+        this.statusBarMin = -1;
+        this.statusBarMax = -1;
+        this.statusBarId = -1;
+        this.nearest = null;
     }
 
-
     @Override
-    public NpcQuery id(int... ids) {
+    public PlayerQuery id(int... ids) {
         this.ids = ids;
         return this;
     }
 
     @Override
-    public NpcQuery names(String... names) {
+    public PlayerQuery names(String... names) {
         this.names = names;
         return this;
     }
 
     @Override
-    public NpcQuery names(Pattern pattern) {
+    public PlayerQuery names(Pattern pattern) {
         this.namePattern = pattern;
         return this;
     }
 
     @Override
-    public NpcQuery within(Area3di area) {
+    public PlayerQuery within(Area3di area) {
         this.area = area;
         return this;
     }
 
     @Override
-    public NpcQuery tile(WorldTile tile) {
+    public PlayerQuery tile(WorldTile tile) {
         this.tile = tile;
         return this;
     }
 
     @Override
-    public NpcQuery health(int value, int deviation) {
+    public PlayerQuery health(int value, int deviation) {
         this.health = value;
         this.healthDeviation = deviation;
         return this;
     }
 
     @Override
-    public NpcQuery serverIndex(int index) {
+    public PlayerQuery serverIndex(int index) {
         this.serverIndex = index;
         return this;
     }
 
     @Override
-    public NpcQuery options(String... options) {
+    public PlayerQuery options(String... options) {
         this.options = options;
         return this;
     }
 
     @Override
-    public NpcQuery interactIndex(int index) {
+    public PlayerQuery interactIndex(int index) {
         this.interactIndex = index;
         return this;
     }
 
-    @Deprecated
     @Override
-    public NpcQuery activeHeadBar(float mineValue, float maxValue) {
+    public PlayerQuery activeHeadBar(float mineValue, float maxValue) {
+        this.statusBarMin = mineValue;
+        this.statusBarMax = maxValue;
         return this;
     }
 
-    @Deprecated
     @Override
-    public NpcQuery activeHeadBar(int barId) {
+    public PlayerQuery activeHeadBar(int barId) {
+        this.statusBarId = barId;
         return this;
     }
 
-    public EntityResultSet<Npc> result() {
+    public EntityResultSet<Player> result() {
         return new EntityResultSet<>(results());
     }
+    
+    private native List<Player> results();
 
-    private native List<Npc> results();
+    public static native Player self();
 }

@@ -1,7 +1,7 @@
-package abyss.plugin.api.queries.components;
+package abyss.plugin.api.query.components;
 
 import abyss.plugin.api.Component;
-import abyss.plugin.api.queries.results.ComponentResultSet;
+import abyss.plugin.api.query.results.ComponentResultSet;
 
 import java.util.List;
 

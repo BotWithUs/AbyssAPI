@@ -1,6 +1,6 @@
 package abyss.plugin.api;
 
-import abyss.plugin.api.queries.players.PlayerQuery;
+import abyss.plugin.api.query.players.PlayerQuery;
 
 import java.util.LinkedList;
 import java.util.List;

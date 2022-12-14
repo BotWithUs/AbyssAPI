@@ -1,4 +1,4 @@
-package abyss.plugin.api.queries;
+package abyss.plugin.api.query;
 
 public interface PathingEntityQuery<T extends EntityQuery<T>> extends EntityQuery<T> {
 

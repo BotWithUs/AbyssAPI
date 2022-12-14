@@ -1,9 +1,9 @@
-package abyss.plugin.api.queries.projectiles;
+package abyss.plugin.api.query.projectiles;
 
 import abyss.plugin.api.Area3di;
 import abyss.plugin.api.Vector3;
-import abyss.plugin.api.queries.results.EntityResultSet;
-import abyss.plugin.api.queries.IdentityQuery;
+import abyss.plugin.api.query.results.EntityResultSet;
+import abyss.plugin.api.query.IdentityQuery;
 import abyss.plugin.api.world.WorldTile;
 import abyss.plugin.api.world.projectiles.Projectile;
 

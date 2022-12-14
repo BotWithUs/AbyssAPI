@@ -1,4 +1,4 @@
-package abyss.plugin.api.queries.results;
+package abyss.plugin.api.query.results;
 
 import abyss.plugin.api.game.chat.ChatMessage;
 import org.jetbrains.annotations.NotNull;

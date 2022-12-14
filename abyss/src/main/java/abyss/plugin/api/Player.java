@@ -1,7 +1,7 @@
 package abyss.plugin.api;
 
 import abyss.Utils;
-import abyss.plugin.api.queries.players.PlayerQuery;
+import abyss.plugin.api.query.players.PlayerQuery;
 import abyss.plugin.api.variables.Variables;
 import abyss.plugin.api.world.WorldTile;
 

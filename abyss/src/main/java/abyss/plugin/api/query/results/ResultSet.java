@@ -1,4 +1,4 @@
-package abyss.plugin.api.queries.results;
+package abyss.plugin.api.query.results;
 
 import java.util.Comparator;
 import java.util.List;

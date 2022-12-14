@@ -1,4 +1,4 @@
-package abyss.plugin.api.queries;
+package abyss.plugin.api.query;
 
 import java.util.regex.Pattern;
 

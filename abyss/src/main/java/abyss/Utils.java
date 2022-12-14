@@ -23,7 +23,7 @@ import abyss.pathing.FixedTileStrategy;
 import abyss.pathing.LocalPathing;
 import abyss.pathing.ObjectStrategy;
 import abyss.plugin.api.*;
-import abyss.plugin.api.queries.players.PlayerQuery;
+import abyss.plugin.api.query.players.PlayerQuery;
 import abyss.plugin.api.world.WorldTile;
 
 import java.nio.ByteBuffer;

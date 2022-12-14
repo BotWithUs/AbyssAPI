@@ -1,8 +1,8 @@
-package abyss.plugin.api.queries.chat;
+package abyss.plugin.api.query.chat;
 
 import abyss.plugin.api.game.chat.ChatMessage;
 import abyss.plugin.api.game.chat.MessageType;
-import abyss.plugin.api.queries.results.ChatResultSet;
+import abyss.plugin.api.query.results.ChatResultSet;
 
 import java.util.Arrays;
 import java.util.List;

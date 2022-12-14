@@ -1,9 +1,9 @@
-package abyss.plugin.api.queries.results;
+package abyss.plugin.api.query.results;
 
 import abyss.plugin.api.Player;
 import abyss.plugin.api.Vector3i;
 import abyss.plugin.api.entities.Locatable;
-import abyss.plugin.api.queries.players.PlayerQuery;
+import abyss.plugin.api.query.players.PlayerQuery;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;

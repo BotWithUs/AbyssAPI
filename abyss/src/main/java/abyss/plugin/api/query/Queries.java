@@ -1,13 +1,13 @@
-package abyss.plugin.api.queries;
+package abyss.plugin.api.query;
 
-import abyss.plugin.api.queries.chat.ChatQuery;
-import abyss.plugin.api.queries.spot_animations.SpotAnimationQuery;
-import abyss.plugin.api.queries.items.GroundItemQuery;
-import abyss.plugin.api.queries.npc.NpcQuery;
-import abyss.plugin.api.queries.objects.ObjectQuery;
-import abyss.plugin.api.queries.players.PlayerQuery;
-import abyss.plugin.api.queries.projectiles.ProjectileQuery;
-import abyss.plugin.api.queries.components.ComponentQuery;
+import abyss.plugin.api.query.chat.ChatQuery;
+import abyss.plugin.api.query.spot_animations.SpotAnimationQuery;
+import abyss.plugin.api.query.items.GroundItemQuery;
+import abyss.plugin.api.query.npc.NpcQuery;
+import abyss.plugin.api.query.objects.ObjectQuery;
+import abyss.plugin.api.query.players.PlayerQuery;
+import abyss.plugin.api.query.projectiles.ProjectileQuery;
+import abyss.plugin.api.query.components.ComponentQuery;
 
 public class Queries {
     private Queries() {
