@@ -8,7 +8,7 @@ import static abyss.plugin.api.Actions.*;
  * A snapshot of a non-playable-character within the game world. This data is constant,
  * and will not be changed after this object is created.
  */
-public final class Npc extends Spirit {
+public final class Npc extends PathingEntity {
 
     private static final int[] OPTION_NAME_MAP = {
             MENU_EXECUTE_NPC1,

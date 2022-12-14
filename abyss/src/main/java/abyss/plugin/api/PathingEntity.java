@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * A snapshot of a spirit in the game world. This data is constant,
- *  * and will not be changed after this object is created.
+ * A snapshot of a pathing entity (character) in the game world. This data is constant,
+ * and will not be changed after this object is created.
  */
-public abstract class Spirit extends Entity {
+public abstract class PathingEntity extends Entity {
 
     public static final int STATUS_HEALTH = 0;
     public static final int STATUS_ADRENALINE = 5;
@@ -26,7 +26,7 @@ public abstract class Spirit extends Entity {
     /**
      * Do not make instances of this.
      */
-    Spirit() {
+    PathingEntity() {
     }
 
     /**
@@ -44,9 +44,9 @@ public abstract class Spirit extends Entity {
     }
 
     /**
-     * Retrieves this spirit's server index.
+     * Retrieves this entities server index.
      *
-     * @return This spirit's server index.
+     * @return This entities server index.
      */
     public int getServerIndex() {
         return serverIndex;
@@ -120,17 +120,17 @@ public abstract class Spirit extends Entity {
      *
      * @return The spirit being interacted with.
      */
-    public Spirit getInteracting() {
+    public PathingEntity getInteracting() {
         int index = getInteractingIndex();
         if (index == -1) {
             return null;
         }
 
-        return (Spirit) Entities.byServerIndex(index);
+        return (PathingEntity) Entities.byServerIndex(index);
     }
 
     /**
-     * Interacts with this spirit.
+     * Interacts with this entity.
      */
     public void interact(int type) {
         Actions.entity(this, type);
@@ -144,8 +144,8 @@ public abstract class Spirit extends Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        Spirit spirit = (Spirit) o;
-        return serverIndex == spirit.serverIndex;
+        PathingEntity pathingEntity = (PathingEntity) o;
+        return serverIndex == pathingEntity.serverIndex;
     }
 
     @Override

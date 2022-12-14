@@ -3,9 +3,9 @@ package abyss.plugin.api.plugin.nodes.leafs;
 import abyss.plugin.api.Npc;
 import abyss.plugin.api.Npcs;
 import abyss.plugin.api.actions.NpcAction;
-import abyss.plugin.api.plugin.nodes.SpiritNode;
+import abyss.plugin.api.plugin.nodes.PathingEntityNode;
 
-public class NpcNode extends SpiritNode<NpcAction, Npc> {
+public class NpcNode extends PathingEntityNode<NpcAction, Npc> {
 
     public NpcNode(Npc entity, NpcAction action) {
         super(entity, action);

@@ -12,9 +12,8 @@ import java.util.Map;
  * A snapshot of a player within the game world. This data is constant,
  * and will not be changed after this object is created.
  */
-public final class Player extends Spirit {
-
-    private Map<EquipmentSlot, Integer> equipment = new HashMap<>();
+public final class Player extends PathingEntity {
+    private final Map<EquipmentSlot, Integer> equipment = new HashMap<>();
     private int totalLevel;
     private int combatLevel;
 
