@@ -78,10 +78,21 @@ public abstract class PathingEntity extends Entity {
         return statusBarFill.getOrDefault(id, 0.0f);
     }
 
+    /**
+     * Gets all associated hitmarks.
+     *
+     * @return a non-null List.
+     */
     public List<Hitmark> getHitmarks() {
         return hitmarks;
     }
 
+    /**
+     * Get all associated hitmarks with the given id.
+     *
+     * @param id the id of the hitmark, which can also be thought of as type.
+     * @return A non-null List
+     */
     public List<Hitmark> getHitmarks(int id) {
         return getHitmarks().stream().filter(h -> h.getId() == id).toList();
     }
