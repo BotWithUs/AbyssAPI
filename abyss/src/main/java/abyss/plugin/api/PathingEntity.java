@@ -1,8 +1,6 @@
 package abyss.plugin.api;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A snapshot of a pathing entity (character) in the game world. This data is constant,
@@ -18,6 +16,7 @@ public abstract class PathingEntity extends Entity {
     private boolean isMoving;
     private Map<Integer, Boolean> activeStatusBars = new HashMap<>();
     private Map<Integer, Float> statusBarFill = new HashMap<>();
+    private List<Hitmark> hitmarks = new ArrayList<>(5);
     private int animationId;
     private boolean isAnimationPlaying;
     private int interactingIndex;
@@ -77,6 +76,14 @@ public abstract class PathingEntity extends Entity {
      */
     public float getStatusBarFill(int id) {
         return statusBarFill.getOrDefault(id, 0.0f);
+    }
+
+    public List<Hitmark> getHitmarks() {
+        return hitmarks;
+    }
+
+    public List<Hitmark> getHitmarks(int id) {
+        return getHitmarks().stream().filter(h -> h.getId() == id).toList();
     }
 
     /**
