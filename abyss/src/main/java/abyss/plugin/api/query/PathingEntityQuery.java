@@ -13,5 +13,4 @@ public interface PathingEntityQuery<T extends EntityQuery<T>> extends EntityQuer
     T activeHeadBar(float mineValue, float maxValue);
 
     T activeHeadBar(int barId);
-
 }

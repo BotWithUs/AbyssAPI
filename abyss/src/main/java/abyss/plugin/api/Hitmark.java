@@ -10,17 +10,22 @@ public class Hitmark {
     private Hitmark() {
     }
 
+    /**
+     * The id for this Hitmark. It can be used to determine what type of damage has been inflicted,
+     * whether a critical hit occurred, etc.
+     *
+     * @return The id of this type of Hitmark
+     */
     public int getId() {
         return id;
     }
 
-    public int getDamage() {
+    /**
+     * Gets the number displayed in the hitsplat.
+     *
+     * @return The number displayed in the hitsplat, 0 if nothing is shown.
+     */
+    public int getNumber() {
         return damage;
-    }
-
-    public boolean isVisible() {
-        //TODO locate the endCycle memory location and verify the current engine cycle is also below the end cycle.
-        long cycle = GameEngine.getEngineTime();
-        return cycle >= startCycle;
     }
 }

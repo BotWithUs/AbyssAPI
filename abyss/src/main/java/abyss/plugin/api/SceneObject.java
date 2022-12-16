@@ -79,8 +79,6 @@ public class SceneObject extends Entity {
         entity(this, type, xOff, yOff);
     }
 
-
-
     /**
      * Interacts with this object.
      */
