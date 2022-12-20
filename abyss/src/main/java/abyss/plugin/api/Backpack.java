@@ -44,7 +44,7 @@ public final class Backpack extends SimpleExtensionContainer {
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(item.toWidgetItem(i, Interfaces.hash(ext.getRootId(), ext.getContainerChildId()), container));
+                list.add(item.toComponentItem(i, Interfaces.hash(ext.getRootId(), ext.getContainerChildId()), container));
             }
         }
         return list.toArray(new ComponentItem[0]);

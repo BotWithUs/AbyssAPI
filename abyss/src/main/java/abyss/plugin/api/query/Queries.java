@@ -9,7 +9,7 @@ import abyss.plugin.api.query.players.PlayerQuery;
 import abyss.plugin.api.query.projectiles.ProjectileQuery;
 import abyss.plugin.api.query.components.ComponentQuery;
 
-public class Queries {
+public final class Queries {
     private Queries() {
     }
 
@@ -40,11 +40,11 @@ public class Queries {
         return new ChatQuery();
     }
 
-    public static ComponentQuery newWidgetQuery(int groupId, int rootId) {
+    public static ComponentQuery newComponentQuery(int groupId, int rootId) {
         return new ComponentQuery(groupId, rootId);
     }
 
-    public static ComponentQuery newWidgetQuery(int groupId) {
+    public static ComponentQuery newComponentQuery(int groupId) {
         return new ComponentQuery(groupId);
     }
 }

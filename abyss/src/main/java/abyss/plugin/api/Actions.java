@@ -122,12 +122,12 @@ public final class Actions {
         entity(object, type, 0, 0);
     }
 
-    public static void entity(Spirit spirit, int type) {
-        if (spirit instanceof Player) {
+    public static void entity(PathingEntity pathingEntity, int type) {
+        if (pathingEntity instanceof Player) {
             if (!Array.contains(VALID_PLAYER_ACTIONS, type)) {
                 throw new BadActionException("Bad player action type");
             }
-        } else if (spirit instanceof Npc) {
+        } else if (pathingEntity instanceof Npc) {
             if (!Array.contains(VALID_NPC_ACTIONS, type)) {
                 throw new BadActionException("Bad NPC action type");
             }
@@ -135,7 +135,7 @@ public final class Actions {
             throw new BadActionException("Bad entity type");
         }
 
-        Actions.menu(type, spirit.getServerIndex(), 0, 0, 1);
+        Actions.menu(type, pathingEntity.getServerIndex(), 0, 0, 1);
     }
 
     public static void entity(GroundItem item, int type) {
