@@ -1,6 +1,5 @@
 package abyss.plugin.api.entities.hitmarks;
 
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +36,7 @@ public final class HitmarkManager {
             Integer currentTotal = hitmarks.get(type);
             hitmarks.put(type, (currentTotal + amount));
         } else {
-            hitmarks = new EnumMap<>(HitmarkType.class);
+            hitmarks = new HashMap<>();
             hitmarks.put(type, amount);
         }
         entities.put(pathingEntityIndex, hitmarks);

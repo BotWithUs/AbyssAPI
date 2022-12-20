@@ -19,9 +19,9 @@ public abstract class PathingEntity extends Entity implements Hitmarks, Identifi
 
     private int serverIndex;
     private boolean isMoving;
-    private Map<Integer, Boolean> activeStatusBars = new HashMap<>();
-    private Map<Integer, Float> statusBarFill = new HashMap<>();
-    private List<Hitmark> hitmarks = new ArrayList<>(5);
+    private final Map<Integer, Boolean> activeStatusBars = new HashMap<>();
+    private final Map<Integer, Float> statusBarFill = new HashMap<>();
+    private final List<Hitmark> hitmarks = new ArrayList<>(5);
     private int animationId;
     private boolean isAnimationPlaying;
     private int interactingIndex;
@@ -58,7 +58,9 @@ public abstract class PathingEntity extends Entity implements Hitmarks, Identifi
     }
 
 
-
+    public int getServerIndex() {
+        return getIdentifier();
+    }
 
 
     /**

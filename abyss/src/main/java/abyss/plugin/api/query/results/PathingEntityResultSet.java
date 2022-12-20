@@ -37,7 +37,7 @@ public final class PathingEntityResultSet<T extends Hitmarks & Identifiable & Lo
         stream().forEach(e -> {
             if (types.length == 0) {
                 for (Hitmark hitmark : e.getHitmarks()) {
-                    HitmarkType type = HitmarkType.forId(hitmark.getId());
+                    HitmarkType type = HitmarkTypes.forId(hitmark.getId());
                     if (type != null) {
                         HitmarkManager.MANAGER.addHit(e.getIdentifier(), type, hitmark.getNumber());
                     }

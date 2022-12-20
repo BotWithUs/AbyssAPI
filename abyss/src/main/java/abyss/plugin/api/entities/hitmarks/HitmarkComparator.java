@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 public class HitmarkComparator<T extends Hitmarks & Identifiable & Locatable> implements Comparator<T> {
 
-    private HitmarkType type;
+    private final HitmarkType type;
 
     public HitmarkComparator(HitmarkType type) {
         this.type = type;

@@ -1,7 +1,5 @@
 package abyss.plugin.api;
 
-import abyss.plugin.api.game.GameEngine;
-
 public class Hitmark {
     private int id;
     private int damage;
