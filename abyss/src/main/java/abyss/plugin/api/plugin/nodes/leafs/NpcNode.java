@@ -13,6 +13,6 @@ public class NpcNode extends PathingEntityNode<NpcAction, Npc> {
 
     @Override
     public boolean exists() {
-        return Npcs.byServerIndex(getEntity().getServerIndex()) != null;
+        return Npcs.byServerIndex(getEntity().getIdentifier()) != null;
     }
 }

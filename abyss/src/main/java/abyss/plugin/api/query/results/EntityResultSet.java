@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class EntityResultSet<T extends Locatable> implements ResultSet<T> {
+public class EntityResultSet<T extends Locatable> implements ResultSet<T> {
 
     private final List<T> results;
 

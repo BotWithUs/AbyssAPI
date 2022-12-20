@@ -115,7 +115,7 @@ public final class Npc extends PathingEntity {
     @Override
     public String toString() {
         return "Npc{" +
-                "serverIndex=" + getServerIndex() +
+                "serverIndex=" + getIdentifier() +
                 '}';
     }
 

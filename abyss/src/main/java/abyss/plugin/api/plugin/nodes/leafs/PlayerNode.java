@@ -13,6 +13,6 @@ public class PlayerNode extends PathingEntityNode<PlayerAction, Player> {
 
     @Override
     public boolean exists() {
-        return Players.byServerIndex(getEntity().getServerIndex()) != null;
+        return Players.byServerIndex(getEntity().getIdentifier()) != null;
     }
 }

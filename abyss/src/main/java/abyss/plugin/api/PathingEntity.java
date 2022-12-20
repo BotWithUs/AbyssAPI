@@ -1,12 +1,17 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.entities.Identifiable;
+import abyss.plugin.api.entities.hitmarks.HitmarkManager;
+import abyss.plugin.api.entities.hitmarks.HitmarkType;
+import abyss.plugin.api.entities.hitmarks.Hitmarks;
+
 import java.util.*;
 
 /**
  * A snapshot of a pathing entity (character) in the game world. This data is constant,
  * and will not be changed after this object is created.
  */
-public abstract class PathingEntity extends Entity {
+public abstract class PathingEntity extends Entity implements Hitmarks, Identifiable {
 
     public static final int STATUS_HEALTH = 0;
     public static final int STATUS_ADRENALINE = 5;
@@ -47,9 +52,14 @@ public abstract class PathingEntity extends Entity {
      *
      * @return This entities server index.
      */
-    public int getServerIndex() {
+    @Override
+    public int getIdentifier() {
         return serverIndex;
     }
+
+
+
+
 
     /**
      * Determines if this spirit is currently moving.
@@ -83,6 +93,7 @@ public abstract class PathingEntity extends Entity {
      *
      * @return a non-null List.
      */
+    @Override
     public List<Hitmark> getHitmarks() {
         return hitmarks;
     }
@@ -93,8 +104,24 @@ public abstract class PathingEntity extends Entity {
      * @param id the id of the hitmark, which can also be thought of as type.
      * @return A non-null List
      */
+    @Override
     public List<Hitmark> getHitmarks(int id) {
         return getHitmarks().stream().filter(h -> h.getId() == id).toList();
+    }
+
+    @Override
+    public int getTotalNumber(HitmarkType type) {
+        return HitmarkManager.MANAGER.getTotalHitFor(serverIndex, type);
+    }
+
+    @Override
+    public boolean clearHitmark(HitmarkType type) {
+        return HitmarkManager.MANAGER.clear(serverIndex, type);
+    }
+
+    @Override
+    public boolean clearHitmarks() {
+        return HitmarkManager.MANAGER.clear(serverIndex);
     }
 
     /**

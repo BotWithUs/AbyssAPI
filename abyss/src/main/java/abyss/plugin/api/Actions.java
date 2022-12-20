@@ -135,7 +135,7 @@ public final class Actions {
             throw new BadActionException("Bad entity type");
         }
 
-        Actions.menu(type, pathingEntity.getServerIndex(), 0, 0, 1);
+        Actions.menu(type, pathingEntity.getIdentifier(), 0, 0, 1);
     }
 
     public static void entity(GroundItem item, int type) {

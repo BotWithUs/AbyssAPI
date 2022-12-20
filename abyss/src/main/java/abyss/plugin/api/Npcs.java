@@ -125,7 +125,7 @@ public final class Npcs {
      * @return The found NPC, or NULL if one was not found.
      */
     public static Npc byServerIndex(int index) {
-        return closest((n) -> n.getServerIndex() == index);
+        return closest((n) -> n.getIdentifier() == index);
     }
 
 

@@ -5,6 +5,7 @@ import abyss.plugin.api.Player;
 import abyss.plugin.api.Vector3;
 import abyss.plugin.api.query.results.EntityResultSet;
 import abyss.plugin.api.query.PathingEntityQuery;
+import abyss.plugin.api.query.results.PathingEntityResultSet;
 import abyss.plugin.api.world.WorldTile;
 
 import java.util.List;
@@ -112,8 +113,8 @@ public final class PlayerQuery implements PathingEntityQuery<PlayerQuery> {
         return this;
     }
 
-    public EntityResultSet<Player> result() {
-        return new EntityResultSet<>(results());
+    public PathingEntityResultSet<Player> result() {
+        return new PathingEntityResultSet<>(results());
     }
     
     private native List<Player> results();

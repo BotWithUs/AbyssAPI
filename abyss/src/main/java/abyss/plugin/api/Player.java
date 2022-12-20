@@ -110,7 +110,7 @@ public final class Player extends PathingEntity {
     @Override
     public String toString() {
         return "Player{" +
-                "serverIndex=" + getServerIndex() +
+                "serverIndex=" + getIdentifier() +
                 '}';
     }
 }

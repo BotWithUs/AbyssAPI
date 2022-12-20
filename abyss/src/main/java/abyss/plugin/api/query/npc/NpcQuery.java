@@ -3,6 +3,7 @@ package abyss.plugin.api.query.npc;
 import abyss.plugin.api.*;
 import abyss.plugin.api.query.results.EntityResultSet;
 import abyss.plugin.api.query.PathingEntityQuery;
+import abyss.plugin.api.query.results.PathingEntityResultSet;
 import abyss.plugin.api.world.WorldTile;
 
 import java.util.List;
@@ -101,8 +102,8 @@ public final class NpcQuery implements PathingEntityQuery<NpcQuery> {
         return this;
     }
 
-    public EntityResultSet<Npc> result() {
-        return new EntityResultSet<>(results());
+    public PathingEntityResultSet<Npc> result() {
+        return new PathingEntityResultSet<>(results());
     }
 
     private native List<Npc> results();
