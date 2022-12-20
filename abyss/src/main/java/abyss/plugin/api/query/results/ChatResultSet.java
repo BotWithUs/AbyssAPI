@@ -1,6 +1,8 @@
 package abyss.plugin.api.query.results;
 
 import abyss.plugin.api.game.chat.ChatMessage;
+import kotlin.random.Random;
+import kotlin.random.RandomKt;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -39,6 +41,14 @@ public final class ChatResultSet implements ResultSet<ChatMessage> {
             return Optional.empty();
         }
         return Optional.of(results.get(index));
+    }
+
+    @Override
+    public Optional<ChatMessage> random() {
+        if(results.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(results.get(random.nextInt(0, results.size())));
     }
 
     @Override

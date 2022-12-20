@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * An item configuration from the cache.
  */
-public final class CacheItem extends AsyncData {
+    public final class CacheItem extends AsyncData {
 
     private int id = 0;
     private long address = 0;

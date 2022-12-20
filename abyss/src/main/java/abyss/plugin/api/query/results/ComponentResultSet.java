@@ -41,6 +41,14 @@ public final class ComponentResultSet implements ResultSet<Component> {
     }
 
     @Override
+    public Optional<Component> random() {
+        if(results.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(results.get(random.nextInt(0, results.size())));
+    }
+
+    @Override
     public Stream<Component> stream() {
         return results.stream();
     }

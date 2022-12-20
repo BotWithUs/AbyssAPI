@@ -79,6 +79,14 @@ public final class EntityResultSet<T extends Locatable> implements ResultSet<T> 
     }
 
     @Override
+    public Optional<T> random() {
+        if (results.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(results.get(random.nextInt(0, results.size())));
+    }
+
+    @Override
     public Stream<T> stream() {
         return results.stream();
     }

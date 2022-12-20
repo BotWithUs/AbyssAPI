@@ -1,11 +1,11 @@
 package abyss.plugin.api.query.results;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public interface ResultSet<T> extends Iterable<T> {
+
+    Random random = new Random();
 
     Optional<T> first();
     Optional<T> last();
@@ -13,6 +13,8 @@ public interface ResultSet<T> extends Iterable<T> {
     List<T> sort(Comparator<T> comparator);
 
     Optional<T> get(int index);
+
+    Optional<T> random();
 
     Stream<T> stream();
 

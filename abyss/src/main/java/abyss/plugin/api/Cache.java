@@ -305,6 +305,7 @@ public final class Cache {
      * @param id The id of the NPC to retrieve.
      * @return The retrieved NPC.
      */
+    @Deprecated(forRemoval = true)
     public static CacheNpc getNpc(int id) {
         return getNpc(id, true);
     }

@@ -55,17 +55,15 @@ public final class Npc extends Spirit {
      * @return The names of options when right clicking this NPC.
      */
     public String[] getOptionNames() {
-        CacheNpc npc;
-        if(transformedId == -1) {
-            npc = type;
-        } else {
-            npc = Cache.getNpc(transformedId);
-        }
-        if (npc == null) {
+        if(type == null) {
             return new String[0];
         }
+        return type.getOptionNames();
+    }
 
-        return npc.getOptionNames();
+    @Override
+    public String getName() {
+        return type == null ? "Unknown " + id : type.getName();
     }
 
     /**
