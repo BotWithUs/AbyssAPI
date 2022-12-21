@@ -1,7 +1,6 @@
 package abyss.plugin.api;
 
 import abyss.plugin.api.entities.Identifiable;
-import abyss.plugin.api.entities.hitmarks.HitmarkManager;
 
 import java.util.*;
 
@@ -9,7 +8,7 @@ import java.util.*;
  * A snapshot of a pathing entity (character) in the game world. This data is constant,
  * and will not be changed after this object is created.
  */
-public abstract class PathingEntity extends Entity implements Hitmarks, Identifiable {
+public abstract class PathingEntity extends Entity implements Identifiable {
 
     public static final int STATUS_HEALTH = 0;
     public static final int STATUS_ADRENALINE = 5;
@@ -17,9 +16,12 @@ public abstract class PathingEntity extends Entity implements Hitmarks, Identifi
 
     private int serverIndex;
     private boolean isMoving;
+    @Deprecated
     private final Map<Integer, Boolean> activeStatusBars = new HashMap<>();
+    @Deprecated
     private final Map<Integer, Float> statusBarFill = new HashMap<>();
     private final List<Hitmark> hitmarks = new ArrayList<>(5);
+    private final List<Headbar> headbars = new ArrayList<>(6);
     private int animationId;
     private boolean isAnimationPlaying;
     private int interactingIndex;
@@ -32,15 +34,17 @@ public abstract class PathingEntity extends Entity implements Hitmarks, Identifi
     }
 
     /**
-     * Retrieves the state of all status bars.
+     * See getHeadbars
      */
+    @Deprecated
     public Map<Integer, Boolean> getActiveStatusBars() {
         return activeStatusBars;
     }
 
     /**
-     * Retrieves the fill of all status bars.
+     * See getHeadbars.
      */
+    @Deprecated
     public Map<Integer, Float> getStatusBarFill() {
         return statusBarFill;
     }
@@ -54,7 +58,6 @@ public abstract class PathingEntity extends Entity implements Hitmarks, Identifi
     public int getIdentifier() {
         return serverIndex;
     }
-
 
     public int getServerIndex() {
         return getIdentifier();
@@ -71,19 +74,17 @@ public abstract class PathingEntity extends Entity implements Hitmarks, Identifi
     }
 
     /**
-     * Determines if a status bar is active.
-     *
-     * @return If the status bar with the provided id is active.
+     * @See getHeadbar(int)
      */
+    @Deprecated
     public boolean isStatusBarActive(int id) {
         return activeStatusBars.containsKey(id) && activeStatusBars.get(id);
     }
 
     /**
-     * Retrieves the fill of a status bar (0-1.)
-     *
-     * @return The fill of a status bar.
+     * See getHeadbar(int)
      */
+    @Deprecated
     public float getStatusBarFill(int id) {
         return statusBarFill.getOrDefault(id, 0.0f);
     }
@@ -93,7 +94,6 @@ public abstract class PathingEntity extends Entity implements Hitmarks, Identifi
      *
      * @return a non-null List.
      */
-    @Override
     public List<Hitmark> getHitmarks() {
         return hitmarks;
     }
@@ -104,24 +104,16 @@ public abstract class PathingEntity extends Entity implements Hitmarks, Identifi
      * @param id the id of the hitmark, which can also be thought of as type.
      * @return A non-null List
      */
-    @Override
     public List<Hitmark> getHitmarks(int id) {
         return getHitmarks().stream().filter(h -> h.getId() == id).toList();
     }
 
-    @Override
-    public int getTotalNumber(HitmarkType type) {
-        return HitmarkManager.MANAGER.getTotalHitFor(serverIndex, type);
+    public List<Headbar> getHeadbars() {
+        return headbars;
     }
 
-    @Override
-    public boolean clearHitmark(HitmarkType type) {
-        return HitmarkManager.MANAGER.clear(serverIndex, type);
-    }
-
-    @Override
-    public boolean clearHitmarks() {
-        return HitmarkManager.MANAGER.clear(serverIndex);
+    public List<Headbar> getHeadbars(int id) {
+        return getHeadbars().stream().filter(hb -> hb.getId() == id).toList();
     }
 
     /**

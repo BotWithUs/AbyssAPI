@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.query.players.PlayerQuery;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -43,11 +45,10 @@ public final class GroundItems {
      * @return The found ground item, or NULL if one was not found.
      */
     public static GroundItem closest(Predicate<GroundItem> filter) {
-        Player self = Players.self();
+        Player self = PlayerQuery.self();
         if (self == null) {
             return null;
         }
-
         Vector3 center = self.getScenePosition();
         GroundItem closest = null;
         float closestDistance = 0.f;
