@@ -36,7 +36,7 @@ public abstract class PathingEntity extends Entity implements Identifiable {
     /**
      * See getHeadbars
      */
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public Map<Integer, Boolean> getActiveStatusBars() {
         return activeStatusBars;
     }
@@ -44,7 +44,7 @@ public abstract class PathingEntity extends Entity implements Identifiable {
     /**
      * See getHeadbars.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public Map<Integer, Float> getStatusBarFill() {
         return statusBarFill;
     }

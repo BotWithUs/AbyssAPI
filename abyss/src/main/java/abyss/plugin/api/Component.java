@@ -22,6 +22,7 @@ public class Component {
     private Component[] children;
     private boolean visible = false;
     private byte[] textBinary;
+    private String text;
     private Item item = new Item(-1, 0);
     private Vector2i position;
     private Vector2i size;
@@ -32,6 +33,8 @@ public class Component {
     private int childId = -1;
 
     private int slot = -1;
+
+    private int renderIndex;
 
     /**
      * Do not make instances of this.
@@ -117,22 +120,14 @@ public class Component {
      *
      * @return The text being stored in this widget, or NULL if the widget has no text.
      */
-    public byte[] getTextBinary() {
-        return textBinary;
-    }
-
-    /**
-     * Retrieves the text being stored in this widget.
-     *
-     * @return The text being stored in this widget, or NULL if the widget has no text.
-     */
     public String getText() {
-        byte[] bin = getTextBinary();
-        if (bin == null) {
+        if(text != null) {
+            return text;
+        }
+        if (textBinary == null) {
             return null;
         }
-
-        return new String(TextUtils.filterSpecialChars(bin), StandardCharsets.US_ASCII);
+        return new String(TextUtils.filterSpecialChars(textBinary), StandardCharsets.US_ASCII);
     }
 
     /**
@@ -212,12 +207,17 @@ public class Component {
         return screenPosition;
     }
 
+    public int getRenderIndex() {
+        return renderIndex;
+    }
+
     /**
      * Interacts with this widget using the provided option.
      *
      * @param option The option to use.
      */
     public void interact(int option) {
+        Debug.log("Option " + option + " : " + parentId + " - " + childId);
         if (slot != -1) {
             Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot, getInteractId(), 0);
         } else {

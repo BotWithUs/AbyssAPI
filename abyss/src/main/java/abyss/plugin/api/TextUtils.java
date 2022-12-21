@@ -16,13 +16,13 @@ public final class TextUtils {
      */
     public static byte[] filterSpecialChars(byte[] bin) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        for (int i = 0; i < bin.length; i++) {
-            if (bin[i] == -62) {
+        for (byte b : bin) {
+            if (b == -62) {
                 bos.write(' ');
-            } else if (bin[i] == -96) {
+            } else if (b == -96) {
                 // nothing
             } else {
-                bos.write(bin[i]);
+                bos.write(b);
             }
         }
         return bos.toByteArray();
