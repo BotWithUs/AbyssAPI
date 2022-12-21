@@ -2,8 +2,6 @@ package abyss.plugin.api;
 
 import abyss.plugin.api.entities.Identifiable;
 import abyss.plugin.api.entities.hitmarks.HitmarkManager;
-import abyss.plugin.api.entities.hitmarks.HitmarkType;
-import abyss.plugin.api.entities.hitmarks.Hitmarks;
 
 import java.util.*;
 

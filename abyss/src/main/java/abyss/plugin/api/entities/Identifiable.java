@@ -6,7 +6,5 @@ package abyss.plugin.api.entities;
  */
 
 public interface Identifiable {
-
     int getIdentifier();
-
 }
