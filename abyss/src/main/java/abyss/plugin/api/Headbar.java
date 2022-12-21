@@ -2,6 +2,7 @@ package abyss.plugin.api;
 
 public class Headbar {
     private int id;
+    //TODO should be currentValue and we should have a maxValue field.
     private int value;
 
     private Headbar() {
