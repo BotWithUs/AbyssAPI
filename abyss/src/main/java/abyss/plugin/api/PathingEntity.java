@@ -16,10 +16,6 @@ public abstract class PathingEntity extends Entity implements Identifiable {
 
     private int serverIndex;
     private boolean isMoving;
-    @Deprecated
-    private final Map<Integer, Boolean> activeStatusBars = new HashMap<>();
-    @Deprecated
-    private final Map<Integer, Float> statusBarFill = new HashMap<>();
     private final List<Hitmark> hitmarks = new ArrayList<>(5);
     private final List<Headbar> headbars = new ArrayList<>(6);
     private int animationId;
@@ -31,22 +27,6 @@ public abstract class PathingEntity extends Entity implements Identifiable {
      * Do not make instances of this.
      */
     PathingEntity() {
-    }
-
-    /**
-     * See getHeadbars
-     */
-    @Deprecated(forRemoval = true)
-    public Map<Integer, Boolean> getActiveStatusBars() {
-        return activeStatusBars;
-    }
-
-    /**
-     * See getHeadbars.
-     */
-    @Deprecated(forRemoval = true)
-    public Map<Integer, Float> getStatusBarFill() {
-        return statusBarFill;
     }
 
     /**
@@ -71,22 +51,6 @@ public abstract class PathingEntity extends Entity implements Identifiable {
      */
     public boolean isMoving() {
         return isMoving;
-    }
-
-    /**
-     * @See getHeadbar(int)
-     */
-    @Deprecated
-    public boolean isStatusBarActive(int id) {
-        return activeStatusBars.containsKey(id) && activeStatusBars.get(id);
-    }
-
-    /**
-     * See getHeadbar(int)
-     */
-    @Deprecated
-    public float getStatusBarFill(int id) {
-        return statusBarFill.getOrDefault(id, 0.0f);
     }
 
     /**

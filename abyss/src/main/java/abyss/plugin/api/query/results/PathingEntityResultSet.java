@@ -12,4 +12,5 @@ public final class PathingEntityResultSet<T extends Identifiable & Locatable> ex
     public PathingEntityResultSet(List<T> results) {
         super(results);
     }
+    //TODO add hitmark and headbar queries.
 }
