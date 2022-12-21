@@ -96,7 +96,7 @@ public class Component {
     public Component getChild(Predicate<Component> filter, int... indices) {
         Component w = this;
         for (int i = 0; i < indices.length && w != null && filter.test(w); i++) {
-            w = getChild(indices[i]);
+            w = w.getChild(indices[i]);
         }
         return w;
     }
@@ -107,7 +107,7 @@ public class Component {
     public Component getChild(int... indices) {
         Component w = this;
         for (int i = 0; i < indices.length && w != null; i++) {
-            w = getChild(indices[i]);
+            w = w.getChild(indices[i]);
         }
         return w;
     }
