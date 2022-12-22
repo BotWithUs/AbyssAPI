@@ -40,7 +40,7 @@ public abstract class Entity implements Locatable {
      */
     public String getName() {
         if(this.name.isEmpty()) {
-            return new String(nameBinary);
+            return new String(TextUtils.filterSpecialChars(nameBinary));
         }
         return this.name;
     }

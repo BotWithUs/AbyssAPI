@@ -23,7 +23,9 @@ public final class Npcs {
      *
      * @return All NPCs.
      */
-    public static native Npc[] all();
+    public static Npc[] all() {
+        return all.result().stream().toArray(Npc[]::new);
+    }
 
     /**
      * Retrieves all NPCs that match the provided filter.
