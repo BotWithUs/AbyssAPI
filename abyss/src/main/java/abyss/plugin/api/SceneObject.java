@@ -3,6 +3,9 @@ package abyss.plugin.api;
 import abyss.Utils;
 import abyss.map.Region;
 
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
+
 import static abyss.plugin.api.Actions.*;
 
 /**
@@ -79,10 +82,7 @@ public class SceneObject extends Entity {
         entity(this, type, xOff, yOff);
     }
 
-    /**
-     * Interacts with this object.
-     */
-    public boolean interact(String option) {
+    public boolean interact(String option, BiPredicate<String, String> predicate) {
         CacheObject type = getType();
         if (type == null) {
             return false;
@@ -91,7 +91,7 @@ public class SceneObject extends Entity {
         String[] options = type.getOptionNames();
         int m = Math.min(OPTION_NAME_MAP.length, options.length);
         for (int i = 0; i < m; i++) {
-            if (option.contains(options[i])) {
+            if (predicate.test(option, options[i])) {
                 interact(OPTION_NAME_MAP[i]);
                 return true;
             }
@@ -104,6 +104,13 @@ public class SceneObject extends Entity {
         }
 
         return false;
+    }
+
+    /**
+     * Interacts with this object.
+     */
+    public boolean interact(String option) {
+        return interact(option, (o1, o2) -> o2.contains(o1));
     }
 
     /**

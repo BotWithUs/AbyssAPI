@@ -2,6 +2,8 @@ package abyss.plugin.api;
 
 import abyss.Utils;
 
+import java.util.function.BiPredicate;
+
 import static abyss.plugin.api.Actions.*;
 
 /**
@@ -69,11 +71,11 @@ public final class Npc extends PathingEntity {
     /**
      * Interacts with this NPC.
      */
-    public boolean interact(String option) {
+    public boolean interact(String option, BiPredicate<String, String> predicate) {
         String[] options = getOptionNames();
         int m = Math.min(OPTION_NAME_MAP.length, options.length);
         for (int i = 0; i < m; i++) {
-            if (option.equalsIgnoreCase(options[i])) {
+            if (predicate.test(option, options[i])) {
                 interact(OPTION_NAME_MAP[i]);
                 return true;
             }
@@ -85,6 +87,10 @@ public final class Npc extends PathingEntity {
             Debug.log(" " + s);
         }
         return false;
+    }
+
+    public boolean interact(String option) {
+        return interact(option, (o1, o2) -> o2.contains(o1));
     }
 
     /**
