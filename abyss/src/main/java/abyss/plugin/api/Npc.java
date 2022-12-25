@@ -75,7 +75,7 @@ public final class Npc extends PathingEntity {
         String[] options = getOptionNames();
         int m = Math.min(OPTION_NAME_MAP.length, options.length);
         for (int i = 0; i < m; i++) {
-            if (predicate.test(option, options[i])) {
+            if (options[i] != null && predicate.test(option, options[i])) {
                 interact(OPTION_NAME_MAP[i]);
                 return true;
             }
