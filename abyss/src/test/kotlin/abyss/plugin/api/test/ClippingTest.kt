@@ -16,7 +16,7 @@ class ClippingTest {
     fun clippingTest() {
         val myPos = tile(3184, 3288, 0)
 
-        val obj = WorldObject(3185, 3289, 0, 38732, ObjectType.SCENERY_INTERACT)
+        val obj = WorldObject(3185, 3289, 0, 38732, 0, ObjectType.SCENERY_INTERACT)
 
         //  -> Args= 0 3188 3290 1
 

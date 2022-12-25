@@ -2,6 +2,8 @@ package abyss.plugin.api;
 
 import abyss.Utils;
 
+import java.util.function.BiPredicate;
+
 import static abyss.plugin.api.Actions.*;
 
 /**
@@ -55,27 +57,25 @@ public final class Npc extends PathingEntity {
      * @return The names of options when right clicking this NPC.
      */
     public String[] getOptionNames() {
-        CacheNpc npc;
-        if(transformedId == -1) {
-            npc = type;
-        } else {
-            npc = Cache.getNpc(transformedId);
-        }
-        if (npc == null) {
+        if(type == null) {
             return new String[0];
         }
+        return type.getOptionNames();
+    }
 
-        return npc.getOptionNames();
+    @Override
+    public String getName() {
+        return type == null ? "Unknown " + id : type.getName();
     }
 
     /**
      * Interacts with this NPC.
      */
-    public boolean interact(String option) {
+    public boolean interact(String option, BiPredicate<String, String> predicate) {
         String[] options = getOptionNames();
         int m = Math.min(OPTION_NAME_MAP.length, options.length);
         for (int i = 0; i < m; i++) {
-            if (option.equalsIgnoreCase(options[i])) {
+            if (predicate.test(option, options[i])) {
                 interact(OPTION_NAME_MAP[i]);
                 return true;
             }
@@ -87,6 +87,10 @@ public final class Npc extends PathingEntity {
             Debug.log(" " + s);
         }
         return false;
+    }
+
+    public boolean interact(String option) {
+        return interact(option, (o1, o2) -> o2.contains(o1));
     }
 
     /**
@@ -117,7 +121,7 @@ public final class Npc extends PathingEntity {
     @Override
     public String toString() {
         return "Npc{" +
-                "serverIndex=" + getServerIndex() +
+                "serverIndex=" + getIdentifier() +
                 '}';
     }
 

@@ -23,7 +23,9 @@ public final class Npcs {
      *
      * @return All NPCs.
      */
-    public static native Npc[] all();
+    public static Npc[] all() {
+        return all.result().stream().toArray(Npc[]::new);
+    }
 
     /**
      * Retrieves all NPCs that match the provided filter.
@@ -125,7 +127,7 @@ public final class Npcs {
      * @return The found NPC, or NULL if one was not found.
      */
     public static Npc byServerIndex(int index) {
-        return closest((n) -> n.getServerIndex() == index);
+        return closest((n) -> n.getIdentifier() == index);
     }
 
 

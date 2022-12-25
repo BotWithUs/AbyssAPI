@@ -3,6 +3,7 @@ package abyss.plugin.api;
 import abyss.Utils;
 
 import java.util.Objects;
+import java.util.function.BiPredicate;
 
 import static abyss.plugin.api.Actions.*;
 
@@ -91,17 +92,21 @@ public final class GroundItem extends Entity {
     /**
      * Interacts with this ground item.
      */
-    public boolean interact(String option) {
+    public boolean interact(String option, BiPredicate<String, String> predicate) {
         String[] options = getOptionNames();
         int m = Math.min(OPTION_NAME_MAP.length, options.length);
         for (int i = 0; i < m; i++) {
-            if (option.equalsIgnoreCase(options[i])) {
+            if (predicate.test(option, options[i])) {
                 interact(OPTION_NAME_MAP[i]);
                 return true;
             }
         }
 
         return false;
+    }
+
+    public boolean interact(String option) {
+        return interact(option, (o1, o2) -> o2.contains(o1));
     }
 
     public boolean isReachable() {

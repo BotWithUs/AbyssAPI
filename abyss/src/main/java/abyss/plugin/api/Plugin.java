@@ -149,7 +149,7 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
 
     }
 
-    private void onSceneObjectAdded(int objectId, int x, int y, int type) {
+    private void onSceneObjectAdded(int objectId, int rotation, int x, int y, int type) {
         Player self = PlayerQuery.self();
         if (self == null) {
             return;
@@ -161,7 +161,7 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
         if (otype == null) {
             return;
         }
-        WorldObject wo = new WorldObject(x, y, pos.getZ(), objectId, otype);
+        WorldObject wo = new WorldObject(x, y, pos.getZ(), objectId, rotation, otype);
         region.spawnObject(wo, pos.getZ(), tile.getXInRegion(), tile.getYInRegion());
 
         onSceneObjectSpawned(objectId, x, y, type);

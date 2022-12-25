@@ -1,14 +1,14 @@
 package abyss.plugin.api;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import abyss.plugin.api.entities.Identifiable;
+
+import java.util.*;
 
 /**
  * A snapshot of a pathing entity (character) in the game world. This data is constant,
  * and will not be changed after this object is created.
  */
-public abstract class PathingEntity extends Entity {
+public abstract class PathingEntity extends Entity implements Identifiable {
 
     public static final int STATUS_HEALTH = 0;
     public static final int STATUS_ADRENALINE = 5;
@@ -16,8 +16,8 @@ public abstract class PathingEntity extends Entity {
 
     private int serverIndex;
     private boolean isMoving;
-    private Map<Integer, Boolean> activeStatusBars = new HashMap<>();
-    private Map<Integer, Float> statusBarFill = new HashMap<>();
+    private final List<Hitmark> hitmarks = new ArrayList<>(5);
+    private final List<Headbar> headbars = new ArrayList<>(6);
     private int animationId;
     private boolean isAnimationPlaying;
     private int interactingIndex;
@@ -30,27 +30,19 @@ public abstract class PathingEntity extends Entity {
     }
 
     /**
-     * Retrieves the state of all status bars.
-     */
-    public Map<Integer, Boolean> getActiveStatusBars() {
-        return activeStatusBars;
-    }
-
-    /**
-     * Retrieves the fill of all status bars.
-     */
-    public Map<Integer, Float> getStatusBarFill() {
-        return statusBarFill;
-    }
-
-    /**
      * Retrieves this entities server index.
      *
      * @return This entities server index.
      */
-    public int getServerIndex() {
+    @Override
+    public int getIdentifier() {
         return serverIndex;
     }
+
+    public int getServerIndex() {
+        return getIdentifier();
+    }
+
 
     /**
      * Determines if this spirit is currently moving.
@@ -62,21 +54,30 @@ public abstract class PathingEntity extends Entity {
     }
 
     /**
-     * Determines if a status bar is active.
+     * Gets all associated hitmarks.
      *
-     * @return If the status bar with the provided id is active.
+     * @return a non-null List.
      */
-    public boolean isStatusBarActive(int id) {
-        return activeStatusBars.containsKey(id) && activeStatusBars.get(id);
+    public List<Hitmark> getHitmarks() {
+        return hitmarks;
     }
 
     /**
-     * Retrieves the fill of a status bar (0-1.)
+     * Get all associated hitmarks with the given id.
      *
-     * @return The fill of a status bar.
+     * @param id the id of the hitmark, which can also be thought of as type.
+     * @return A non-null List
      */
-    public float getStatusBarFill(int id) {
-        return statusBarFill.getOrDefault(id, 0.0f);
+    public List<Hitmark> getHitmarks(int id) {
+        return getHitmarks().stream().filter(h -> h.getId() == id).toList();
+    }
+
+    public List<Headbar> getHeadbars() {
+        return headbars;
+    }
+
+    public List<Headbar> getHeadbars(int id) {
+        return getHeadbars().stream().filter(hb -> hb.getId() == id).toList();
     }
 
     /**

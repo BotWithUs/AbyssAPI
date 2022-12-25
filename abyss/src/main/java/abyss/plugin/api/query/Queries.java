@@ -9,7 +9,7 @@ import abyss.plugin.api.query.players.PlayerQuery;
 import abyss.plugin.api.query.projectiles.ProjectileQuery;
 import abyss.plugin.api.query.components.ComponentQuery;
 
-public class Queries {
+public final class Queries {
     private Queries() {
     }
 

@@ -3,6 +3,7 @@ package abyss.plugin.api.query.npc;
 import abyss.plugin.api.*;
 import abyss.plugin.api.query.results.EntityResultSet;
 import abyss.plugin.api.query.PathingEntityQuery;
+import abyss.plugin.api.query.results.PathingEntityResultSet;
 import abyss.plugin.api.world.WorldTile;
 
 import java.util.List;
@@ -20,6 +21,14 @@ public final class NpcQuery implements PathingEntityQuery<NpcQuery> {
     private int serverIndex;
     private int interactIndex;
 
+    private float headbarMin;
+    private float headbarMax;
+    private int headbarId;
+
+    private int hitmarkId;
+    private int hitmarkMinValue;
+    private int hitmarkMaxValue;
+
     public NpcQuery() {
         this.ids = null;
         this.names = null;
@@ -31,6 +40,12 @@ public final class NpcQuery implements PathingEntityQuery<NpcQuery> {
         this.healthDeviation = 0;
         this.serverIndex = -1;
         this.interactIndex = -1;
+        this.headbarMin = 0.0f;
+        this.headbarMax = 0.0f;
+        this.headbarId = -1;
+        this.hitmarkMinValue = -1;
+        this.hitmarkMaxValue = -1;
+        this.hitmarkId = -1;
     }
 
 
@@ -89,20 +104,24 @@ public final class NpcQuery implements PathingEntityQuery<NpcQuery> {
         return this;
     }
 
-    @Deprecated
     @Override
-    public NpcQuery activeHeadBar(float mineValue, float maxValue) {
+    public NpcQuery activeHeadBar(int headbarId, float mineValue, float maxValue) {
+        this.headbarId = headbarId;
+        this.headbarMin = mineValue;
+        this.headbarMax = maxValue;
         return this;
     }
 
-    @Deprecated
     @Override
-    public NpcQuery activeHeadBar(int barId) {
+    public NpcQuery hitmark(int hitmarkId, int min, int max) {
+        this.hitmarkId = hitmarkId;
+        this.hitmarkMinValue = min;
+        this.hitmarkMaxValue = max;
         return this;
     }
 
-    public EntityResultSet<Npc> result() {
-        return new EntityResultSet<>(results());
+    public PathingEntityResultSet<Npc> result() {
+        return new PathingEntityResultSet<>(results());
     }
 
     private native List<Npc> results();

@@ -1,7 +1,5 @@
 package abyss.plugin.api;
 
-import java.nio.charset.StandardCharsets;
-
 /**
  * An NPC configuration from the cache.
  */
@@ -9,8 +7,11 @@ public final class CacheNpc extends AsyncData {
 
     private int id = 0;
     private long address = 0;
-    private byte[] binaryName = Abyss.BAD_DATA_STRING.getBytes(StandardCharsets.US_ASCII);
-    private byte[][] binaryOptionNames = new byte[0][];
+    private String name;
+    private String[] options;
+
+    private byte[] binaryName;
+    private byte[][] binaryOptionNames;
 
     private int varbitId = -1;
     private int[] transformIds = new int[0];
@@ -21,6 +22,8 @@ public final class CacheNpc extends AsyncData {
 
     CacheNpc(int id) {
         this.id = id;
+        this.name = "N/A";
+        this.options = new String[0];
     }
 
     /**
@@ -44,17 +47,13 @@ public final class CacheNpc extends AsyncData {
      * @return The name of the NPC.
      */
     public String getName() {
-        return new String(binaryName);
+        return this.name;
     }
 
     /**
      * @return The name of options when right clicking this NPC.
      */
     public String[] getOptionNames() {
-        String[] options = new String[binaryOptionNames.length];
-        for (int i = 0; i < binaryOptionNames.length; i++) {
-            options[i] = binaryOptionNames[i] == null ? "" : new String(binaryOptionNames[i]);
-        }
         return options;
     }
 
@@ -105,6 +104,6 @@ public final class CacheNpc extends AsyncData {
      * @return If this NPC is valid.
      */
     public boolean isValid() {
-        return super.isLoaded() && binaryName != null && binaryOptionNames != null;
+        return super.isLoaded() && !name.equals("N/A") && options.length != 0;
     }
 }

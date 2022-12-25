@@ -19,6 +19,9 @@ public abstract class Entity implements Locatable {
     private long internal3;
 
     private byte[] nameBinary;
+
+    private String name;
+
     private Vector3 scenePosition;
     private Vector3i globalPosition;
 
@@ -26,15 +29,8 @@ public abstract class Entity implements Locatable {
      * Do not make instances of this.
      */
     Entity() {
-    }
-
-    /**
-     * Retrieves the name of this entity.
-     *
-     * @return The name of this entity.
-     */
-    private byte[] getNameBinary() {
-        return nameBinary;
+        name = "";
+        nameBinary = "N/A".getBytes();
     }
 
     /**
@@ -43,12 +39,10 @@ public abstract class Entity implements Locatable {
      * @return The name of this entity.
      */
     public String getName() {
-        byte[] bin = getNameBinary();
-        if (bin == null) {
-            return Abyss.BAD_DATA_STRING;
+        if(this.name.isEmpty()) {
+            return new String(TextUtils.filterSpecialChars(nameBinary));
         }
-
-        return new String(filterSpecialChars(bin), StandardCharsets.US_ASCII);
+        return this.name;
     }
 
     /**

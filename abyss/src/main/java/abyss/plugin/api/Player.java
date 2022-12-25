@@ -6,6 +6,7 @@ import abyss.plugin.api.variables.Variables;
 import abyss.plugin.api.world.WorldTile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,7 +29,7 @@ public final class Player extends PathingEntity {
     @Override
     public boolean isReachable() {
         Player self = PlayerQuery.self();
-        if(self == null) {
+        if (self == null) {
             return false;
         }
         return Utils.getRouteDistanceTo(self.getGlobalPosition(), new WorldTile(getGlobalPosition().getX(), getGlobalPosition().getY(), getGlobalPosition().getZ())) != -1;
@@ -80,14 +81,14 @@ public final class Player extends PathingEntity {
      * The status bar must be displayed above the player's head to retrieve their health.
      * If you need the local player's health, you can use the more reliable {@link Client#getCurrentHealth() Client#getCurrentHealth}
      *
-     * @return This player's health percentage, or 0 if not in combat.
+     * @return This player's health percentage, or -1 if not in combat.
      */
     public float getHealth() {
-        if (!isStatusBarActive(STATUS_HEALTH)) {
-            return 0.0f;
+        List<Headbar> healthBars = getHeadbars(STATUS_HEALTH);
+        if (healthBars.size() != 1) {
+            return -1;
         }
-
-        return getStatusBarFill(STATUS_HEALTH);
+        return healthBars.get(0).getValue() / 255.0f;
     }
 
     /**
@@ -96,11 +97,11 @@ public final class Player extends PathingEntity {
      * @return This player's adrenaline fill percentage, or 0 if not available.
      */
     public float getAdrenaline() {
-        if (!isStatusBarActive(STATUS_ADRENALINE)) {
-            return 0.0f;
+        List<Headbar> adrenalineBar = getHeadbars(STATUS_ADRENALINE);
+        if (adrenalineBar.size() != 1) {
+            return -1;
         }
-
-        return getStatusBarFill(STATUS_ADRENALINE);
+        return adrenalineBar.get(0).getValue() / 255.0f;
     }
 
     public int getTargetIndex() {
@@ -110,7 +111,7 @@ public final class Player extends PathingEntity {
     @Override
     public String toString() {
         return "Player{" +
-                "serverIndex=" + getServerIndex() +
+                "serverIndex=" + getIdentifier() +
                 '}';
     }
 }

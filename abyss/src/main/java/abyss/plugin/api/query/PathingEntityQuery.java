@@ -10,8 +10,7 @@ public interface PathingEntityQuery<T extends EntityQuery<T>> extends EntityQuer
 
     T interactIndex(int index);
 
-    T activeHeadBar(float mineValue, float maxValue);
+    T activeHeadBar(int headbarId, float mineValue, float maxValue);
 
-    T activeHeadBar(int barId);
-
+    T hitmark(int hitmarkId, int min, int max);
 }

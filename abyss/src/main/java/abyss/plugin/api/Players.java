@@ -129,6 +129,6 @@ public final class Players {
      * @return The found player, or NULL if one was not found.
      */
     public static Player byServerIndex(int index) {
-        return closest((p) -> p.getServerIndex() == index);
+        return closest((p) -> p.getIdentifier() == index);
     }
 }

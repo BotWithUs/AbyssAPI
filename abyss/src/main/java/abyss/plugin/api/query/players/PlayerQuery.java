@@ -5,6 +5,7 @@ import abyss.plugin.api.Player;
 import abyss.plugin.api.Vector3;
 import abyss.plugin.api.query.results.EntityResultSet;
 import abyss.plugin.api.query.PathingEntityQuery;
+import abyss.plugin.api.query.results.PathingEntityResultSet;
 import abyss.plugin.api.world.WorldTile;
 
 import java.util.List;
@@ -25,7 +26,10 @@ public final class PlayerQuery implements PathingEntityQuery<PlayerQuery> {
     private float statusBarMin;
     private float statusBarMax;
     private int statusBarId;
-    private Vector3 nearest;
+
+    private int hitmarkId;
+    private int hitmarkMinValue;
+    private int hitmarkMaxValue;
 
     public PlayerQuery() {
         this.ids = null;
@@ -38,15 +42,16 @@ public final class PlayerQuery implements PathingEntityQuery<PlayerQuery> {
         this.healthDeviation = 0;
         this.serverIndex = -1;
         this.interactIndex = -1;
-        this.statusBarMin = -1;
-        this.statusBarMax = -1;
+        this.statusBarMin = 0.0f;
+        this.statusBarMax = 0.0f;
         this.statusBarId = -1;
-        this.nearest = null;
+        this.hitmarkMinValue = -1;
+        this.hitmarkMaxValue = -1;
+        this.hitmarkId = -1;
     }
 
     @Override
     public PlayerQuery id(int... ids) {
-        this.ids = ids;
         return this;
     }
 
@@ -76,8 +81,6 @@ public final class PlayerQuery implements PathingEntityQuery<PlayerQuery> {
 
     @Override
     public PlayerQuery health(int value, int deviation) {
-        this.health = value;
-        this.healthDeviation = deviation;
         return this;
     }
 
@@ -100,20 +103,23 @@ public final class PlayerQuery implements PathingEntityQuery<PlayerQuery> {
     }
 
     @Override
-    public PlayerQuery activeHeadBar(float mineValue, float maxValue) {
+    public PlayerQuery activeHeadBar(int headbarId, float mineValue, float maxValue) {
+        this.statusBarId = headbarId;
         this.statusBarMin = mineValue;
         this.statusBarMax = maxValue;
         return this;
     }
 
     @Override
-    public PlayerQuery activeHeadBar(int barId) {
-        this.statusBarId = barId;
+    public PlayerQuery hitmark(int hitmarkId, int min, int max) {
+        this.hitmarkId = hitmarkId;
+        this.hitmarkMinValue = min;
+        this.hitmarkMaxValue = max;
         return this;
     }
 
-    public EntityResultSet<Player> result() {
-        return new EntityResultSet<>(results());
+    public PathingEntityResultSet<Player> result() {
+        return new PathingEntityResultSet<>(results());
     }
     
     private native List<Player> results();

@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class EntityResultSet<T extends Locatable> implements ResultSet<T> {
+public class EntityResultSet<T extends Locatable> implements ResultSet<T> {
 
     private final List<T> results;
 
@@ -76,6 +76,14 @@ public final class EntityResultSet<T extends Locatable> implements ResultSet<T> 
             return Optional.empty();
         }
         return Optional.of(results.get(index));
+    }
+
+    @Override
+    public Optional<T> random() {
+        if (results.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(results.get(random.nextInt(0, results.size())));
     }
 
     @Override

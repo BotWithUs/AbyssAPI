@@ -16,14 +16,15 @@ public class WorldObject extends Vector3i {
         super(x, y, z);
     }
 
-    public WorldObject(int x, int y, int z, int id, ObjectType type) {
+    public WorldObject(int x, int y, int z, int id, int rotation, ObjectType type) {
         super(x, y, z);
         this.id = id;
         this.type = type;
+        this.rotation = rotation;
     }
 
     public WorldObject(int objectId, ObjectType type, int rotation, int x, int y, int objectPlane) {
-        this(x, y, objectPlane, objectId, type);
+        this(x, y, objectPlane, objectId, rotation, type);
     }
 
     public ObjectType getType() {
