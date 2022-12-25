@@ -90,7 +90,7 @@ public final class Npc extends PathingEntity {
     }
 
     public boolean interact(String option) {
-        return interact(option, (o1, o2) -> o2.contains(o1));
+        return interact(option, (o1, o2) -> o2 !=null && o2.contains(o1));
     }
 
     /**
