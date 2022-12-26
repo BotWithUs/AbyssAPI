@@ -9,7 +9,6 @@ import java.util.*;
  * and will not be changed after this object is created.
  */
 public abstract class PathingEntity extends Entity implements Identifiable {
-
     public static final int STATUS_HEALTH = 0;
     public static final int STATUS_ADRENALINE = 5;
     public static final int STATUS_MINING = 13;
