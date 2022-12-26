@@ -1,6 +1,8 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.query.Queries;
 import abyss.plugin.api.query.players.PlayerQuery;
+import abyss.plugin.api.query.spot_animations.SpotAnimationQuery;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,18 +12,21 @@ import java.util.function.Predicate;
 /**
  * A provider for effects.
  */
-@Deprecated(forRemoval = true)
 public final class SpotAnimations {
 
     private SpotAnimations() {
     }
+
+    private static final SpotAnimationQuery spotanims = Queries.newSpotAnimationQuery();
 
     /**
      * Retrieves all effects.
      *
      * @return All effects.
      */
-    public static native SpotAnimation[] all();
+    public static SpotAnimation[] all() {
+        return spotanims.result().stream().toArray(SpotAnimation[]::new);
+    }
 
     /**
      * Retrieves all effects that match the provided filter.

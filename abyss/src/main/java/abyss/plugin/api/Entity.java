@@ -28,7 +28,7 @@ public abstract class Entity implements Locatable {
     /**
      * Do not make instances of this.
      */
-    Entity() {
+    protected Entity() {
         name = "";
         nameBinary = "N/A".getBytes();
     }

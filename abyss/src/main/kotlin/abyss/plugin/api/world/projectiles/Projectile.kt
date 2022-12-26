@@ -7,6 +7,7 @@ import abyss.plugin.api.entities.Locatable
 class Projectile : Locatable {
 
     private val id: Int = -1
+
     private val scenePosition: Vector3? = null
     private val globalPosition: Vector3i? = null
 
