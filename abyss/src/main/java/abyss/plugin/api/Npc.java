@@ -72,9 +72,15 @@ public final class Npc extends PathingEntity {
      * Interacts with this NPC.
      */
     public boolean interact(String option, BiPredicate<String, String> predicate) {
+        if(option == null || predicate == null) {
+            return false;
+        }
         String[] options = getOptionNames();
         int m = Math.min(OPTION_NAME_MAP.length, options.length);
         for (int i = 0; i < m; i++) {
+            if(options[i] == null) {
+                continue;
+            }
             if (predicate.test(option, options[i])) {
                 interact(OPTION_NAME_MAP[i]);
                 return true;

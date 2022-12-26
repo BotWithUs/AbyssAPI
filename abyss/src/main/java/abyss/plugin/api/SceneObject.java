@@ -83,6 +83,9 @@ public class SceneObject extends Entity {
     }
 
     public boolean interact(String option, BiPredicate<String, String> predicate) {
+        if(option == null || predicate == null) {
+            return false;
+        }
         CacheObject type = getType();
         if (type == null) {
             return false;
@@ -91,6 +94,9 @@ public class SceneObject extends Entity {
         String[] options = type.getOptionNames();
         int m = Math.min(OPTION_NAME_MAP.length, options.length);
         for (int i = 0; i < m; i++) {
+            if(options[i] == null) {
+                continue;
+            }
             if (predicate.test(option, options[i])) {
                 interact(OPTION_NAME_MAP[i]);
                 return true;
