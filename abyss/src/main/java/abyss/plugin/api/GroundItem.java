@@ -28,6 +28,8 @@ public final class GroundItem extends Entity {
     private int id;
     private int amount;
 
+    private CacheItem type;
+
     /**
      * Do not make instances of this.
      */
@@ -58,12 +60,10 @@ public final class GroundItem extends Entity {
      * @return The name of this item.
      */
     public String getName() {
-        CacheItem item = Cache.getItem(id, true);
-        if (item == null) {
-            return Abyss.BAD_DATA_STRING;
+        if(type == null) {
+            return "N/A";
         }
-
-        return item.getName();
+        return type.getName();
     }
 
     /**
@@ -72,12 +72,19 @@ public final class GroundItem extends Entity {
      * @return The names of options when right clicking this ground item.
      */
     public String[] getOptionNames() {
-        CacheItem item = Cache.getItem(id, true);
-        if (item == null) {
+        if(type == null) {
             return new String[0];
         }
+        return type.getGroundOptionNames();
+    }
 
-        return item.getGroundOptionNames();
+    /**
+     * Gets the Item Definition
+     * @return The Item Definition
+     */
+
+    public CacheItem getType() {
+        return type;
     }
 
     /**
@@ -96,6 +103,9 @@ public final class GroundItem extends Entity {
         String[] options = getOptionNames();
         int m = Math.min(OPTION_NAME_MAP.length, options.length);
         for (int i = 0; i < m; i++) {
+            if(options[i] == null) {
+                continue;
+            }
             if (predicate.test(option, options[i])) {
                 interact(OPTION_NAME_MAP[i]);
                 return true;

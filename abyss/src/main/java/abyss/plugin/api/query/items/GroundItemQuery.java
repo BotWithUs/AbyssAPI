@@ -2,7 +2,6 @@ package abyss.plugin.api.query.items;
 
 import abyss.plugin.api.Area3di;
 import abyss.plugin.api.GroundItem;
-import abyss.plugin.api.Vector3;
 import abyss.plugin.api.query.EntityQuery;
 import abyss.plugin.api.query.results.EntityResultSet;
 import abyss.plugin.api.world.WorldTile;
@@ -19,7 +18,6 @@ public class GroundItemQuery implements EntityQuery<GroundItemQuery> {
     private String[] options;
     private Area3di area;
     private WorldTile tile;
-    private Vector3 nearest;
 
     public GroundItemQuery() {
         this.ids = null;
@@ -27,7 +25,6 @@ public class GroundItemQuery implements EntityQuery<GroundItemQuery> {
         this.options = null;
         this.area = null;
         this.tile = null;
-        this.nearest = null;
         this.namePattern = null;    
     }
 
