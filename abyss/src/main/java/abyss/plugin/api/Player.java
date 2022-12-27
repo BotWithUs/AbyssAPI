@@ -17,7 +17,6 @@ public final class Player extends PathingEntity {
     private final Map<EquipmentSlot, Integer> equipment = new HashMap<>();
     private int totalLevel;
     private int combatLevel;
-
     private int targetIndex;
 
     /**
@@ -94,7 +93,7 @@ public final class Player extends PathingEntity {
     /**
      * Retrieves this player's adrenaline fill percentage (0-1), if currently available.
      *
-     * @return This player's adrenaline fill percentage, or 0 if not available.
+     * @return This player's adrenaline fill percentage, or -1 if not available.
      */
     public float getAdrenaline() {
         List<Headbar> adrenalineBar = getHeadbars(STATUS_ADRENALINE);
@@ -111,7 +110,7 @@ public final class Player extends PathingEntity {
     @Override
     public String toString() {
         return "Player{" +
-                "serverIndex=" + getIdentifier() +
+                "identifier=" + getIdentifier() +
                 '}';
     }
 }
