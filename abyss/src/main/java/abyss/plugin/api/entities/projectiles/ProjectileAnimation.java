@@ -67,10 +67,16 @@ public final class ProjectileAnimation extends Entity {
         return targetType;
     }
 
+    /**
+     * Calculates the velocity of this animation across the total distance.
+     * This value is the average of the lowest and highest velocity.
+     */
     public double getVelocity() {
         double distance = startPosition.distance(endPosition);
         return distance / (endCycle - startCycle);
     }
+
+    //public double getAcceleration(){}
 
     public Vector2i getCurrentPosition(long currentCycle) {
         double elapsedTime = currentCycle - startCycle;

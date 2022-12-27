@@ -21,6 +21,7 @@ public abstract class PathingEntity extends Entity implements Identifiable {
     private boolean isAnimationPlaying;
     private int interactingIndex;
     private Vector2 directionOffset;
+    private String chatLine;
 
     /**
      * Do not make instances of this.
@@ -42,6 +43,13 @@ public abstract class PathingEntity extends Entity implements Identifiable {
         return getIdentifier();
     }
 
+    /**
+     * Gets the current overhead chatline.
+     * @return A String if a ChatLine is being displayed, otherwise null.
+     */
+    public String getChatLine(){
+        return chatLine;
+    }
 
     /**
      * Determines if this spirit is currently moving.
