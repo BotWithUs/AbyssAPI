@@ -146,6 +146,31 @@ public class SceneObject extends Entity {
         return Utils.isSceneObjectReachable(this);
     }
 
+    public Area3di toArea3di() {
+        Vector2i min = getMinTile();
+        Vector2i max = getMaxTile();
+        return new Area3di(new Vector3i(min.getX(), min.getY(), 0), new Vector3i(max.getX(), max.getY(), 0));
+    }
+
+    private Vector2i getMinTile() {
+        Vector3i pos = getGlobalPosition();
+        Vector2i size = getSize();
+        return new Vector2i(pos.getX() - size.getX() / 2, pos.getY() - size.getY() / 2);
+    }
+
+    private Vector2i getMaxTile() {
+        Vector3i pos = getGlobalPosition();
+        Vector2i size = getSize();
+        return new Vector2i(pos.getX() + size.getX() / 2, pos.getY() + size.getY() / 2);
+    }
+
+    public Vector2i size() {
+        if(type == null) {
+            return new Vector2i(0, 0);
+        }
+        return new Vector2i(type.getSizeX(), type.getSizeY());
+    }
+
     @Override
     public String toString() {
         return "SceneObject{" +

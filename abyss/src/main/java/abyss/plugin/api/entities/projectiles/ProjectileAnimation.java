@@ -1,11 +1,8 @@
 package abyss.plugin.api.entities.projectiles;
 
 import abyss.plugin.api.Entity;
-import abyss.plugin.api.PathingEntity;
 import abyss.plugin.api.Vector2i;
 import abyss.plugin.api.Vector3i;
-import abyss.plugin.api.query.Queries;
-import org.jetbrains.annotations.Nullable;
 
 public final class ProjectileAnimation extends Entity {
 
