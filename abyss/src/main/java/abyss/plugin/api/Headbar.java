@@ -9,16 +9,16 @@ public class Headbar {
     }
 
     /**
-     * Gets the id of the current headbar. Can also be thought of as the type of headbar.
+     * Gets the id of the current Headbar. Can also be thought of as the type of Headbar.
      *
-     * @return the id of this headbar.
+     * @return the id of this Headbar.
      */
     public int getId() {
         return id;
     }
 
     /**
-     * Gets the current value of this headbar in the form of the width.
+     * Gets the current value of this Headbar in the form of the width.
      * Typically, between 0 and 255, but for some bosses and other scenarios it can be larger or smaller.
      *
      * @return an integer between 0 and the max value of the Headbar (commonly 255.0).
@@ -29,7 +29,7 @@ public class Headbar {
 
     /**
      * Gets the current value of this Headbar as a percentage.
-     * It takes into account the maximum headbar value for the given headbar.
+     * It takes into account the maximum Headbar value for the given Headbar.
      *
      * @return a percentage (double precision floating point) value between 0 and 100.
      */

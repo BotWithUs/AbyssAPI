@@ -64,12 +64,18 @@ public final class ProjectileAnimation extends Entity {
         return targetType;
     }
 
+    /**
+     * Calculates the velocity of this animation across the total distance.
+     * This value is the average of the lowest and highest velocity.
+     */
     public double getVelocity() {
         double distance = startPosition.distance(endPosition);
         return distance / (endCycle - startCycle);
     }
 
-    public Vector2i getCurrentTile(long currentCycle) {
+    //public double getAcceleration(){}
+
+    public Vector2i getCurrentPosition(long currentCycle) {
         double elapsedTime = currentCycle - startCycle;
         double velocity = getVelocity();
         double distanceTraveled = velocity * elapsedTime;
@@ -77,8 +83,9 @@ public final class ProjectileAnimation extends Entity {
         double xDiff = endPosition.getX() - startPosition.getX();
         double yDiff = endPosition.getY() - startPosition.getY();
 
-        double xTraveled = distanceTraveled * (xDiff / startPosition.distance(endPosition));
-        double yTraveled = distanceTraveled * (yDiff / startPosition.distance(endPosition));
+        double dist = startPosition.distance(endPosition);
+        double xTraveled = distanceTraveled * (xDiff / dist);
+        double yTraveled = distanceTraveled * (yDiff / dist);
 
         int x = (int) (startPosition.getX() + xTraveled);
         int y = (int) (startPosition.getY() + yTraveled);
