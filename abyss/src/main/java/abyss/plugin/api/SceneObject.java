@@ -1,10 +1,8 @@
 package abyss.plugin.api;
 
 import abyss.Utils;
-import abyss.map.Region;
 
 import java.util.function.BiPredicate;
-import java.util.function.Predicate;
 
 import static abyss.plugin.api.Actions.*;
 
@@ -34,7 +32,7 @@ public class SceneObject extends Entity {
     private SceneObject() {
     }
 
-    public CacheObject getType() {        
+    public CacheObject getType() {
         return type;
     }
 
@@ -83,7 +81,7 @@ public class SceneObject extends Entity {
     }
 
     public boolean interact(String option, BiPredicate<String, String> predicate) {
-        if(option == null || predicate == null) {
+        if (option == null || predicate == null) {
             return false;
         }
         CacheObject type = getType();
@@ -94,7 +92,7 @@ public class SceneObject extends Entity {
         String[] options = type.getOptionNames();
         int m = Math.min(OPTION_NAME_MAP.length, options.length);
         for (int i = 0; i < m; i++) {
-            if(options[i] == null) {
+            if (options[i] == null) {
                 continue;
             }
             if (predicate.test(option, options[i])) {
@@ -147,26 +145,17 @@ public class SceneObject extends Entity {
     }
 
     public Area3di toArea3di() {
-        Vector2i min = getMinTile();
-        Vector2i max = getMaxTile();
-        return new Area3di(new Vector3i(min.getX(), min.getY(), 0), new Vector3i(max.getX(), max.getY(), 0));
-    }
-
-    private Vector2i getMinTile() {
-        Vector3i pos = getGlobalPosition();
+        Vector3i base = getGlobalPosition();
         Vector2i size = getSize();
-        return new Vector2i(pos.getX() - size.getX() / 2, pos.getY() - size.getY() / 2);
-    }
-
-    private Vector2i getMaxTile() {
-        Vector3i pos = getGlobalPosition();
-        Vector2i size = getSize();
-        return new Vector2i(pos.getX() + size.getX() / 2, pos.getY() + size.getY() / 2);
+        Vector2i min = new Vector2i(base.getX() - size.getX() / 2, base.getY() - size.getY() / 2);
+        Vector2i max = new Vector2i(base.getX() + size.getX() / 2, base.getY() + size.getY() / 2);
+        int z = base.getZ();
+        return new Area3di(new Vector3i(min.getX(), min.getY(), z), new Vector3i(max.getX(), max.getY(), z));
     }
 
     public Vector2i size() {
-        if(type == null) {
-            return new Vector2i(0, 0);
+        if (type == null) {
+            return new Vector2i(1, 1);
         }
         return new Vector2i(type.getSizeX(), type.getSizeY());
     }
