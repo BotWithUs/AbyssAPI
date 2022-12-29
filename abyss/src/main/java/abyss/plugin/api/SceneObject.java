@@ -153,13 +153,6 @@ public class SceneObject extends Entity {
         return new Area3di(new Vector3i(min.getX(), min.getY(), z), new Vector3i(max.getX(), max.getY(), z));
     }
 
-    public Vector2i size() {
-        if (type == null) {
-            return new Vector2i(1, 1);
-        }
-        return new Vector2i(type.getSizeX(), type.getSizeY());
-    }
-
     @Override
     public String toString() {
         return "SceneObject{" +
