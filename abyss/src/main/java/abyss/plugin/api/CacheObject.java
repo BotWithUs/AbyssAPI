@@ -8,9 +8,11 @@ import java.nio.charset.StandardCharsets;
 public final class CacheObject extends AsyncData {
 
     private int id = 0;
-    private long address = 0;
-    private byte[] binaryName = Abyss.BAD_DATA_STRING.getBytes(StandardCharsets.US_ASCII);
-    private byte[][] binaryOptionNames = new byte[0][];
+    private final long address = 0;
+
+    private final String name;
+
+    private final String[] actions;
 
     private int sizeX;
     private int sizeY;
@@ -23,6 +25,8 @@ public final class CacheObject extends AsyncData {
 
     CacheObject(int id) {
         this.id = id;
+        this.name = "";
+        this.actions = new String[0];
     }
 
     /**
@@ -46,18 +50,14 @@ public final class CacheObject extends AsyncData {
      * @return The name of the object.
      */
     public String getName() {
-        return new String(binaryName);
+        return name;
     }
 
     /**
      * @return The name of options when right clicking this object.
      */
     public String[] getOptionNames() {
-        String[] options = new String[binaryOptionNames.length];
-        for (int i = 0; i < binaryOptionNames.length; i++) {
-            options[i] = binaryOptionNames[i] == null ? "" : new String(binaryOptionNames[i]);
-        }
-        return options;
+        return actions;
     }
 
     public int getSizeX() {
@@ -90,6 +90,6 @@ public final class CacheObject extends AsyncData {
      * @return If this object is valid.
      */
     public boolean isValid() {
-        return super.isLoaded() && binaryName != null && binaryOptionNames != null;
+        return super.isLoaded() && !name.isEmpty() && actions.length > 0;
     }
 }

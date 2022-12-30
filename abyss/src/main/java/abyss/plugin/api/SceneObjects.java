@@ -17,7 +17,6 @@ import java.util.stream.Stream;
  * These methods may increase RAM usage significantly due to the amount of objects available
  * in the scene.
  */
-@Deprecated(forRemoval = true)
 public final class SceneObjects {
 
     private SceneObjects() {
@@ -30,7 +29,9 @@ public final class SceneObjects {
      *
      * @return All objects in the scene.
      */
-    public static native SceneObject[] all();
+    public static SceneObject[] all() {
+        return all.result().stream().toList().toArray(SceneObject[]::new);
+    }
 
     /**
      * Retrieves all effects that match the provided filter.

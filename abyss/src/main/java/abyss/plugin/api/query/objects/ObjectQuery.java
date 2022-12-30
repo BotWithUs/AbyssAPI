@@ -24,10 +24,6 @@ public final class ObjectQuery implements EntityQuery<ObjectQuery> {
 
     private Pattern namePattern;
 
-    private boolean notHidden;
-
-    private Vector3 nearest;
-
     public ObjectQuery() {
         this.ids = null;
         this.names = null;
@@ -35,8 +31,6 @@ public final class ObjectQuery implements EntityQuery<ObjectQuery> {
         this.namePattern = null;
         this.area = null;
         this.tile = null;
-        this.notHidden = false;
-        this.nearest = null;
     }
 
     @Override
@@ -71,11 +65,6 @@ public final class ObjectQuery implements EntityQuery<ObjectQuery> {
 
     public ObjectQuery options(String... options) {
         this.options = options;
-        return this;
-    }
-
-    public ObjectQuery notHidden() {
-        this.notHidden = true;
         return this;
     }
 

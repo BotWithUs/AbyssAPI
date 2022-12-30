@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.query.Queries;
+import abyss.plugin.api.query.items.GroundItemQuery;
 import abyss.plugin.api.query.players.PlayerQuery;
 
 import java.util.LinkedList;
@@ -10,18 +12,21 @@ import java.util.function.Predicate;
 /**
  * A provider of ground items.
  */
-@Deprecated(forRemoval = true)
 public final class GroundItems {
 
     private GroundItems() {
     }
+
+    private final static GroundItemQuery all = Queries.newGroundItemQuery();
 
     /**
      * Retrieves all ground items.
      *
      * @return All ground items.
      */
-    public static native GroundItem[] all();
+    public static GroundItem[] all() {
+        return all.result().stream().toArray(GroundItem[]::new);
+    }
 
     /**
      * Retrieves all ground items that match the provided filter.

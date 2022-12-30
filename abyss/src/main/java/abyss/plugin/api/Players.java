@@ -1,5 +1,8 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.query.Queries;
+import abyss.plugin.api.query.players.PlayerQuery;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -10,25 +13,29 @@ import java.util.function.Predicate;
 /**
  * A provider of players.
  */
-@Deprecated(forRemoval = true)
 public final class Players {
 
     private Players() {
     }
 
+    private final static PlayerQuery all = Queries.newPlayerQuery();
     /**
      * Retrieves the local player.
      *
      * @return The local player, or NULL if there is no local player.
      */
-    public static native Player self();
+    public static Player self() {
+        return PlayerQuery.self();
+    }
 
     /**
      * Retrieves all players.
      *
      * @return All players.
      */
-    public static native Player[] all();
+    public static Player[] all() {
+        return all.result().stream().toList().toArray(Player[]::new);
+    }
 
     /**
      * Retrieves all players that match the provided filter.
