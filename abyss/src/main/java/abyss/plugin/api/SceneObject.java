@@ -2,6 +2,7 @@ package abyss.plugin.api;
 
 import abyss.Utils;
 
+import java.util.List;
 import java.util.function.BiPredicate;
 
 import static abyss.plugin.api.Actions.*;
