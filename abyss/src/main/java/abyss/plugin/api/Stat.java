@@ -9,6 +9,11 @@ public class Stat {
     private int max;
     private int xp;
 
+    private int f2pExperienceCap;
+    private int f2pLevelCap;
+
+    private boolean isMembers;
+
     public Stat() {
     }
 
@@ -52,6 +57,32 @@ public class Stat {
      */
     public int getXp() {
         return xp;
+    }
+
+    /**
+     * Retrieves the maximum amount of experience the player can get as a none member
+     * @return The experience cap
+     */
+
+    public int getF2pExperienceCap() {
+        return f2pExperienceCap;
+    }
+
+    /**
+     * Retrieves the maximum level that the player can get as a none member
+     * @return The level cap
+     */
+
+    public int getF2pLevelCap() {
+        return f2pLevelCap;
+    }
+
+    /**
+     * Retrieves is the skill is a members only skill
+     * @return if the skill is members
+     */
+    public boolean isMembers() {
+        return isMembers;
     }
 
     @Override

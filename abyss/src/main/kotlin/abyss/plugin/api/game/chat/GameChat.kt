@@ -1,15 +1,18 @@
 package abyss.plugin.api.game.chat
 
+import abyss.plugin.api.query.Queries
 import abyss.plugin.api.variables.AbyssAPI
 import java.util.*
 import java.util.function.Predicate
 import java.util.stream.Stream
-
-@Deprecated("for removal use quries", replaceWith = ReplaceWith("Queries.newChatQuery()", "abyss.plugin.api.query.Queries"))
 object GameChat {
 
+    private val all = Queries.newChatQuery()
+
     @AbyssAPI
-    external fun all() : Array<ChatMessage>
+    fun all() : Array<ChatMessage> {
+        return all.result().stream().toList().toTypedArray()
+    }
 
     @JvmStatic
     fun filter(predicate: Predicate<ChatMessage>) : List<ChatMessage> {

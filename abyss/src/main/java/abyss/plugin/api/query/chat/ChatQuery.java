@@ -16,19 +16,11 @@ public class ChatQuery {
 
     private Pattern messagePattern;
 
-    private int takeCount;
-
     public ChatQuery() {
         this.names = null;
         this.messages = null;
         this.types = null;
         this.messagePattern = null;
-        this.takeCount = -1;
-    }
-
-    public ChatQuery take(int count) {
-        this.takeCount = count;
-        return this;
     }
 
     public ChatQuery names(String... names) {

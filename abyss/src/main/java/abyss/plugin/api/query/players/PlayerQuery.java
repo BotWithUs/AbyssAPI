@@ -2,6 +2,7 @@ package abyss.plugin.api.query.players;
 
 import abyss.plugin.api.Area3di;
 import abyss.plugin.api.Player;
+import abyss.plugin.api.Stat;
 import abyss.plugin.api.Vector3;
 import abyss.plugin.api.query.results.EntityResultSet;
 import abyss.plugin.api.query.PathingEntityQuery;
@@ -125,4 +126,8 @@ public final class PlayerQuery implements PathingEntityQuery<PlayerQuery> {
     private native List<Player> results();
 
     public static native Player self();
+
+    public static native Stat getStatById(int id);
+
+    public static native Stat getStatByName(String name);
 }

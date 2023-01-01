@@ -1,6 +1,8 @@
 package abyss.plugin.api;
 
 
+import abyss.plugin.api.query.players.PlayerQuery;
+
 import static abyss.plugin.api.ConfigProvider.*;
 
 /**
@@ -96,7 +98,9 @@ public final class Client {
      * @param id The id of the stat to retrieve.
      * @return The stat with the provided id, or NULL if one was not found.
      */
-    public static native Stat getStatById(int id);
+    public static Stat getStatById(int id) {
+        return PlayerQuery.getStatById(id);
+    }
 
     /**
      * Retrieves the combat mode that the game is in.

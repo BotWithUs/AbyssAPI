@@ -3,13 +3,10 @@ package abyss.plugin.api.query.projectiles;
 import abyss.plugin.api.Area3di;
 import abyss.plugin.api.PathingEntity;
 import abyss.plugin.api.Player;
-import abyss.plugin.api.Vector3;
 import abyss.plugin.api.entities.projectiles.ProjectileAnimation;
-import abyss.plugin.api.query.results.EntityResultSet;
 import abyss.plugin.api.query.IdentityQuery;
 import abyss.plugin.api.query.results.ProjectileResultSet;
 import abyss.plugin.api.world.WorldTile;
-import abyss.plugin.api.world.projectiles.Projectile;
 
 import java.util.List;
 
