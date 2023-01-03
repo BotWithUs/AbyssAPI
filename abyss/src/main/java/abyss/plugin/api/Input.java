@@ -78,7 +78,7 @@ public final class Input {
                 waitFor(i64(delayMin, delayMax));
                 release(VK_SHIFT);
             } else {
-                key(c);
+                key(type(c));
             }
         }
     }
