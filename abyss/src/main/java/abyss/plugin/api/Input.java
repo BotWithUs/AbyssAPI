@@ -41,9 +41,9 @@ public final class Input {
      * @param vk The virtual key code of the key to press.
      */
     public static void typeKey(int vk) {
-        press(vk);
+        pressKey(vk);
         waitFor(Rng.i64(30, 250));
-        release(vk);
+        releaseKey(vk);
     }
 
     /**
@@ -72,11 +72,11 @@ public final class Input {
         for (char c : s.toCharArray()) {
             waitFor(i64(delayMin, delayMax));
             if (Character.isUpperCase(c)) {
-                press(VK_SHIFT);
+                pressKey(VK_SHIFT);
                 waitFor(i64(delayMin, delayMax));
                 typeKey(toKeyCode(c));
                 waitFor(i64(delayMin, delayMax));
-                release(VK_SHIFT);
+                releaseKey(VK_SHIFT);
             } else {
                 typeKey(toKeyCode(c));
             }
