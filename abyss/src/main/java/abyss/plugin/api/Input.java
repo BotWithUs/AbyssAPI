@@ -26,14 +26,14 @@ public final class Input {
      *
      * @param vk The virtual key code of the key to press.
      */
-    public static native void press(int vk);
+    public static native void pressKey(int vk);
 
     /**
      * Releases a key on the keyboard.
      *
      * @param vk The virtual key code of the key to release.
      */
-    public static native void release(int vk);
+    public static native void releaseKey(int vk);
 
     /**
      * Presses and releases a key on the keyboard.
