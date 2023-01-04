@@ -40,9 +40,9 @@ public final class Input {
      *
      * @param vk The virtual key code of the key to press.
      */
-    public static void key(int vk) {
+    public static void typeKey(int vk) {
         press(vk);
-        waitFor(250);
+        waitFor(Rng.i64(30, 250));
         release(vk);
     }
 
@@ -71,14 +71,14 @@ public final class Input {
     public static void enter(String s, long delayMin, long delayMax) {
         for (char c : s.toCharArray()) {
             waitFor(i64(delayMin, delayMax));
-            if(Character.isUpperCase(c)) {
+            if (Character.isUpperCase(c)) {
                 press(VK_SHIFT);
                 waitFor(i64(delayMin, delayMax));
-                key(type(c));
+                typeKey(toKeyCode(c));
                 waitFor(i64(delayMin, delayMax));
                 release(VK_SHIFT);
             } else {
-                key(type(c));
+                typeKey(toKeyCode(c));
             }
         }
     }
@@ -89,10 +89,10 @@ public final class Input {
      * @param s The string to enter.
      */
     public static void enter(String s) {
-        enter(s, 10, 30);
+        enter(s, 20, 50);
     }
 
-    public static int type(char character) {
+    public static int toKeyCode(char character) {
         switch (character) {
             case 'a':
             case 'A':
@@ -256,5 +256,4 @@ public final class Input {
                 throw new IllegalArgumentException("Cannot type character " + character);
         }
     }
-
 }
