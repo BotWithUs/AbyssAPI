@@ -14,7 +14,7 @@ import java.util.Map;
  * and will not be changed after this object is created.
  */
 public final class Player extends PathingEntity {
-    private final Map<EquipmentSlot, Integer> equipment = new HashMap<>();
+    private final Map<EquipmentSlot, Integer> wornItems = new HashMap<>();
     private int totalLevel;
     private int combatLevel;
     private int targetIndex;
@@ -44,17 +44,33 @@ public final class Player extends PathingEntity {
     }
 
     /**
-     * Retrieves all equipment this player is wearing. Not all equipment is visible to remote players (e.g. ring slot.)
+     * Retrieves all visible worn items that this player is wearing. Not all equipment is visible to remote players (e.g. ring slot.)
      *
-     * @return All equipment this player is wearing.
+     * @return All worn items that this player is wearing.
      */
-    public Map<EquipmentSlot, Item> getEquipment() {
+    public Map<EquipmentSlot, Item> getWornItems() {
         Map<EquipmentSlot, Item> conv = new HashMap<>();
-        for (EquipmentSlot slot : equipment.keySet()) {
-            int id = equipment.get(slot);
-            conv.put(slot, new Item(id));
+        for (EquipmentSlot slot : wornItems.keySet()) {
+            int id = wornItems.get(slot);
+            if (id != -1) {
+                conv.put(slot, new Item(id));
+            }
         }
         return conv;
+    }
+
+    /**
+     * Gets the visible worn item that this player is wearing in the specified slot
+     *
+     * @param slot the slot to check for a visible worn item
+     * @return the worn item, otherwise null
+     */
+    public Item getWornItem(EquipmentSlot slot) {
+        int id = wornItems.get(slot);
+        if (id == -1) {
+            return null;
+        }
+        return new Item(id);
     }
 
     /**
@@ -78,7 +94,7 @@ public final class Player extends PathingEntity {
     /**
      * Retrieves this player's health percentage (0-1), if they are currently in combat.
      * The status bar must be displayed above the player's head to retrieve their health.
-     * If you need the local player's health, you can use the more reliable {@link Client#getCurrentHealth() Client#getCurrentHealth}
+     * If you need the local player's health, you can use the more reliable {@link Client#getCurrentHealth()}
      *
      * @return This player's health percentage, or -1 if not in combat.
      */
