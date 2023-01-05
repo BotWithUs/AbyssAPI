@@ -1,6 +1,6 @@
 package abyss.plugin.api.query.results;
 
-import abyss.plugin.api.entities.projectiles.ProjectileAnimation;
+import abyss.plugin.api.entities.ProjectileAnimation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;

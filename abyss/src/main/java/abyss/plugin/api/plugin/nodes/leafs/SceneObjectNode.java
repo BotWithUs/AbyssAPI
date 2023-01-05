@@ -1,6 +1,6 @@
 package abyss.plugin.api.plugin.nodes.leafs;
 
-import abyss.plugin.api.SceneObject;
+import abyss.plugin.api.entities.SceneObject;
 import abyss.plugin.api.actions.ObjectAction;
 import abyss.plugin.api.plugin.TreeContext;
 import abyss.plugin.api.plugin.TreeNode;

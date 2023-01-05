@@ -1,7 +1,7 @@
 package abyss.plugin.api.query.spot_animations;
 
 import abyss.plugin.api.Area3di;
-import abyss.plugin.api.SpotAnimation;
+import abyss.plugin.api.entities.SpotAnimation;
 import abyss.plugin.api.query.results.EntityResultSet;
 import abyss.plugin.api.query.IdentityQuery;
 import abyss.plugin.api.world.WorldTile;

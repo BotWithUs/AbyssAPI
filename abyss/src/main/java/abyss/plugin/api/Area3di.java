@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.entities.Entity;
+
 import java.util.Objects;
 
 import static abyss.plugin.api.Rng.i32;

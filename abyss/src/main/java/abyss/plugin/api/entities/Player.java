@@ -1,6 +1,10 @@
-package abyss.plugin.api;
+package abyss.plugin.api.entities;
 
 import abyss.Utils;
+import abyss.plugin.api.Client;
+import abyss.plugin.api.EquipmentSlot;
+import abyss.plugin.api.entities.state.Headbar;
+import abyss.plugin.api.Item;
 import abyss.plugin.api.query.players.PlayerQuery;
 import abyss.plugin.api.variables.Variables;
 import abyss.plugin.api.world.WorldTile;
@@ -31,11 +35,13 @@ public final class Player extends PathingEntity {
         if (self == null) {
             return false;
         }
+
         return Utils.getRouteDistanceTo(self.getGlobalPosition(), new WorldTile(getGlobalPosition().getX(), getGlobalPosition().getY(), getGlobalPosition().getZ())) != -1;
     }
 
     /**
      * Determines if this player is under attack currently.
+     * This only works for the local player and should be considered for revision.
      *
      * @return If this player is under attack currently.
      */

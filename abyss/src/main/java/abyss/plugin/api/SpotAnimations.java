@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.entities.Player;
+import abyss.plugin.api.entities.SpotAnimation;
 import abyss.plugin.api.query.Queries;
 import abyss.plugin.api.query.players.PlayerQuery;
 import abyss.plugin.api.query.spot_animations.SpotAnimationQuery;

@@ -1,7 +1,7 @@
 package abyss.plugin.api.query.items;
 
 import abyss.plugin.api.Area3di;
-import abyss.plugin.api.GroundItem;
+import abyss.plugin.api.entities.GroundItem;
 import abyss.plugin.api.query.EntityQuery;
 import abyss.plugin.api.query.results.EntityResultSet;
 import abyss.plugin.api.world.WorldTile;

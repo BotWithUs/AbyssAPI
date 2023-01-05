@@ -1,6 +1,9 @@
-package abyss.plugin.api;
+package abyss.plugin.api.entities;
 
-import abyss.plugin.api.entities.Identifiable;
+import abyss.plugin.api.*;
+import abyss.plugin.api.entities.markers.Identifiable;
+import abyss.plugin.api.entities.state.Headbar;
+import abyss.plugin.api.entities.state.Hitmark;
 
 import java.util.*;
 

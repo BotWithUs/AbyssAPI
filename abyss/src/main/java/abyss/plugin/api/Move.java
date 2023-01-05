@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.entities.Player;
+
 import static abyss.plugin.api.Rng.i32;
 
 /**

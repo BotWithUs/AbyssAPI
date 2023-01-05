@@ -1,7 +1,7 @@
 package abyss.plugin.api.query.npc;
 
 import abyss.plugin.api.*;
-import abyss.plugin.api.query.results.EntityResultSet;
+import abyss.plugin.api.entities.Npc;
 import abyss.plugin.api.query.PathingEntityQuery;
 import abyss.plugin.api.query.results.PathingEntityResultSet;
 import abyss.plugin.api.world.WorldTile;

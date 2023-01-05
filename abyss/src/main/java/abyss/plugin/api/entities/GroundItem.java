@@ -1,6 +1,8 @@
-package abyss.plugin.api;
+package abyss.plugin.api.entities;
 
 import abyss.Utils;
+import abyss.plugin.api.Actions;
+import abyss.plugin.api.CacheItem;
 
 import java.util.Objects;
 import java.util.function.BiPredicate;

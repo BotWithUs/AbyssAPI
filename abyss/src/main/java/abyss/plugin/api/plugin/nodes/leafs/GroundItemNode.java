@@ -2,7 +2,7 @@ package abyss.plugin.api.plugin.nodes.leafs;
 
 import abyss.Utils;
 import abyss.plugin.api.Actions;
-import abyss.plugin.api.GroundItem;
+import abyss.plugin.api.entities.GroundItem;
 import abyss.plugin.api.actions.GroundItemAction;
 import abyss.plugin.api.plugin.TreeContext;
 import abyss.plugin.api.plugin.TreeNode;

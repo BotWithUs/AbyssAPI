@@ -1,4 +1,4 @@
-package abyss.plugin.api.entities;
+package abyss.plugin.api.entities.markers;
 
 /**
  * This provides methods that help identify pathing entities across deaths.

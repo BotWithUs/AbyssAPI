@@ -1,10 +1,8 @@
 package abyss.plugin.api.query.players;
 
 import abyss.plugin.api.Area3di;
-import abyss.plugin.api.Player;
+import abyss.plugin.api.entities.Player;
 import abyss.plugin.api.Stat;
-import abyss.plugin.api.Vector3;
-import abyss.plugin.api.query.results.EntityResultSet;
 import abyss.plugin.api.query.PathingEntityQuery;
 import abyss.plugin.api.query.results.PathingEntityResultSet;
 import abyss.plugin.api.world.WorldTile;

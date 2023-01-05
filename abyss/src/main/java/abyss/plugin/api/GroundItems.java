@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.entities.GroundItem;
+import abyss.plugin.api.entities.Player;
 import abyss.plugin.api.query.Queries;
 import abyss.plugin.api.query.items.GroundItemQuery;
 import abyss.plugin.api.query.players.PlayerQuery;

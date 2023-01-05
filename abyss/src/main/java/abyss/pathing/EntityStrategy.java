@@ -16,9 +16,8 @@
 //
 package abyss.pathing;
 
-import abyss.plugin.api.Cache;
-import abyss.plugin.api.Entity;
-import abyss.plugin.api.Npc;
+import abyss.plugin.api.entities.Entity;
+import abyss.plugin.api.entities.Npc;
 
 public class EntityStrategy extends RouteStrategy {
 

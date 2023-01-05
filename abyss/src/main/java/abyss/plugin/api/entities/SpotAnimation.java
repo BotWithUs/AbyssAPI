@@ -1,4 +1,4 @@
-package abyss.plugin.api;
+package abyss.plugin.api.entities;
 
 /**
  * An animation that can stand independently in the scene that does not move between different tiles.

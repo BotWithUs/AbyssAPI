@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.entities.*;
+
 /**
  * A provider of actions.
  */
