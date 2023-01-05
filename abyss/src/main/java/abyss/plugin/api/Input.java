@@ -89,7 +89,7 @@ public final class Input {
      * @param s The string to enter.
      */
     public static void enter(String s) {
-        enter(s, 20, 50);
+        enter(s, 20, 200);
     }
 
     public static int toKeyCode(char character) {
