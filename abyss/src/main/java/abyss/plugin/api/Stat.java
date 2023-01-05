@@ -37,7 +37,7 @@ public class Stat {
      *
      * @return The current level of this stat.
      */
-    public int getCurrent() {
+    public int getCurrentLevel() {
         return current;
     }
 
@@ -46,7 +46,7 @@ public class Stat {
      *
      * @return The maximum level of this stat.
      */
-    public int getMax() {
+    public int getMaxLevel() {
         return max;
     }
 
@@ -64,7 +64,7 @@ public class Stat {
      * @return The experience cap
      */
 
-    public int getF2pExperienceCap() {
+    public int getF2PExperienceCap() {
         return f2pExperienceCap;
     }
 
@@ -73,7 +73,7 @@ public class Stat {
      * @return The level cap
      */
 
-    public int getF2pLevelCap() {
+    public int getF2PLevelCap() {
         return f2pLevelCap;
     }
 
