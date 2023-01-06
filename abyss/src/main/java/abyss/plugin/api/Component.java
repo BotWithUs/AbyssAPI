@@ -1,6 +1,5 @@
 package abyss.plugin.api;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -18,28 +17,46 @@ public class Component {
     // internal values, attempting to use these will break the client
     private long internal1;
 
-    private int type = -1;
-    private Component[] children;
-    private boolean visible = false;
-    private byte[] textBinary;
-    private String text;
-    private Item item = new Item(-1, 0);
+    private final int type;
+    private final boolean visible;
+    private final String text;
+    private final int fontId;
+    private final int verticalAlignment;
+    private final int horizontalAlignment;
+    private final int color;
+    private final int alpha;
+    private final Item item;
     private Vector2i position;
     private Vector2i size;
     private Vector2i screenPosition;
-    private int textureIdDisabled = -1;
-    private int textureIdEnabled = -1;
-    private int parentId = -1;
-    private int childId = -1;
+    private final int textureIdDisabled;
+    private final int textureIdEnabled;
+    private final int interfaceIndex;
+    private final int componentIndex;
 
-    private int slot = -1;
+    private final int subComponentIndex;
 
-    private int renderIndex;
+    private final String[] actions;
 
     /**
      * Do not make instances of this.
      */
     private Component() {
+        text = "";
+        actions = new String[0];
+        textureIdDisabled = -1;
+        textureIdEnabled = -1;
+        subComponentIndex = -1;
+        interfaceIndex = -1;
+        componentIndex = -1;
+        item = Item.EMPTY;
+        visible = false;
+        type = -1;
+        alpha = -1;
+        color = -1;
+        horizontalAlignment = -1;
+        verticalAlignment = -1;
+        fontId = -1;
     }
 
     /**
@@ -48,7 +65,7 @@ public class Component {
      * @return The interact id of this widget.
      */
     public int getInteractId() {
-        return ((parentId & 0xffff) << 16) | (childId & 0xffff);
+        return ((interfaceIndex & 0xffff) << 16) | (componentIndex & 0xffff);
     }
 
     /**
@@ -66,8 +83,13 @@ public class Component {
      * @return The children in this widget.
      */
     public Component[] getChildren() {
-        return children;
+        if(type == 0) {
+            return getChildren0();
+        }
+        return new Component[0];
     }
+
+    private native Component[] getChildren0();
 
     /**
      * Determines if this widget has been rendered onto the screen recently.
@@ -78,20 +100,17 @@ public class Component {
         return visible;
     }
 
+    public Component getChild(int index) {
+        if(type == 0) {
+            return getChild0(index);
+        }
+        return null;
+    }
+
     /**
      * Retrieves a child by index. Will return NULL if index is out of bounds.
      */
-    public Component getChild(int index) {
-        if (type != Component.LAYER) {
-            return null;
-        }
-
-        if (index < 0 || index >= children.length) {
-            return null;
-        }
-
-        return children[index];
-    }
+    private native Component getChild0(int index);
 
     /**
      * Retrieves a child by index. Will return NULL if index is out of bounds.
@@ -121,13 +140,7 @@ public class Component {
      * @return The text being stored in this widget, or NULL if the widget has no text.
      */
     public String getText() {
-        if(text != null) {
-            return text;
-        }
-        if (textBinary == null) {
-            return null;
-        }
-        return new String(TextUtils.filterSpecialChars(textBinary), StandardCharsets.US_ASCII);
+        return text;
     }
 
     /**
@@ -178,37 +191,19 @@ public class Component {
     /**
      * @return The id of the group this widget is in.
      */
-    public int getParentId() {
-        return parentId;
+    public int getInterfaceIndex() {
+        return interfaceIndex;
     }
 
     /**
      * @return The id of this widget within the group.
      */
-    public int getChildId() {
-        return childId;
-    }
-
-    public boolean hover() {
-        if (screenPosition != null) {
-            Input.moveMouse(screenPosition.getX(), screenPosition.getY());
-            return true;
-        }
-        return false;
-    }
-
-    public void mouseClick() {
-        if (hover()) {
-            Input.clickMouse(0);
-        }
+    public int getComponentIndex() {
+        return componentIndex;
     }
 
     public Vector2i getScreenPosition() {
         return screenPosition;
-    }
-
-    public int getRenderIndex() {
-        return renderIndex;
     }
 
     /**
@@ -217,9 +212,9 @@ public class Component {
      * @param option The option to use.
      */
     public void interact(int option) {
-        Debug.log("Option " + option + " : " + parentId + " - " + childId);
-        if (slot != -1) {
-            Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot, getInteractId(), 0);
+        Debug.log("Option " + option + " : " + interfaceIndex + " - " + componentIndex);
+        if (subComponentIndex != -1) {
+            Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, subComponentIndex, getInteractId(), 0);
         } else {
             Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, option, getInteractId(), 0);
         }
@@ -230,6 +225,34 @@ public class Component {
      */
     public void interact() {
         interact(-1);
+    }
+
+    public int getVerticalAlignment() {
+        return verticalAlignment;
+    }
+
+    public int getHorizontalAlignment() {
+        return horizontalAlignment;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public int getAlpha() {
+        return alpha;
+    }
+
+    public int getSubComponentIndex() {
+        return subComponentIndex;
+    }
+
+    public int getFontId() {
+        return fontId;
+    }
+
+    public String[] getActions() {
+        return actions;
     }
 
     @Override

@@ -9,6 +9,9 @@ import java.util.Objects;
  */
 public class Item extends SimpleExtensionContainer {
 
+    public static final Item EMPTY = new Item(-1, 0);
+
+
     private int id;
     private int amount;
 
