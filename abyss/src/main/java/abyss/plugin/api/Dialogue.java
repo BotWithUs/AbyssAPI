@@ -5,9 +5,9 @@ package abyss.plugin.api;
  */
 public final class Dialogue {
 
-    private static final int WIDGET_ID = 1188;
-    private static final int WIDGET_ID_NPC_TALKING = 1184;
-    private static final int WIDGET_ID_PLAYER_TALKING = 1191;
+    private static final int INTERFACE_ID = 1188;
+    private static final int INTERFACE_ID_NPC_TALKING = 1184;
+    private static final int INTERFACE_ID_PLAYER_TALKING = 1191;
 
     private static final DialogueOption[] DIALOGUE_OPTIONS = {
             new DialogueOption(77856776, 0),
@@ -25,7 +25,7 @@ public final class Dialogue {
      * @return If the dialogue widget is open.
      */
     public static boolean isOpen() {
-        return Interfaces.isOpen(WIDGET_ID) || Interfaces.isOpen(WIDGET_ID_NPC_TALKING) || Interfaces.isOpen(WIDGET_ID_PLAYER_TALKING);
+        return Interfaces.isOpen(INTERFACE_ID) || Interfaces.isOpen(INTERFACE_ID_NPC_TALKING) || Interfaces.isOpen(INTERFACE_ID_PLAYER_TALKING);
     }
 
     /**
@@ -34,9 +34,9 @@ public final class Dialogue {
      * @return All dialogue options.
      */
     public static String[] getOptions() {
-        Component optionList = Interfaces.getComponent(WIDGET_ID, 0, 1);
+        Component optionList = Interfaces.getComponent(INTERFACE_ID, 0, 1);
         if (optionList == null) {
-            optionList = Interfaces.getComponent(WIDGET_ID, 0, 0);
+            optionList = Interfaces.getComponent(INTERFACE_ID, 0, 0);
         }
         if (optionList == null || optionList.getType() != Component.LAYER) {
             return new String[0];
@@ -84,9 +84,9 @@ public final class Dialogue {
      * Clicks to the next dialogue.
      */
     public static void next() {
-        if (Interfaces.isOpen(WIDGET_ID_NPC_TALKING)) {
+        if (Interfaces.isOpen(INTERFACE_ID_NPC_TALKING)) {
             Actions.menu(Actions.MENU_EXECUTE_DIALOGUE, 0, -1, 77594639, 0);
-        } else if (Interfaces.isOpen(WIDGET_ID_PLAYER_TALKING)) {
+        } else if (Interfaces.isOpen(INTERFACE_ID_PLAYER_TALKING)) {
             Actions.menu(Actions.MENU_EXECUTE_DIALOGUE, 0, -1, 78053391, 0);
         }
     }
