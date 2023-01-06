@@ -1,7 +1,7 @@
 package abyss.plugin.api;
 
 /**
- * Provides utilities for accessing dialogue widgets.
+ * Provides utilities for accessing dialogue components.
  */
 public final class Dialogue {
 
@@ -20,9 +20,9 @@ public final class Dialogue {
     }
 
     /**
-     * Determines if the dialogue widget is open.
+     * Determines if the dialogue component is open.
      *
-     * @return If the dialogue widget is open.
+     * @return If the dialogue component is open.
      */
     public static boolean isOpen() {
         return Interfaces.isOpen(INTERFACE_ID) || Interfaces.isOpen(INTERFACE_ID_NPC_TALKING) || Interfaces.isOpen(INTERFACE_ID_PLAYER_TALKING);
