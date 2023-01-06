@@ -23,6 +23,10 @@ import abyss.pathing.FixedTileStrategy;
 import abyss.pathing.LocalPathing;
 import abyss.pathing.ObjectStrategy;
 import abyss.plugin.api.*;
+import abyss.plugin.api.entities.GroundItem;
+import abyss.plugin.api.entities.Npc;
+import abyss.plugin.api.entities.Player;
+import abyss.plugin.api.entities.SceneObject;
 import abyss.plugin.api.query.players.PlayerQuery;
 import abyss.plugin.api.world.WorldTile;
 

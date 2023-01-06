@@ -1,6 +1,6 @@
 package abyss.plugin.api.plugin.nodes;
 
-import abyss.plugin.api.Entity;
+import abyss.plugin.api.entities.Entity;
 import abyss.plugin.api.Vector3i;
 import abyss.plugin.api.plugin.TreeNode;
 import abyss.plugin.api.world.WorldTile;

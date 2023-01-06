@@ -1,6 +1,6 @@
 package abyss.plugin.api.plugin;
 
-import abyss.plugin.api.Player;
+import abyss.plugin.api.entities.Player;
 
 public class TreeContext {
 

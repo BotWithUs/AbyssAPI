@@ -248,11 +248,19 @@ enum class Lodestones(
         return ConfigProvider.getVarbitValue(varbit) == 1
     }
 
+    fun getDestination(): WorldTile {
+        return dest
+    }
+
+    fun isMembersOnly(): Boolean {
+        return isMembers;
+    }
+
     fun interact() = runBlocking { teleport() }
 
     override suspend fun teleport(): Boolean {
         if (!Interfaces.isOpen(LODESTONE_ID)) {
-            Input.type('T')
+            Input.type('T'.toString())
         }
         if (delayUntil(3000) { Interfaces.isOpen(LODESTONE_ID) }) {
             if (!isAvailable()) {
@@ -260,7 +268,7 @@ enum class Lodestones(
                 return false
             }
             if (key != ' ') {
-                Input.type(key)
+                Input.type(key.toString())
             }
             if (delayUntil { !Interfaces.isOpen(LODESTONE_ID) }) {
                 return true
@@ -285,7 +293,7 @@ enum class Lodestones(
                     return false
                 }
                 if (key != ' ') {
-                    Input.type(key)
+                    Input.type(key.toString())
                 }
                 if (delayUntil { !Interfaces.isOpen(LODESTONE_ID) }) {
                     return true

@@ -1,9 +1,11 @@
-package abyss.plugin.api.entities.projectiles;
+package abyss.plugin.api.entities;
 
-import abyss.plugin.api.Entity;
 import abyss.plugin.api.Vector2i;
 import abyss.plugin.api.Vector3i;
 
+/**
+ * An animation in the scene that moves across tiles over a period of time.
+ */
 public final class ProjectileAnimation extends Entity {
 
     private int id;

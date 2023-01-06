@@ -1,6 +1,9 @@
-package abyss.plugin.api;
+package abyss.plugin.api.entities;
 
-import abyss.plugin.api.entities.Locatable;
+import abyss.plugin.api.TextUtils;
+import abyss.plugin.api.Vector3;
+import abyss.plugin.api.Vector3i;
+import abyss.plugin.api.entities.markers.Locatable;
 
 import java.util.Objects;
 

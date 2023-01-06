@@ -1,7 +1,7 @@
 package abyss.plugin.api.plugin.nodes;
 
 import abyss.plugin.api.Actions;
-import abyss.plugin.api.PathingEntity;
+import abyss.plugin.api.entities.PathingEntity;
 import abyss.plugin.api.actions.ActionType;
 import abyss.plugin.api.plugin.TreeContext;
 import abyss.plugin.api.plugin.TreeNode;

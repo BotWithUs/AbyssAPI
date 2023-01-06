@@ -1,5 +1,8 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.entities.Entity;
+import abyss.plugin.api.entities.Player;
+
 /**
  * A provider of entities.
  */

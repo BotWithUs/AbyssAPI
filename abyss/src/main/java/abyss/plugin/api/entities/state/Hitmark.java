@@ -1,4 +1,4 @@
-package abyss.plugin.api;
+package abyss.plugin.api.entities.state;
 
 public class Hitmark {
     private int id;

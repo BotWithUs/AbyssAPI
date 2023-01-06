@@ -1,6 +1,6 @@
 package abyss.plugin.api.plugin.nodes.leafs;
 
-import abyss.plugin.api.Player;
+import abyss.plugin.api.entities.Player;
 import abyss.plugin.api.Players;
 import abyss.plugin.api.actions.PlayerAction;
 import abyss.plugin.api.plugin.nodes.PathingEntityNode;

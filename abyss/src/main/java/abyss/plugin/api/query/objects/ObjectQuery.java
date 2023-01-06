@@ -1,8 +1,7 @@
 package abyss.plugin.api.query.objects;
 
 import abyss.plugin.api.Area3di;
-import abyss.plugin.api.SceneObject;
-import abyss.plugin.api.Vector3;
+import abyss.plugin.api.entities.SceneObject;
 import abyss.plugin.api.query.EntityQuery;
 import abyss.plugin.api.query.results.EntityResultSet;
 import abyss.plugin.api.world.WorldTile;

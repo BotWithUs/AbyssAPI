@@ -26,24 +26,128 @@ public final class Input {
      *
      * @param vk The virtual key code of the key to press.
      */
-    public static native void press(int vk);
+    public static native void pressKey(int vk);
 
     /**
      * Releases a key on the keyboard.
      *
      * @param vk The virtual key code of the key to release.
      */
-    public static native void release(int vk);
+    public static native void releaseKey(int vk);
 
     /**
      * Presses and releases a key on the keyboard.
      *
      * @param vk The virtual key code of the key to press.
      */
-    public static void key(int vk) {
-        press(vk);
-        waitFor(250);
-        release(vk);
+    public static void typeKey(int vk) {
+        pressKey(vk);
+        waitFor(Rng.i64(30, 250));
+        releaseKey(vk);
+    }
+
+    /**
+     * Enters a series of characters into the game client. Does not press enter.
+     *
+     * @param text        The string to enter.
+     * @param delayMin The minimum delay to wait between key presses.
+     * @param delayMax The maximum delay to wait between key presses.
+     */
+    public static void type(String text, long delayMin, long delayMax) {
+        for (char c : text.toCharArray()) {
+            waitFor(i64(delayMin, delayMax));
+            //TODO only shift is currently supported as far as meta keys go and the keycode differs on some keyboards.
+            if (Character.isUpperCase(c)) {
+                pressKey(VK_SHIFT);
+                waitFor(i64(delayMin, delayMax));
+                typeKey(toKeyCode(c));
+                waitFor(i64(delayMin, delayMax));
+                releaseKey(VK_SHIFT);
+            } else {
+                typeKey(toKeyCode(c));
+            }
+        }
+    }
+
+    /**
+     * Enters a series of characters into the game client. Does not press enter.
+     *
+     * @param text The string to enter.
+     */
+    public static void type(String text) {
+        type(text, 20, 200);
+    }
+
+    public static int toKeyCode(char character) {
+        //TODO characters should be passed to the native side directly so we can translate the keycodes based
+        //on keyboard layout and locale. This would also allow us to more easily analyze the state of meta keys
+        //such as ctrl, alt, shift, and the windows key.
+        return switch (character) {
+            case 'a', 'A' -> VK_A;
+            case 'b', 'B' -> VK_B;
+            case 'c', 'C' -> VK_C;
+            case 'd', 'D' -> VK_D;
+            case 'e', 'E' -> VK_E;
+            case 'f', 'F' -> VK_F;
+            case 'g', 'G' -> VK_G;
+            case 'h', 'H' -> VK_H;
+            case 'i', 'I' -> VK_I;
+            case 'j', 'J' -> VK_J;
+            case 'k', 'K' -> VK_K;
+            case 'l', 'L' -> VK_L;
+            case 'm', 'M' -> VK_M;
+            case 'n', 'N' -> VK_N;
+            case 'o', 'O' -> VK_O;
+            case 'p', 'P' -> VK_P;
+            case 'q', 'Q' -> VK_Q;
+            case 'r', 'R' -> VK_R;
+            case 's', 'S' -> VK_S;
+            case 't', 'T' -> VK_T;
+            case 'u', 'U' -> VK_U;
+            case 'v', 'V' -> VK_V;
+            case 'w', 'W' -> VK_W;
+            case 'x', 'X' -> VK_X;
+            case 'y', 'Y' -> VK_Y;
+            case 'z', 'Z' -> VK_Z;
+            case '`', '~' -> VK_BACK_QUOTE;
+            case '0' -> VK_0;
+            case '1' -> VK_1;
+            case '2' -> VK_2;
+            case '3' -> VK_3;
+            case '4' -> VK_4;
+            case '5', '%' -> VK_5;
+            case '6' -> VK_6;
+            case '7' -> VK_7;
+            case '8' -> VK_8;
+            case '9' -> VK_9;
+            case '-' -> VK_MINUS;
+            case '=' -> VK_EQUALS;
+            case '!' -> VK_EXCLAMATION_MARK;
+            case '@' -> VK_AT;
+            case '#' -> VK_NUMBER_SIGN;
+            case '$' -> VK_DOLLAR;
+            case '^' -> VK_CIRCUMFLEX;
+            case '&' -> VK_AMPERSAND;
+            case '*' -> VK_ASTERISK;
+            case '(' -> VK_LEFT_PARENTHESIS;
+            case ')' -> VK_RIGHT_PARENTHESIS;
+            case '_' -> VK_UNDERSCORE;
+            case '+' -> VK_PLUS;
+            case '\t' -> VK_TAB;
+            case '\n' -> VK_ENTER;
+            case '[', '{' -> VK_OPEN_BRACKET;
+            case ']', '}' -> VK_CLOSE_BRACKET;
+            case '\\', '|' -> VK_BACK_SLASH;
+            case ';' -> VK_SEMICOLON;
+            case ':' -> VK_COLON;
+            case '\'' -> VK_QUOTE;
+            case '"' -> VK_QUOTEDBL;
+            case ',', '<' -> VK_COMMA;
+            case '.' -> VK_PERIOD;
+            case '/' -> VK_SLASH;
+            case ' ' -> VK_SPACE;
+            default -> throw new IllegalArgumentException("Cannot type character " + character);
+        };
     }
 
     /**
@@ -60,201 +164,4 @@ public final class Input {
      * @param button The mouse button to click.
      */
     public static native void clickMouse(int button);
-
-    /**
-     * Enters a series of characters into the game client. Does not press enter.
-     *
-     * @param s        The string to enter.
-     * @param delayMin The minimum delay to wait between key presses.
-     * @param delayMax The maximum delay to wait between key presses.
-     */
-    public static void enter(String s, long delayMin, long delayMax) {
-        for (char c : s.toCharArray()) {
-            waitFor(i64(delayMin, delayMax));
-            if(Character.isUpperCase(c)) {
-                press(VK_SHIFT);
-                waitFor(i64(delayMin, delayMax));
-                key(type(c));
-                waitFor(i64(delayMin, delayMax));
-                release(VK_SHIFT);
-            } else {
-                key(c);
-            }
-        }
-    }
-
-    /**
-     * Enters a series of characters into the game client. Does not press enter.
-     *
-     * @param s The string to enter.
-     */
-    public static void enter(String s) {
-        enter(s, 10, 30);
-    }
-
-    public static int type(char character) {
-        switch (character) {
-            case 'a':
-            case 'A':
-                return VK_A;
-            case 'b':
-            case 'B':
-                return VK_B;
-            case 'c':
-            case 'C':
-                return VK_C;
-            case 'd':
-            case 'D':
-                return VK_D;
-            case 'e':
-            case 'E':
-                return VK_E;
-            case 'f':
-            case 'F':
-                return VK_F;
-            case 'g':
-            case 'G':
-                return VK_G;
-            case 'h':
-            case 'H':
-                return VK_H;
-            case 'i':
-            case 'I':
-                return VK_I;
-            case 'j':
-            case 'J':
-                return VK_J;
-            case 'k':
-            case 'K':
-                return VK_K;
-            case 'l':
-            case 'L':
-                return VK_L;
-            case 'm':
-            case 'M':
-                return VK_M;
-            case 'n':
-            case 'N':
-                return VK_N;
-            case 'o':
-            case 'O':
-                return VK_O;
-            case 'p':
-            case 'P':
-                return VK_P;
-            case 'q':
-            case 'Q':
-                return VK_Q;
-            case 'r':
-            case 'R':
-                return VK_R;
-            case 's':
-            case 'S':
-                return VK_S;
-            case 't':
-            case 'T':
-                return VK_T;
-            case 'u':
-            case 'U':
-                return VK_U;
-            case 'v':
-            case 'V':
-                return VK_V;
-            case 'w':
-            case 'W':
-                return VK_W;
-            case 'x':
-            case 'X':
-                return VK_X;
-            case 'y':
-            case 'Y':
-                return VK_Y;
-            case 'z':
-            case 'Z':
-                return VK_Z;
-            case '`':
-            case '~':
-                return VK_BACK_QUOTE;
-            case '0':
-                return VK_0;
-            case '1':
-                return VK_1;
-            case '2':
-                return VK_2;
-            case '3':
-                return VK_3;
-            case '4':
-                return VK_4;
-            case '5':
-            case '%':
-                return VK_5;
-            case '6':
-                return VK_6;
-            case '7':
-                return VK_7;
-            case '8':
-                return VK_8;
-            case '9':
-                return VK_9;
-            case '-':
-                return VK_MINUS;
-            case '=':
-                return VK_EQUALS;
-            case '!':
-                return VK_EXCLAMATION_MARK;
-            case '@':
-                return VK_AT;
-            case '#':
-                return VK_NUMBER_SIGN;
-            case '$':
-                return VK_DOLLAR;
-            case '^':
-                return VK_CIRCUMFLEX;
-            case '&':
-                return VK_AMPERSAND;
-            case '*':
-                return VK_ASTERISK;
-            case '(':
-                return VK_LEFT_PARENTHESIS;
-            case ')':
-                return VK_RIGHT_PARENTHESIS;
-            case '_':
-                return VK_UNDERSCORE;
-            case '+':
-                return VK_PLUS;
-            case '\t':
-                return VK_TAB;
-            case '\n':
-                return VK_ENTER;
-            case '[':
-            case '{':
-                return VK_OPEN_BRACKET;
-            case ']':
-            case '}':
-                return VK_CLOSE_BRACKET;
-            case '\\':
-            case '|':
-                return VK_BACK_SLASH;
-            case ';':
-                return VK_SEMICOLON;
-            case ':':
-                return VK_COLON;
-            case '\'':
-                return VK_QUOTE;
-            case '"':
-                return VK_QUOTEDBL;
-            case ',':
-            case '<':
-                return VK_COMMA;
-            case '.':
-                return VK_PERIOD;
-            case '/':
-                return VK_SLASH;
-            case ' ':
-                return VK_SPACE;
-            default:
-                throw new IllegalArgumentException("Cannot type character " + character);
-        }
-    }
-
 }

@@ -1,4 +1,4 @@
-package abyss.plugin.api.entities;
+package abyss.plugin.api.entities.markers;
 
 import abyss.plugin.api.Vector3i;
 

@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.entities.GroundItem;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;

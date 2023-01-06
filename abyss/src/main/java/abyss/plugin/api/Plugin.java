@@ -2,6 +2,7 @@ package abyss.plugin.api;
 
 import abyss.map.Region;
 import abyss.map.WorldObject;
+import abyss.plugin.api.entities.Player;
 import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.ExtensionContainer;
 import abyss.plugin.api.plugin.attributes.Attributes;
