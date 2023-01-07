@@ -1,5 +1,6 @@
 package abyss.plugin.api;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -8,15 +9,15 @@ import java.util.Objects;
 public class Interface {
 
     // internal values, attempting to use these will break the client
-    private long internal1;
+    private long internal;
 
     private int id;
-    private Component[] components;
 
     /**
      * Do not make instances of this.
      */
     private Interface() {
+
     }
 
     /**
@@ -31,22 +32,14 @@ public class Interface {
     /**
      * Retrieves a component by index. Will return null if index is out of bounds.
      */
-    public Component getComponent(int index) {
-        // nobody actually wants to check for this or handle this..
-        if (index < 0 || index >= components.length) {
-            return null;
-        }
-        return components[index];
-    }
+    public native Component getComponent(int index);
 
     /**
      * Retrieves all widgets in this group.
      *
      * @return All widgets in this group.
      */
-    public Component[] getComponents() {
-        return components;
-    }
+    public native List<Component> getComponents();
 
     @Override
     public String toString() {
@@ -60,11 +53,13 @@ public class Interface {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Interface that = (Interface) o;
-        return internal1 == that.internal1;
+        return internal == that.internal;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(internal1);
+        return Objects.hash(internal);
     }
+
+    public static native Interface getByIndex(int index);
 }

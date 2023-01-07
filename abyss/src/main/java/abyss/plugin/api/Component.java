@@ -1,5 +1,6 @@
 package abyss.plugin.api;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -84,12 +85,12 @@ public class Component {
      */
     public Component[] getChildren() {
         if(type == 0) {
-            return getChildren0();
+            return getChildren0().toArray(Component[]::new);
         }
         return new Component[0];
     }
 
-    private native Component[] getChildren0();
+    private native List<Component> getChildren0();
 
     /**
      * Determines if this widget has been rendered onto the screen recently.

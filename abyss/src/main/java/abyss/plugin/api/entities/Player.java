@@ -2,6 +2,7 @@ package abyss.plugin.api.entities;
 
 import abyss.Utils;
 import abyss.plugin.api.Client;
+import abyss.plugin.api.Debug;
 import abyss.plugin.api.EquipmentSlot;
 import abyss.plugin.api.entities.state.Headbar;
 import abyss.plugin.api.Item;
@@ -18,7 +19,7 @@ import java.util.Map;
  * and will not be changed after this object is created.
  */
 public final class Player extends PathingEntity {
-    private final Map<EquipmentSlot, Integer> wornItems = new HashMap<>();
+    private final Map<EquipmentSlot, Integer> wornItems;
     private int totalLevel;
     private int combatLevel;
     private int targetIndex;
@@ -27,6 +28,14 @@ public final class Player extends PathingEntity {
      * Do not make instances of this.
      */
     private Player() {
+        wornItems = new HashMap<>();
+    }
+
+    private void setEquipmentSlot(int slot, int wornItemId) {
+        EquipmentSlot eslot = EquipmentSlot.forSlot(slot);
+        if(eslot != null) {
+            wornItems.put(eslot, wornItemId);
+        }
     }
 
     @Override
