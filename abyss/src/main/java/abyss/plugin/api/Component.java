@@ -221,6 +221,19 @@ public class Component {
         }
     }
 
+    public void interact(String action) {
+        if(this.actions.length == 0) {
+            return;
+        }
+        for (int i = 0; i < this.actions.length; i++) {
+            String a = this.actions[i];
+            if(a.contains(action)) {
+                interact(i + 1);
+                return;
+            }
+        }
+    }
+
     /**
      * Interacts with this widget using the default option.
      */

@@ -40,10 +40,6 @@ public final class Queries {
         return new ChatQuery();
     }
 
-    public static ComponentQuery newComponentQuery(int groupId, int rootId) {
-        return new ComponentQuery(groupId, rootId);
-    }
-
     public static ComponentQuery newComponentQuery(int groupId) {
         return new ComponentQuery(groupId);
     }

@@ -14,30 +14,40 @@ public final class ComponentQuery {
     public static final int MODEL = 6;
 
     private String[] text;
-    private int[] textureIds;
-    private int[] disabledTextureIds;
+    private int[] materialIds;
     private int[] itemIds;
     private String[] itemNames;
 
-    private final int groupId;
+    private String[] actions;
 
-    private final int rootId;
+    private int fontId;
+    private int color;
+    private int alpha;
 
-    private boolean isOpen;
+    private final int interfaceIndex;
 
-    public ComponentQuery(int groupId, int rootId) {
+    private int type;
+
+    public ComponentQuery(int interfaceIndex) {
         this.text = null;
-        this.textureIds = null;
-        this.disabledTextureIds = null;
+        this.materialIds = null;
         this.itemIds = null;
         this.itemNames = null;
-        this.groupId = groupId;
-        this.rootId = rootId;
-        this.isOpen = false;
+        this.actions = null;
+        this.interfaceIndex = interfaceIndex;
+        this.fontId = -1;
+        this.color = -1;
+        this.alpha = -1;
     }
 
-    public ComponentQuery(int groupId) {
-        this(groupId, 0);
+    public ComponentQuery actions(String... actions) {
+        this.actions = actions;
+        return this;
+    }
+
+    public ComponentQuery font(int fontId) {
+        this.fontId = fontId;
+        return this;
     }
 
     public ComponentQuery text(String... text) {
@@ -45,13 +55,22 @@ public final class ComponentQuery {
         return this;
     }
 
-    public ComponentQuery textures(int... ids) {
-        this.textureIds = ids;
+    public ComponentQuery text(int fontId, String... text) {
+        this.fontId = fontId;
+        this.text = text;
         return this;
     }
 
-    public ComponentQuery disabledTextures(int... ids) {
-        this.disabledTextureIds = ids;
+    public ComponentQuery text(int fonId, int color, int alpha, String... text) {
+        this.fontId = fonId;
+        this.color = color;
+        this.alpha = alpha;
+        this.text = text;
+        return this;
+    }
+
+    public ComponentQuery materials(int... ids) {
+        this.materialIds = ids;
         return this;
     }
 
@@ -65,10 +84,6 @@ public final class ComponentQuery {
         return this;
     }
 
-    public ComponentQuery isOpen() {
-        this.isOpen = true;
-        return this;
-    }
     public ComponentResultSet result() {
         return new ComponentResultSet(results());
     }
