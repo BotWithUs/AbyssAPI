@@ -38,10 +38,17 @@ public final class Client {
     public static final int DIVINATION = 25;
     public static final int INVENTION = 26;
     public static final int ARCHAEOLOGY = 27;
-    public static final int AT_LOGIN = 10;
-    public static final int IN_LOBBY = 20;
-    public static final int IN_GAME = 30;
-
+    public static final int INITIALIZING = 0;
+    public static final int LOGIN_SCREEN = 10;
+    public static final int LOBBY_SCREEN = 20;
+    public static final int ACCOUNT_CREATION = 23;
+    public static final int LOGGED_IN = 30;
+    public static final int ATTEMPTING_TO_REESTABLISH_NOTIFICATION = 35;
+    /**
+     * Frequently associated with world hopping
+     */
+    public static final int PLEASE_WAIT_NOTIFICATION = 37;
+    public static final int LOADING_NOTIFICATION = 40;
     public static final int REPORT_EXPLOITING_BUGS = 5;
     public static final int REPORT_STAFF_IMPERSONATION = 6;
     public static final int REPORT_BUYING_OR_SELLING_ACCOUNT = 7;
@@ -70,7 +77,7 @@ public final class Client {
 
     /**
      * Retrieves the world that the client is currently logged into.
-     *
+     * <p>
      * This value may be modified by the client, and this value will not take
      * effects until a disconnect has been performed.
      *
@@ -243,7 +250,7 @@ public final class Client {
             return;
         }
 
-        int[] indices = new int[] { 1, 3, 5 };
+        int[] indices = new int[]{1, 3, 5};
         if (!Interfaces.isOpen(1446)) {
             Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, 0, 93913094, 0);
         } else {

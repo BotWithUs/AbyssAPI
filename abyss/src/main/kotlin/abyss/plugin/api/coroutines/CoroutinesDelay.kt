@@ -1,7 +1,6 @@
 package abyss.plugin.api.coroutines
 
 import abyss.plugin.api.Client
-import abyss.plugin.api.Client.IN_GAME
 import abyss.plugin.api.Rng
 
 suspend fun delayUntil(
@@ -12,7 +11,7 @@ suspend fun delayUntil(
     if (predicate()) return true
     val begin = System.currentTimeMillis()
     while (System.currentTimeMillis() < (begin + timeout)) {
-        if(Client.getMainState() != IN_GAME)
+        if (Client.getMainState() != Client.LOGGED_IN)
             return false
         kotlinx.coroutines.delay(delay)
         if (predicate()) {
@@ -26,8 +25,8 @@ suspend fun delayUntil(
  * for this to continue the predicate must be met, or the coroutine canceled.
  */
 
-suspend fun delayIndefinitely(delay: Long = 600, predicate: suspend () -> Boolean) : Boolean {
-    if(predicate()) return true
+suspend fun delayIndefinitely(delay: Long = 600, predicate: suspend () -> Boolean): Boolean {
+    if (predicate()) return true
     while (!predicate()) {
         kotlinx.coroutines.delay(delay)
     }
