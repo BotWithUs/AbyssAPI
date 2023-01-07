@@ -7,7 +7,6 @@ import java.util.concurrent.ThreadLocalRandom;
  * Provides access to random data generation.
  */
 public final class Rng {
-
     public static final int OPT_ALPHABET = (1 << 0);
     public static final int OPT_NUMERICAL = (1 << 1);
     public static final int OPT_SYMBOLS = (1 << 2);
@@ -25,7 +24,7 @@ public final class Rng {
     }
 
     public static boolean bool() {
-        return bool(ThreadLocalRandom.current());
+        return bool(random());
     }
 
     public static int i32(Random r) {
@@ -36,19 +35,10 @@ public final class Rng {
         return i32(ThreadLocalRandom.current());
     }
 
-    public static int ui32(Random r) {
-        return i32(r) & Integer.MAX_VALUE;
-    }
-
-    public static int ui32() {
-        return ui32(ThreadLocalRandom.current());
-    }
-
     public static int i32(Random r, int max) {
         if (max == 0) {
             return 0;
         }
-
         return ui32(r) % max;
     }
 
@@ -56,8 +46,7 @@ public final class Rng {
         if (max == 0) {
             return 0;
         }
-
-        return ui32(ThreadLocalRandom.current()) % max;
+        return ui32(random()) % max;
     }
 
     public static int i32(Random r, int min, int max) {
@@ -65,36 +54,62 @@ public final class Rng {
         if (range == 0) {
             return min;
         }
-
         return min + (ui32(r) % range);
     }
 
     public static int i32(int min, int max) {
-        return i32(ThreadLocalRandom.current(), min, max);
+        return i32(random(), min, max);
+    }
+
+    public static int ui32(Random r) {
+        return i32(r) & Integer.MAX_VALUE;
+    }
+
+    public static int ui32() {
+        return ui32(random());
+    }
+
+    public static long i64(Random random, long min, long max) {
+        return random.nextLong(min, max);
     }
 
     public static long i64(long min, long max) {
-        return ThreadLocalRandom.current().nextLong(min, max);
+        return i64(random(),min, max);
     }
 
-    public static float f32(Random r) {
+    public static long i64(Random random, long max){
+        return random.nextLong(max);
+    }
+    public static long i64(long max){
+        return i64(random(),max);
+    }
+
+    public static long i64(Random random){
+        return random.nextLong();
+    }
+
+    public static long i64(){
+        return i64(random());
+    }
+
+    public static float fp32(Random r) {
         return r.nextFloat();
     }
 
-    public static float f32() {
-        return f32(ThreadLocalRandom.current());
+    public static float fp32() {
+        return fp32(random());
     }
 
-    public static double f32(float min, float max) {
-        return (float) ThreadLocalRandom.current().nextDouble(min, max);
+    public static float fp32(float min, float max) {
+        return random().nextFloat(min, max);
     }
 
-    public static double f64() {
-        return ThreadLocalRandom.current().nextDouble();
+    public static double fp64() {
+        return random().nextDouble();
     }
 
-    public static double f64(double min, double max) {
-        return ThreadLocalRandom.current().nextDouble(min, max);
+    public static double fp64(double min, double max) {
+        return random().nextDouble(min, max);
     }
 
     public static String string(Random r, int options, int length) {
@@ -128,7 +143,7 @@ public final class Rng {
     }
 
     public static String string(int options, int length) {
-        return string(ThreadLocalRandom.current(), options, length);
+        return string(random(), options, length);
     }
 
     public static <T> T select(Random r, T[] arr) {
@@ -147,13 +162,7 @@ public final class Rng {
         return arr[ui32() % arr.length];
     }
 
-    /**
-     * Generates a number from 0-100, and determines if it falls within 0-chance.
-     *
-     * @param chance The chance of us returning true.
-     * @return If the number is between 0 and chance.
-     */
-    public static boolean roll(int chance) {
-        return i32() % 101 >= chance;
+    private static Random random() {
+        return ThreadLocalRandom.current();
     }
 }

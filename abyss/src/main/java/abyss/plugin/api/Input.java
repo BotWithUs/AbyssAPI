@@ -29,6 +29,14 @@ public final class Input {
     public static native void pressKey(int vk);
 
     /**
+     * Presses a key down on the keyboard.
+     *
+     * @param vk The virtual key code of the key to press.
+     * @param vc The virtual key char of the key to press.
+     */
+    public static native void pressKey(int vk, char vc);
+
+    /**
      * Releases a key on the keyboard.
      *
      * @param vk The virtual key code of the key to release.
@@ -47,9 +55,21 @@ public final class Input {
     }
 
     /**
+     * Presses and releases a key on the keyboard.
+     *
+     * @param vk The virtual key code of the key to press.
+     * @param vc The virtual key char of the key to press.
+     */
+    public static void typeKey(int vk, char vc) {
+        pressKey(vk, vc);
+        waitFor(Rng.i64(30, 250));
+        releaseKey(vk);
+    }
+
+    /**
      * Enters a series of characters into the game client. Does not press enter.
      *
-     * @param text        The string to enter.
+     * @param text     The string to enter.
      * @param delayMin The minimum delay to wait between key presses.
      * @param delayMax The maximum delay to wait between key presses.
      */
@@ -60,7 +80,7 @@ public final class Input {
             if (Character.isUpperCase(c)) {
                 pressKey(VK_SHIFT);
                 waitFor(i64(delayMin, delayMax));
-                typeKey(toKeyCode(c));
+                typeKey(toKeyCode(c), c);
                 waitFor(i64(delayMin, delayMax));
                 releaseKey(VK_SHIFT);
             } else {
