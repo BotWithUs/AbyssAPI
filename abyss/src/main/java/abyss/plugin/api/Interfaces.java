@@ -16,7 +16,7 @@ public final class Interfaces {
      * @param id The id of the widget to retrieve.
      * @return The group with the provided id, or NULL if one was not found.
      */
-    public static native Interface getById(int id);
+    public static native Interface getByIndex(int id);
 
     /**
      * Determines if an Interface is open.
@@ -25,7 +25,7 @@ public final class Interfaces {
      * @return If the widget with the provided is is open.
      */
     public static boolean isOpen(int id) {
-        Interface iface = getById(id);
+        Interface iface = getByIndex(id);
         if (iface == null) {
             return false;
         }
@@ -48,7 +48,7 @@ public final class Interfaces {
      * @return The found widget, or NULL if one was not found (not a container, not visible, etc.)
      */
     public static Component getComponent(int interfaceId, int componentId, int subcomponentId) {
-        Interface iface = getById(interfaceId);
+        Interface iface = getByIndex(interfaceId);
         if (iface == null) {
             return null;
         }
@@ -60,7 +60,7 @@ public final class Interfaces {
     }
 
     public static Component filter(int interfaceId, Predicate<Component> predicate) {
-        Interface group = getById(interfaceId);
+        Interface group = getByIndex(interfaceId);
         if (group == null)
             return null;
         Component component = group.getComponent(0);
