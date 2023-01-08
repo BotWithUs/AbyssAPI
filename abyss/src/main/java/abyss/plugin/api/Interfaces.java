@@ -16,7 +16,9 @@ public final class Interfaces {
      * @param id The id of the widget to retrieve.
      * @return The group with the provided id, or NULL if one was not found.
      */
-    public static native Interface getByIndex(int id);
+    public static Interface getByIndex(int id) {
+        return Interface.getByIndex(id);
+    }
 
     /**
      * Determines if an Interface is open.
