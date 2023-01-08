@@ -1,5 +1,6 @@
 package abyss.plugin.api;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -249,12 +250,11 @@ public class Component {
         return horizontalAlignment;
     }
 
-    public int getColor() {
-        return color;
-    }
-
-    public int getAlpha() {
-        return alpha;
+    public Color getColor() {
+        int red = (color & 0xff0000) >> 16;
+        int green = (color & 0xff00) >> 8;
+        int blue = (color & 0xff);
+        return new Color(red, green, blue, alpha);
     }
 
     public int getSubComponentIndex() {
