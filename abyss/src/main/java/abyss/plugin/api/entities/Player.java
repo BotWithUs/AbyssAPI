@@ -33,7 +33,7 @@ public final class Player extends PathingEntity {
 
     private void setEquipmentSlot(int slot, int wornItemId) {
         EquipmentSlot eslot = EquipmentSlot.forSlot(slot);
-        if(eslot != null) {
+        if (eslot != null) {
             wornItems.put(eslot, wornItemId);
         }
     }
@@ -66,8 +66,8 @@ public final class Player extends PathingEntity {
     public Map<EquipmentSlot, Item> getWornItems() {
         Map<EquipmentSlot, Item> conv = new HashMap<>();
         for (EquipmentSlot slot : wornItems.keySet()) {
-            int id = wornItems.get(slot);
-            if (id != -1) {
+            Integer id = wornItems.get(slot);
+            if (id != null && id != -1) {
                 conv.put(slot, new Item(id));
             }
         }
@@ -81,8 +81,8 @@ public final class Player extends PathingEntity {
      * @return the worn item, otherwise null
      */
     public Item getWornItem(EquipmentSlot slot) {
-        int id = wornItems.get(slot);
-        if (id == -1) {
+        Integer id = wornItems.get(slot);
+        if (id == null || id == -1) {
             return null;
         }
         return new Item(id);

@@ -17,7 +17,6 @@ public class Interface {
      * Do not make instances of this.
      */
     private Interface() {
-
     }
 
     /**

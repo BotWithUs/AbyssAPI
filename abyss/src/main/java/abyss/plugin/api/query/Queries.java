@@ -16,6 +16,7 @@ public final class Queries {
     public static NpcQuery newNpcQuery() {
         return new NpcQuery();
     }
+
     public static ObjectQuery newObjectQuery() {
         return new ObjectQuery();
     }

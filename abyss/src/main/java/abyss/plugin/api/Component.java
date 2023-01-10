@@ -35,7 +35,6 @@ public class Component {
     private final int textureIdEnabled;
     private final int interfaceIndex;
     private final int componentIndex;
-
     private final int subComponentIndex;
 
     private final String[] actions;
