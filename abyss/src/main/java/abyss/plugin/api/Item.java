@@ -57,7 +57,7 @@ public class Item extends SimpleExtensionContainer {
     */
     public String getName() {
         if(type == null) {
-            type = Cache.getItem(id, true);
+            type = Cache.getItem(id);
         }
         if (type == null) {
             return Abyss.BAD_DATA_STRING;
@@ -73,7 +73,7 @@ public class Item extends SimpleExtensionContainer {
     */
     public String[] getOptionNames() {
         if(type == null) {
-            type = Cache.getItem(id, true);
+            type = Cache.getItem(id);
         }
         if(type == null) {
             return new String[0];

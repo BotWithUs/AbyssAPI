@@ -9,32 +9,38 @@ import java.util.Objects;
  */
 public class ComponentItem extends Item {
 
-    private int slot;
-    private int componentId = -1;
-    private int childId = -1;
+    private int interfaceIndex;
+    private int componentIndex;
+    private int subComponentIndex;
 
     private Inventory inventory;
 
     public ComponentItem() {
-        this.slot = -1;
+        this.subComponentIndex = -1;
+        this.interfaceIndex = -1;
+        this.componentIndex = -1;
     }
 
     public ComponentItem(int itemId, int amount, int slot) {
         super(itemId, amount);
-        this.slot = slot;
+        this.subComponentIndex = slot;
+        this.interfaceIndex = -1;
+        this.componentIndex = -1;
     }
 
-    public ComponentItem(int id, int amount, int slot, int componentId, Inventory inventory) {
+    public ComponentItem(int id, int amount, int slot, int interfaceHash, Inventory inventory) {
         super(id, amount);
-        this.slot = slot;
-        this.componentId = componentId;
+        this.subComponentIndex = slot;
+        this.interfaceIndex = interfaceHash >> 16;
+        this.componentIndex = interfaceHash & 65535;
         this.inventory = inventory;
     }
 
-    public ComponentItem(int id, int amount, int slot, int componentId, CacheItem type, Inventory inventory) {
+    public ComponentItem(int id, int amount, int slot, int interfacehash, CacheItem type, Inventory inventory) {
         super(id, amount, type);
-        this.slot = slot;
-        this.componentId = componentId;
+        this.subComponentIndex = slot;
+        this.interfaceIndex = interfacehash >> 16;
+        this.componentIndex = interfacehash & 65535;
         this.inventory = inventory;
     }
 
@@ -42,29 +48,33 @@ public class ComponentItem extends Item {
      * Retrieves the item container slot that this item is in within
      * the widget.
      */
-    public int getSlot() {
-        return slot;
+    public int getSubComponentIndex() {
+        return subComponentIndex;
     }
 
     /**
      * Changes the slot this item is in. Should only be used internally.
      */
-    public void setSlot(int slot) {
-        this.slot = slot;
+    public void setSubComponentIndex(int subComponentIndex) {
+        this.subComponentIndex = subComponentIndex;
     }
 
     /**
      * Retrieves the interact id of the widget this item is bound to.
      */
-    public int getComponentId() {
-        return componentId;
+    public int getInterfaceIndex() {
+        return interfaceIndex;
     }
 
     /**
      * Changes the interact id of the widget this item is bound to. Should only be used internally.
      */
-    public void setComponentId(int componentId) {
-        this.componentId = componentId;
+    public void setInterfaceIndex(int interfaceIndex) {
+        this.interfaceIndex = interfaceIndex;
+    }
+
+    public void setComponentIndex(int componentIndex) {
+        this.componentIndex = componentIndex;
     }
 
     /**
@@ -77,23 +87,17 @@ public class ComponentItem extends Item {
     }
 
     /**
-     * Sets the Inventory that this item belongs too
-     */
-    public void setInventory(Inventory container) {
-        this.inventory = container;
-    }
-
-    /**
      * Interacts with this widget item. This may not be available on all widgets.
      *
      * @param option The option to interact with.
      */
     public boolean interact(int option) {
-        if (componentId == -1) {
+        if (interfaceIndex == -1) {
             return false;
         }
         //TODO: slot == -1 ? 1 : slot is confusing, why 1?
-        Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, slot == -1 ? 1 : slot, componentId, 0);
+        //0 isn't valid we would be sending the wrong information options are +1
+        Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, subComponentIndex == -1 ? 1 : subComponentIndex, interfaceIndex << 16 | componentIndex, 0);
         return true;
     }
 
@@ -112,13 +116,13 @@ public class ComponentItem extends Item {
         return "ComponentItem{" +
                 "id=" + getId() +
                 ", amount= " + getAmount() +
-                ", slot=" + slot +
+                ", slot=" + subComponentIndex +
                 '}';
     }
 
     public int getVarbitValue(int varbitID) {
         if (inventory == null) return 0;
-        return inventory.getVarbitById(slot, varbitID);
+        return inventory.getVarbitById(subComponentIndex, varbitID);
     }
 
     public int getVarbitValue(ContainerVariables var) {
@@ -131,11 +135,11 @@ public class ComponentItem extends Item {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         ComponentItem that = (ComponentItem) o;
-        return slot == that.slot;
+        return subComponentIndex == that.subComponentIndex;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), slot);
+        return Objects.hash(super.hashCode(), subComponentIndex);
     }
 }

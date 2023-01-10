@@ -209,18 +209,17 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
      * Called when an item in the inventory is changed.
      */
     private void inventoryItemChanged(ComponentItem prev, ComponentItem next) {
-        if (!Backpack.BACKPACK.hasExtension(BackpackWidgetExtension.class)) {
-            return;
-        }
-        BackpackWidgetExtension ext = (BackpackWidgetExtension) Backpack.BACKPACK.getExt(BackpackWidgetExtension.class);
-        Inventory inventory = Inventories.byId(ext.getContainerId());
-        prev.setInventory(inventory);
-        next.setInventory(inventory);
+        BackpackWidgetExtension backpackExt = (BackpackWidgetExtension) Backpack.BACKPACK.getExt(BackpackWidgetExtension.class);
+        next.setInterfaceIndex(backpackExt.getInterfaceIndex());
+        next.setComponentIndex(backpackExt.getComponentIndex());
+        //Previous item is not in backpack anymore
+        prev.setInterfaceIndex(-1);
+        prev.setComponentIndex(-1);
+        prev.setSubComponentIndex(-1);
         onInventoryItemChanged(prev, next);
     }
 
     public void onInventoryItemChanged(ComponentItem prev, ComponentItem next) {
-
     }
 
     /**

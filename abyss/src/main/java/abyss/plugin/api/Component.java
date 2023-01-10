@@ -62,7 +62,7 @@ public class Component {
     }
 
     /**
-     * Calculates the interact id of this widget.
+     * Calculates to interact id of this widget.
      *
      * @return The interact id of this widget.
      */
@@ -214,7 +214,11 @@ public class Component {
      * @param option The option to use.
      */
     public void interact(int option) {
-        Debug.log("Option " + option + " : " + interfaceIndex + " - " + componentIndex);
+        if(type == 0) {
+            Debug.log("Interact on Layer component has been blocked.");
+            return;
+        }
+        Debug.log("Option " + option + " : " + interfaceIndex + " - " + componentIndex + " - " + subComponentIndex + " - " + getInteractId());
         if (subComponentIndex != -1) {
             Actions.menu(Actions.MENU_EXECUTE_WIDGET, option, subComponentIndex, getInteractId(), 0);
         } else {

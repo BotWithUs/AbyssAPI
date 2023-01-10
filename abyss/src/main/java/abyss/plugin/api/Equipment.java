@@ -48,7 +48,7 @@ public final class Equipment extends SimpleExtensionContainer {
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(new ComponentItem(item.getId(), item.getAmount(), i, Interfaces.hash(ext.getInterfaceId(), ext.getComponentId()), inventory));
+                list.add(new ComponentItem(item.getId(), item.getAmount(), i, Interfaces.hash(ext.getInterfaceIndex(), ext.getComponentIndex()), inventory));
             }
         }
         return list.toArray(new ComponentItem[0]);

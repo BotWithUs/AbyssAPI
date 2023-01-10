@@ -33,7 +33,7 @@ public final class Backpack extends SimpleExtensionContainer {
         }
         BackpackWidgetExtension ext = (BackpackWidgetExtension) BACKPACK.getExt(BackpackWidgetExtension.class);
 
-        Inventory container = Inventories.byId(ext.getContainerId());
+        Inventory container = Inventories.byId(ext.getInventoryId());
         if (container == null) {
             return new ComponentItem[0];
         }
@@ -44,7 +44,7 @@ public final class Backpack extends SimpleExtensionContainer {
         for (int i = 0; i < containerItems.length; i++) {
             Item item = containerItems[i];
             if (item.getId() != -1) {
-                list.add(item.toComponentItem(i, Interfaces.hash(ext.getRootId(), ext.getContainerChildId()), container));
+                list.add(item.toComponentItem(i, Interfaces.hash(ext.getInterfaceIndex(), ext.getComponentIndex()), container));
             }
         }
         return list.toArray(new ComponentItem[0]);
@@ -137,7 +137,7 @@ public final class Backpack extends SimpleExtensionContainer {
     public static int getVarbitValueForItem(int itemId, int varbitId) {
         for (ComponentItem item : getItems()) {
             if(itemId == item.getId()) {
-                return getVarbitValue(item.getSlot(), varbitId);
+                return getVarbitValue(item.getSubComponentIndex(), varbitId);
             }
         }
         return -1;
@@ -153,7 +153,7 @@ public final class Backpack extends SimpleExtensionContainer {
         }
         BackpackWidgetExtension ext = (BackpackWidgetExtension) BACKPACK.getExt(BackpackWidgetExtension.class);
 
-        Inventory inventory = Inventories.byId(ext.getContainerId());
+        Inventory inventory = Inventories.byId(ext.getInventoryId());
         if(inventory == null) return -1;
         return inventory.getVarbitById(slot, varbitId);
     }

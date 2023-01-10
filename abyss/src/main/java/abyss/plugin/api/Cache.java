@@ -1,13 +1,11 @@
 package abyss.plugin.api;
 
-import abyss.plugin.api.params.Struct;
 import com.abyss.filesystem.Filesystem;
 import com.abyss.filesystem.sqlite.SqliteFilesystem;
 
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Provides access to the cache. All access to cache game memory must be done
@@ -31,15 +29,8 @@ public final class Cache {
     private static final Map<Integer, CacheNpc> npcs = new HashMap<>();
 
     /**
-     * A cache of Jagex Structs
-     */
-
-    private static final Map<Integer, Struct> structs = new HashMap<>();
-
-    /**
      * A lock for accessing the cache.
      */
-    private static final ReentrantLock lock = new ReentrantLock();
 
     private static final Filesystem FS = new SqliteFilesystem(Paths.get("C:\\ProgramData\\Jagex\\RuneScape"));
 
@@ -47,150 +38,9 @@ public final class Cache {
     }
 
     public static void reset() {
-        locked(() -> {
-            items.clear();
-            npcs.clear();
-            objects.clear();
-            structs.clear();
-            return null;
-        });
-    }
-
-    /**
-     * Calls some code within the cache lock.
-     *
-     * @param cb The callback to run within the lock.
-     */
-    private static <T> T locked(LockCallback<T> cb) {
-        lock.lock();
-        T t = cb.call();
-        lock.unlock();
-        return t;
-    }
-
-    /**
-     * Loads an struct asynchronously. The struct will be loaded later on
-     * in the engine thread.
-     *
-     * @param struct The struct to load.
-     */
-
-    public static native void asyncLoad(Struct struct);
-
-    /**
-     * Loads an item asynchronously. The item will be loaded later on
-     * in the engine thread.
-     *
-     * @param item The item to load.
-     */
-    public static native void asyncLoad(CacheItem item);
-
-
-    /**
-     * Loads an object asynchronously. The object will be loaded later on
-     * in the engine thread.
-     *
-     * @param object The object to load.
-     */
-    public static native void asyncLoad(CacheObject object);
-
-
-    /**
-     * Loads an NPC asynchronously. The NPC will be loaded later on
-     * in the engine thread.
-     *
-     * @param npc The NPC to load.
-     */
-    public static native void asyncLoad(CacheNpc npc);
-
-    /**
-     * Loads a struct asynchronously.
-     */
-
-    public static void load(Struct struct) {
-        asyncLoad(struct);
-        while(!struct.isLoaded()) {
-            Time.waitFor(10);
-        }
-    }
-
-    /**
-     * Loads an item synchronously.
-     *
-     * @param item The item to load.
-     */
-    public static void load(CacheItem item) {
-        asyncLoad(item);
-        while (!item.isLoaded()) {
-            Time.waitFor(10);
-        }
-    }
-
-    /**
-     * Loads an object synchronously.
-     *
-     * @param object The object to load.
-     */
-    public static void load(CacheObject object) {
-        asyncLoad(object);
-        while (!object.isLoaded()) {
-            Time.waitFor(10);
-        }
-    }
-
-    /**
-     * Loads an NPC synchronously.
-     *
-     * @param npc The NPC to load.
-     */
-    public static void load(CacheNpc npc) {
-        asyncLoad(npc);
-        while (!npc.isLoaded()) {
-            Time.waitFor(10);
-        }
-    }
-
-    /**
-    * Retrieves an struct from the cache. The fields within this struct
-    * may not immediately be available if this struct has not been
-    * retrieved before.
-    *
-    * @param id    The id of the struct to retrieve.
-    * @param async If the request will be performed asynchronously.
-    * @return The retrieved struct.
-    */
-
-    public static Struct getStruct(int id, boolean async) {
-        if(id < 0) {
-            return null;
-        }
-        return locked(() -> {
-            Struct ret;
-            if (!structs.containsKey(id)) {
-                ret = new Struct(id);
-                if (async) {
-                    asyncLoad(ret);
-                } else {
-                    load(ret);
-                }
-
-                structs.put(id, ret);
-            } else {
-                ret = structs.get(id);
-            }
-            return ret;
-        });
-    }
-
-    /**
-    * Retrieves an struct from the cache.
-    *
-    * @param id The id of the struct to retrieve.
-    * @return The retrieved object.
-    */
-
-    public static Struct getStruct(int id) {
-        return getStruct(id, true);
+        items.clear();
+        npcs.clear();
+        objects.clear();
     }
 
     /**
@@ -199,30 +49,16 @@ public final class Cache {
      * retrieved before.
      *
      * @param id    The id of the item to retrieve.
-     * @param async If the request will be performed asynchronously.
      * @return The retrieved item.
      */
-    public static CacheItem getItem(int id, boolean async) {
+    public static CacheItem getItem(int id) {
         if (id < 0) {
             return null;
         }
-
-        return locked(() -> {
-            CacheItem ret;
-            if (!items.containsKey(id)) {
-                ret = new CacheItem(id);
-                if (async) {
-                    asyncLoad(ret);
-                } else {
-                    load(ret);
-                }
-
-                items.put(id, ret);
-            } else {
-                ret = items.get(id);
-            }
-            return ret;
-        });
+        if(items.containsKey(id)) {
+            return items.get(id);
+        }
+        return getItem0(id);
     }
 
     /**
@@ -231,40 +67,20 @@ public final class Cache {
      * retrieved before.
      *
      * @param id    The id of the object to retrieve.
-     * @param async If the request will be performed asynchronously.
-     * @return The retrieved object.
-     */
-    public static CacheObject getObject(int id, boolean async) {
-        if (id < 0) {
-            return null;
-        }
-
-        return locked(() -> {
-            CacheObject ret;
-            if (!objects.containsKey(id)) {
-                ret = new CacheObject(id);
-                if (async) {
-                    asyncLoad(ret);
-                } else {
-                    load(ret);
-                }
-
-                objects.put(id, ret);
-            } else {
-                ret = objects.get(id);
-            }
-            return ret;
-        });
-    }
-
-    /**
-     * Retrieves an object from the cache.
-     *
-     * @param id The id of the object to retrieve.
      * @return The retrieved object.
      */
     public static CacheObject getObject(int id) {
-        return getObject(id, true);
+        if (id < 0) {
+            return null;
+        }
+        if(objects.containsKey(id)) {
+            return objects.get(id);
+        }
+        return getObject0(id);
+    }
+
+    public static CacheObject getObject(int id, boolean dummy) {
+        return getObject(id);
     }
 
     /**
@@ -273,77 +89,23 @@ public final class Cache {
      * retrieved before.
      *
      * @param id    The id of the NPC to retrieve.
-     * @param async If the request will be performed asynchronously.
      * @return The retrieved NPC.
      */
-    public static CacheNpc getNpc(int id, boolean async) {
+    public static CacheNpc getNpc(int id) {
         if (id < 0) {
             return null;
         }
-
-        return locked(() -> {
-            CacheNpc ret;
-            if (!npcs.containsKey(id)) {
-                ret = new CacheNpc(id);
-                if (async) {
-                    asyncLoad(ret);
-                } else {
-                    load(ret);
-                }
-
-                npcs.put(id, ret);
-            } else {
-                ret = npcs.get(id);
-            }
-            return ret;
-        });
+        if(npcs.containsKey(id)) {
+            return npcs.get(id);
+        }
+        return getNpc0(id);
     }
 
-    /**
-     * Retrieves an NPC from the cache.
-     *
-     * @param id The id of the NPC to retrieve.
-     * @return The retrieved NPC.
-     */
-    @Deprecated(forRemoval = true)
-    public static CacheNpc getNpc(int id) {
-        return getNpc(id, true);
-    }
-
-    /**
-     * Determines if anything is currently loading.
-     *
-     * @return If anything is currently loading.
-     */
-    public static boolean loading() {
-        return locked(() -> {
-            for (CacheItem item : items.values()) {
-                if (!item.isLoaded()) {
-                    return true;
-                }
-            }
-
-            for (CacheNpc npc : npcs.values()) {
-                if (!npc.isLoaded()) {
-                    return true;
-                }
-            }
-
-            for (CacheObject object : objects.values()) {
-                if (!object.isLoaded()) {
-                    return true;
-                }
-            }
-
-            return false;
-        });
-    }
+    private static native CacheNpc getNpc0(int id);
+    private static native CacheItem getItem0(int id);
+    private static native CacheObject getObject0(int id);
 
     public static Filesystem getFilesystem() {
         return FS;
-    }
-
-    private interface LockCallback<T> {
-        T call();
     }
 }

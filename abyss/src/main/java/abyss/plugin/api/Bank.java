@@ -173,7 +173,7 @@ public final class Bank implements ExtensionContainer<Extension> {
 
         Backpack.forEach((item) -> {
             if (filter.test(item)) {
-                item.setComponentId(Interfaces.hash(ext.getRootId(), ext.getDepositButtonId()));
+                item.setInterfaceIndex(Interfaces.hash(ext.getRootId(), ext.getDepositButtonId()));
                 item.interact(option);
             }
         });

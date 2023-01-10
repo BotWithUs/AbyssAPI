@@ -51,17 +51,4 @@ public final class Deposit {
     public static void depositMoney() {
         Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, WIDGET_DEPOSIT_MONEY_ID, 0);
     }
-
-    /**
-     * Retrieves all items in the deposit widget.
-     *
-     * @return All items in the deposit widget.
-     */
-    public static ComponentItem[] getItems() {
-        ComponentItem[] items = Backpack.getItems();
-        for (ComponentItem item : items) {
-            item.setComponentId(WIDGET_INTERACT_ID);
-        }
-        return items;
-    }
 }

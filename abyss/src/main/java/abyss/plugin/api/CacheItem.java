@@ -1,7 +1,5 @@
 package abyss.plugin.api;
 
-import abyss.plugin.api.params.Struct;
-
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -15,8 +13,6 @@ import java.nio.charset.StandardCharsets;
     private byte[] binaryName = Abyss.BAD_DATA_STRING.getBytes(StandardCharsets.US_ASCII);
     private byte[][] binaryOptionNames = new byte[0][];
     private byte[][] binaryGroundOptionNames = new byte[0][];
-
-    private Struct struct;
 
     private boolean isMembers;
     private boolean isStackable;
@@ -35,14 +31,6 @@ import java.nio.charset.StandardCharsets;
      */
     public int getId() {
         return id;
-    }
-
-    /**
-     * @return The struct related to this item.
-     */
-
-    public Struct getStruct() {
-        return struct;
     }
 
     /**
@@ -88,7 +76,7 @@ import java.nio.charset.StandardCharsets;
         return options;
     }
 
-    public String[] getEquipmentOptions() {
+    /*public String[] getEquipmentOptions() {
         return new String[]{
                 struct.readString(528),
                 struct.readString(529),
@@ -98,7 +86,7 @@ import java.nio.charset.StandardCharsets;
                 struct.readString(6712),
                 struct.readString(6713),
         };
-    }
+    }*/
 
     public boolean isMembers() {
         return isMembers;
