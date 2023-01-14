@@ -15,10 +15,6 @@ public class Component {
     public static final int TEXT = 4;
     public static final int SPRITE = 5;
     public static final int MODEL = 6;
-
-    // internal values, attempting to use these will break the client
-    private long internal1;
-
     private final int type;
     private final boolean visible;
     private final String text;
@@ -28,16 +24,17 @@ public class Component {
     private final int color;
     private final int alpha;
     private final Item item;
-    private Vector2i position;
-    private Vector2i size;
-    private Vector2i screenPosition;
     private final int textureIdDisabled;
     private final int textureIdEnabled;
     private final int interfaceIndex;
     private final int componentIndex;
     private final int subComponentIndex;
-
     private final String[] actions;
+    // internal values, attempting to use these will break the client
+    private long internal1;
+    private Vector2i position;
+    private Vector2i size;
+    private Vector2i screenPosition;
 
     /**
      * Do not make instances of this.
@@ -61,8 +58,11 @@ public class Component {
     }
 
     public void hover() {
-        if(screenPosition != null) {
-            Input.moveMouse(screenPosition.getX(), screenPosition.getY());
+        if (screenPosition != null) {
+            Input.moveMouse(
+                    Rng.i32(screenPosition.getX(), screenPosition.getX() + size.getX()),
+                    Rng.i32(screenPosition.getY(), screenPosition.getY() + size.getY())
+            );
         }
     }
 
@@ -90,7 +90,7 @@ public class Component {
      * @return The children in this widget.
      */
     public Component[] getChildren() {
-        if(type == 0) {
+        if (type == 0) {
             return getChildren0().toArray(Component[]::new);
         }
         return new Component[0];
@@ -108,7 +108,7 @@ public class Component {
     }
 
     public Component getChild(int index) {
-        if(type == 0) {
+        if (type == 0) {
             return getChild0(index);
         }
         return null;
@@ -160,11 +160,22 @@ public class Component {
     }
 
     /**
-     * Retrieves the position of this widget on the screen. May not be valid for all widgets.
+     * Retrieves the relative position of this widget on the screen. May not be valid for all widgets.
      *
-     * @return The position of this widget.
+     * @return The relative position of this widget.
+     * @deprecated Use getRelativeScreenPosition() instead.
      */
+    @Deprecated
     public Vector2i getPosition() {
+        return position;
+    }
+
+    /**
+     * Retrieves the relative position of this widget on the screen. May not be valid for all widgets.
+     *
+     * @return The relative position of this widget.
+     */
+    public Vector2i getRelativeScreenPosition() {
         return position;
     }
 
@@ -219,7 +230,7 @@ public class Component {
      * @param option The option to use.
      */
     public void interact(int option) {
-        if(type == 0) {
+        if (type == 0) {
             Debug.log("Interact on Layer component has been blocked.");
             return;
         }
@@ -232,12 +243,12 @@ public class Component {
     }
 
     public void interact(String action) {
-        if(this.actions.length == 0) {
+        if (this.actions.length == 0) {
             return;
         }
         for (int i = 0; i < this.actions.length; i++) {
             String a = this.actions[i];
-            if(a.contains(action)) {
+            if (a.contains(action)) {
                 interact(i + 1);
                 return;
             }
