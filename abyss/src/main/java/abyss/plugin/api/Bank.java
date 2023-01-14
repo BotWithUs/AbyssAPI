@@ -171,13 +171,14 @@ public final class Bank implements ExtensionContainer<Extension> {
         }
         BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
 
-        Backpack.forEach((item) -> {
-            if (filter.test(item)) {
+        for (ComponentItem item : Backpack.getItems()) {
+            if(filter.test(item)) {
                 item.setInterfaceIndex(ext.getRootId());
                 item.setComponentIndex(ext.getDepositButtonId());
                 item.interact(option);
+                break;
             }
-        });
+        }
     }
 
     /**
