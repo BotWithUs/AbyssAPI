@@ -60,6 +60,12 @@ public class Component {
         fontId = -1;
     }
 
+    public void hover() {
+        if(screenPosition != null) {
+            Input.moveMouse(screenPosition.getX(), screenPosition.getY());
+        }
+    }
+
     /**
      * Calculates to interact id of this widget.
      *
