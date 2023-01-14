@@ -154,7 +154,7 @@ public final class Bank implements ExtensionContainer<Extension> {
         for (ComponentItem item : Bank.getItems()) {
             if (filter.test(item)) {
                 item.setInterfaceIndex(ext.getRootId());
-                item.setComponentIndex(ext.getDepositButtonId());
+                item.setComponentIndex(ext.getWithdrawButtonId());
                 if(item.interact(option)) {
                     break;
                 }
