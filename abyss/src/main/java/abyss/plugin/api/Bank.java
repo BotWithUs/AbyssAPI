@@ -48,11 +48,8 @@ public final class Bank implements ExtensionContainer<Extension> {
      * @return If the bank widget is open.
      */
     public static boolean isOpen() {
-        if(BANK.hasExtension(BankWidgetExtension.class)) {
-            BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
-            return Inventories.isAvailable(ext.getContainerId());
-        }
-        return false;
+        BankWidgetExtension ext = getBankExtension();
+        return ext != null && Inventories.isAvailable(ext.getContainerId());
     }
 
     /**
@@ -61,16 +58,14 @@ public final class Bank implements ExtensionContainer<Extension> {
      * @return All items in the bank.
      */
     public static ComponentItem[] getItems() {
-        if(!BANK.hasExtension(BankWidgetExtension.class)) {
+        BankWidgetExtension ext = getBankExtension();
+        if (ext == null)
             return new ComponentItem[0];
-        }
-        BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
 
         Inventory container = Inventories.byId(ext.getContainerId());
         if (container == null) {
             return new ComponentItem[0];
         }
-
 
         List<ComponentItem> list = new LinkedList<>();
         Item[] containerItems = container.getItems();
@@ -137,6 +132,7 @@ public final class Bank implements ExtensionContainer<Extension> {
      *
      * @param cb The callback to invoke with each element.
      */
+    @Deprecated
     public static void forEach(Consumer<ComponentItem> cb) {
         for (ComponentItem item : getItems()) {
             if (item != null) {
@@ -152,11 +148,18 @@ public final class Bank implements ExtensionContainer<Extension> {
      * @param option The menu option to use for withdrawing.
      */
     public static void withdraw(Predicate<ComponentItem> filter, int option) {
-        forEach((item) -> {
+        BankWidgetExtension ext = getBankExtension();
+        if (ext == null)
+            return;
+        for (ComponentItem item : Bank.getItems()) {
             if (filter.test(item)) {
-                item.interact(option);
+                item.setInterfaceIndex(ext.getRootId());
+                item.setComponentIndex(ext.getDepositButtonId());
+                if(item.interact(option)) {
+                    break;
+                }
             }
-        });
+        }
     }
 
     /**
@@ -166,11 +169,9 @@ public final class Bank implements ExtensionContainer<Extension> {
      * @param option The menu option to use for depositing.
      */
     public static void deposit(Predicate<ComponentItem> filter, int option) {
-        if(!BANK.hasExtension(BankWidgetExtension.class)) {
+        BankWidgetExtension ext = getBankExtension();
+        if (ext == null)
             return;
-        }
-        BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
-
         for (ComponentItem item : Backpack.getItems()) {
             if(filter.test(item)) {
                 item.setInterfaceIndex(ext.getRootId());
@@ -186,49 +187,49 @@ public final class Bank implements ExtensionContainer<Extension> {
      * Deposits all items into the bank.
      */
     public static void depositAll() {
-        if(!BANK.hasExtension(BankWidgetExtension.class)) {
-            return;
-        }
-        BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
-
-        Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Interfaces.hash(ext.getRootId(), ext.getDepositInventoryButtonId()), 0);
+        BankWidgetExtension ext = getBankExtension();
+        if (ext != null)
+            Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Interfaces.hash(ext.getRootId(), ext.getDepositInventoryButtonId()), 0);
     }
 
     /**
      * Deposits all equipment into the bank.
      */
     public static void depositEquipment() {
-        if(!BANK.hasExtension(BankWidgetExtension.class)) {
-            return;
-        }
-        BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
-
-        Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Interfaces.hash(ext.getRootId(), ext.getDepositEquipmentButtonId()), 0);
+        BankWidgetExtension ext = getBankExtension();
+        if (ext != null)
+            Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Interfaces.hash(ext.getRootId(), ext.getDepositEquipmentButtonId()), 0);
     }
 
     /**
      * Determines if items are being withdrawn as notes or not.
      */
     public static boolean isWithdrawingNotes() {
-        if(!BANK.hasExtension(BankWidgetExtension.class)) {
-            return false;
-        }
-        BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
-        return ConfigProvider.getVarpValue(ext.getWithdrawAsNoteConVarId()) == 1;
+        BankWidgetExtension ext = getBankExtension();
+        return ext != null && ConfigProvider.getVarpValue(ext.getWithdrawAsNoteConVarId()) == 1;
     }
 
     /**
      * Changes whether or not we are withdrawing items in noted form.
      */
     public static void setWithdrawingNotes(boolean notes) {
-        if(!BANK.hasExtension(BankWidgetExtension.class)) {
-            return;
-        }
-        BankWidgetExtension ext = (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
-
-        if (isWithdrawingNotes() != notes) {
+        BankWidgetExtension ext = getBankExtension();
+        if (ext != null && isWithdrawingNotes() != notes) {
             Actions.menu(Actions.MENU_EXECUTE_WIDGET, 1, -1, Interfaces.hash(ext.getRootId(), ext.getToggleNotesButtonId()), 0);
         }
+    }
+
+    /**
+     * Checks if the bank component extension can be fetched.
+     *
+     * Returns:
+     * the bank extension if it can, or null.
+     */
+    public static BankWidgetExtension getBankExtension() {
+        if(!BANK.hasExtension(BankWidgetExtension.class)) {
+            return null;
+        }
+        return (BankWidgetExtension) BANK.getExt(BankWidgetExtension.class);
     }
 
     @NotNull
