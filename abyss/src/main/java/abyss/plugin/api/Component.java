@@ -274,11 +274,16 @@ public class Component {
         return horizontalAlignment;
     }
 
+    @Deprecated
     public Color getColor() {
         int red = (color & 0xff0000) >> 16;
         int green = (color & 0xff00) >> 8;
         int blue = (color & 0xff);
         return new Color(red, green, blue, alpha);
+    }
+
+    public Color getTextColor(){
+        return getColor();
     }
 
     public int getSubComponentIndex() {
