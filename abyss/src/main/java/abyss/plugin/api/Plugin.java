@@ -1,5 +1,7 @@
 package abyss.plugin.api;
 
+import abyss.bindings.MethodBuilder;
+import abyss.bindings.NativeLoader;
 import abyss.map.Region;
 import abyss.map.WorldObject;
 import abyss.plugin.api.entities.Player;
@@ -10,6 +12,8 @@ import abyss.plugin.api.query.players.PlayerQuery;
 import abyss.plugin.api.widgets.BackpackWidgetExtension;
 import abyss.plugin.api.world.WorldTile;
 import com.abyss.definitions.ObjectType;
+import kotlin.Unit;
+import kotlin.coroutines.Continuation;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayInputStream;
@@ -19,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.BiConsumer;
 
 /**
  * All plugins must extend this base type.
@@ -29,6 +34,8 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
     public final Attributes attributes = new Attributes();
 
     private final Map<Class<?>, Extension> pluginExtensions = new HashMap<>();
+
+    private Continuation<Unit> pluginContinuation;
 
     /**
      * A random instance that is seeded with information about the running account.
@@ -162,6 +169,7 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
         if (otype == null) {
             return;
         }
+
         WorldObject wo = new WorldObject(x, y, pos.getZ(), objectId, rotation, otype);
         region.spawnObject(wo, pos.getZ(), tile.getXInRegion(), tile.getYInRegion());
 

@@ -1,8 +1,12 @@
 package abyss.plugin.api;
 
+import abyss.bindings.MethodBuilder;
+import abyss.bindings.NativeLoader;
+
 import java.awt.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 /**
@@ -307,5 +311,15 @@ public class Component {
     @Override
     public int hashCode() {
         return Objects.hash(internal1);
+    }
+
+    public static void bind(BiConsumer<Class<?>, MethodBuilder> registerNativeMethods) {
+        registerNativeMethods.accept(Component.class, NativeLoader
+                .newMethod("getChildren0")
+                .setReturnType(List.class));
+        registerNativeMethods.accept(Component.class, NativeLoader
+                .newMethod("getChild0")
+                .addParam(int.class)
+                .setReturnType(Component.class));
     }
 }

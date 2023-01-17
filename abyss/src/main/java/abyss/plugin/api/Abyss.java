@@ -124,23 +124,23 @@ public final class Abyss {
     /**
      * Retrieves the username of the currently running Kraken account. May not always be valid.
      */
-    public static native byte[] getKrakenUsernameBinary();
+        public static native byte[] getSdnUsername();
 
     /**
      * Retrieves the password of the currently running Kraken account. May not always be valid.
      */
-    public static native byte[] getKrakenPasswordBinary();
+    public static native byte[] getSdnPassword();
 
     /**
      * Retrieves the email of the currently running account.
      */
-    public static native byte[] getEmailBinary();
+    public static native byte[] getDisplayNameBinary();
 
     /**
      * Retrieves the email of the currently running account.
      */
-    public static String getEmail() {
-        return new String(getEmailBinary());
+    public static String getDisplayName() {
+        return new String(getDisplayNameBinary());
     }
 
     /**

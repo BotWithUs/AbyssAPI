@@ -1,5 +1,7 @@
 package abyss.plugin.api.query.players;
 
+import abyss.bindings.MethodBuilder;
+import abyss.bindings.NativeLoader;
 import abyss.plugin.api.Area3di;
 import abyss.plugin.api.entities.Player;
 import abyss.plugin.api.Stat;
@@ -8,7 +10,11 @@ import abyss.plugin.api.query.results.PathingEntityResultSet;
 import abyss.plugin.api.world.WorldTile;
 
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.regex.Pattern;
+
+import static abyss.bindings.NativeLoader.*;
 
 public final class PlayerQuery implements PathingEntityQuery<PlayerQuery> {
 
@@ -120,7 +126,7 @@ public final class PlayerQuery implements PathingEntityQuery<PlayerQuery> {
     public PathingEntityResultSet<Player> result() {
         return new PathingEntityResultSet<>(results());
     }
-    
+
     private native List<Player> results();
 
     public static native Player self();
@@ -128,4 +134,15 @@ public final class PlayerQuery implements PathingEntityQuery<PlayerQuery> {
     public static native Stat getStatById(int id);
 
     public static native Stat getStatByName(String name);
+
+    public static void bind(BiConsumer<Class<?>, MethodBuilder> registerNativeMethod) {
+        registerNativeMethod.accept(PlayerQuery.class, newMethod("results").setReturnType(List.class));
+        registerNativeMethod.accept(PlayerQuery.class, newMethod("self").setReturnType(Player.class));
+        registerNativeMethod.accept(PlayerQuery.class, newMethod("getStatById")
+                .addParam(int.class)
+                .setReturnType(Stat.class));
+        registerNativeMethod.accept(PlayerQuery.class, newMethod("getStatByName")
+                .addParam(String.class)
+                .setReturnType(Stat.class));
+    }
 }

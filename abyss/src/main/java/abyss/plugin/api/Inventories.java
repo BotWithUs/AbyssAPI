@@ -1,5 +1,10 @@
 package abyss.plugin.api;
 
+import abyss.bindings.MethodBuilder;
+import abyss.bindings.NativeLoader;
+
+import java.util.function.BiConsumer;
+
 /**
  * Provides access to item containers.
  */
@@ -31,5 +36,12 @@ public final class Inventories {
      */
     public static boolean isAvailable(int id) {
         return byId(id) != null;
+    }
+
+    public static void bind(BiConsumer<Class<?>, MethodBuilder> registerNativeMethod) {
+        registerNativeMethod.accept(Inventories.class, NativeLoader
+                .newMethod("all").setReturnType(Inventory[].class));
+        registerNativeMethod.accept(Inventories.class, NativeLoader
+                .newMethod("byId").addParam(int.class).setReturnType(Inventory.class));
     }
 }

@@ -1,5 +1,10 @@
 package abyss.plugin.api;
 
+import abyss.bindings.MethodBuilder;
+import abyss.bindings.NativeLoader;
+
+import java.util.function.BiConsumer;
+
 /**
  * Provides access to RuneScape Config Variables
  */
@@ -79,7 +84,7 @@ public final class ConfigProvider {
     public static native int getVarpValue(int id);
 
     /**
-     * Gets the value of a script variable tha tis used in RuneScape client scripts.
+     * Gets the value of a script variable that is used in RuneScape client scripts.
      * @param id The scirpt id
      * @return The script variables' value
      */
@@ -99,5 +104,30 @@ public final class ConfigProvider {
         int value = getVarpValue(varpId);
         return (value >> msb) & BIT_TABLE[bits - 1];
     }
-    
+
+    public static void bind(BiConsumer<Class<?>, MethodBuilder> registerNativeMethods) {
+        registerNativeMethods.accept(ConfigProvider.class, NativeLoader
+                .newMethod("getVarbitValue")
+                .addParam(int.class)
+                .setReturnType(int.class));
+        registerNativeMethods.accept(ConfigProvider.class, NativeLoader
+                .newMethod("getVarbitValue")
+                .addParam(int.class)
+                .addParam(int.class)
+                .addParam(int.class)
+                .setReturnType(int.class));
+        registerNativeMethods.accept(ConfigProvider.class, NativeLoader
+                .newMethod("getVarpValue")
+                .addParam(int.class)
+                .setReturnType(int.class));
+        registerNativeMethods.accept(ConfigProvider.class, NativeLoader
+                .newMethod("getScriptVarValue")
+                .addParam(int.class)
+                .setReturnType(long.class));
+        registerNativeMethods.accept(ConfigProvider.class, NativeLoader
+                .newMethod("getClientVarValue")
+                .addParam(int.class)
+                .setReturnType(int.class));
+    }
+
 }

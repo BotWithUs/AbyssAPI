@@ -1,5 +1,7 @@
 package abyss.plugin.api.query.npc;
 
+import abyss.bindings.MethodBuilder;
+import abyss.bindings.NativeLoader;
 import abyss.plugin.api.*;
 import abyss.plugin.api.entities.Npc;
 import abyss.plugin.api.query.PathingEntityQuery;
@@ -7,6 +9,7 @@ import abyss.plugin.api.query.results.PathingEntityResultSet;
 import abyss.plugin.api.world.WorldTile;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.regex.Pattern;
 
 public final class NpcQuery implements PathingEntityQuery<NpcQuery> {

@@ -1,7 +1,11 @@
 package abyss.plugin.api;
 
+import abyss.bindings.MethodBuilder;
+import abyss.bindings.NativeLoader;
+
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 
 /**
  * A group of components.
@@ -61,4 +65,18 @@ public class Interface {
     }
 
     public static native Interface getByIndex(int index);
+
+    public static void bind(BiConsumer<Class<?>, MethodBuilder> registerNativeMethods) {
+        registerNativeMethods.accept(Interface.class, NativeLoader
+                .newMethod("getByIndex")
+                .addParam(int.class)
+                .setReturnType(Interface.class));
+        registerNativeMethods.accept(Interface.class, NativeLoader
+                .newMethod("getComponent")
+                .addParam(int.class)
+                .setReturnType(Component.class));
+        registerNativeMethods.accept(Interface.class, NativeLoader
+                .newMethod("getComponents")
+                .setReturnType(List.class));
+    }
 }

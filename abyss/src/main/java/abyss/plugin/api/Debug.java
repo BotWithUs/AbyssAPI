@@ -1,7 +1,15 @@
 package abyss.plugin.api;
 
+import abyss.bindings.MethodBuilder;
+import abyss.plugin.api.entities.Player;
+import abyss.plugin.api.query.players.PlayerQuery;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.List;
+import java.util.function.BiConsumer;
+
+import static abyss.bindings.NativeLoader.newMethod;
 
 /**
  * Provides various debugging utilities.
@@ -29,5 +37,7 @@ public final class Debug {
         }
     }
 
-
+    public static void bind(BiConsumer<Class<?>, MethodBuilder> registerNativeMethod) {
+        registerNativeMethod.accept(Debug.class, newMethod("log").addParam(String.class));
+    }
 }
