@@ -145,13 +145,19 @@ public class SceneObject extends Entity {
         return Utils.isSceneObjectReachable(this);
     }
 
+    @Deprecated
     public Area3di toArea3di() {
+        return getGlobalArea();
+    }
+
+    @Override
+    public Area3di getGlobalArea() {
         Vector3i base = getGlobalPosition();
         Vector2i size = getSize();
-        Vector2i min = new Vector2i(base.getX() - size.getX() / 2, base.getY() - size.getY() / 2);
-        Vector2i max = new Vector2i(base.getX() + size.getX() / 2, base.getY() + size.getY() / 2);
         int z = base.getZ();
-        return new Area3di(new Vector3i(min.getX(), min.getY(), z), new Vector3i(max.getX(), max.getY(), z));
+        Vector3i min = new Vector3i(base.getX() - size.getX() / 2, base.getY() - size.getY() / 2,z);
+        Vector3i max = new Vector3i(base.getX() + size.getX() / 2, base.getY() + size.getY() / 2,z);
+        return new Area3di(min, max);
     }
 
     @Override
