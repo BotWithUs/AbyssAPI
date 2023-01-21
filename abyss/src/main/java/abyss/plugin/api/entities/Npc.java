@@ -1,9 +1,12 @@
 package abyss.plugin.api.entities;
 
 import abyss.Utils;
+import abyss.plugin.api.Area3di;
 import abyss.plugin.api.CacheNpc;
 import abyss.plugin.api.Debug;
+import abyss.plugin.api.Vector3i;
 
+import java.awt.geom.Area;
 import java.util.function.BiPredicate;
 
 import static abyss.plugin.api.Actions.*;
@@ -59,7 +62,7 @@ public final class Npc extends PathingEntity {
      * @return The names of options when right clicking this NPC.
      */
     public String[] getOptionNames() {
-        if(type == null) {
+        if (type == null) {
             return new String[0];
         }
         return type.getOptionNames();
@@ -74,13 +77,13 @@ public final class Npc extends PathingEntity {
      * Interacts with this NPC.
      */
     public boolean interact(String option, BiPredicate<String, String> predicate) {
-        if(option == null || predicate == null) {
+        if (option == null || predicate == null) {
             return false;
         }
         String[] options = getOptionNames();
         int m = Math.min(OPTION_NAME_MAP.length, options.length);
         for (int i = 0; i < m; i++) {
-            if(options[i] == null) {
+            if (options[i] == null) {
                 continue;
             }
             if (predicate.test(option, options[i])) {
@@ -124,6 +127,17 @@ public final class Npc extends PathingEntity {
     @Override
     public boolean isReachable() {
         return Utils.isNpcReachable(this);
+    }
+
+    @Override
+    public Area3di getGlobalArea() {
+        int size = 1;
+        CacheNpc type = getType();
+        if (type != null) {
+            size = type.getSize();
+        }
+        Vector3i base = getGlobalPosition();
+        return new Area3di(base, new Vector3i(base.getX() + size, base.getY() + size, base.getZ()));
     }
 
     @Override
