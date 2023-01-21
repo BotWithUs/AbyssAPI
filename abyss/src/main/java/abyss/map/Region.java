@@ -138,7 +138,7 @@ public class Region {
                         if (RenderFlag.flagged(tileFlags[1][x][y], RenderFlag.LOWER_OBJECTS_TO_OVERRIDE_CLIPPING))
                             finalPlane--;
                         if (finalPlane >= 0) {
-                            getClipMap().addBlockedTile(finalPlane, x, y);
+                            getStandardCollisionMap().addBlockedTile(finalPlane, x, y);
                         }
                     }
                 }
@@ -278,7 +278,7 @@ public class Region {
         int plane = object.getZ();
         ObjectType type = object.getType();
         int rotation = object.getRotation();
-        if (x < 0 || y < 0 || x >= clipMap.getMasks()[plane].length || y >= clipMap.getMasks()[plane][x].length)
+        if (x < 0 || y < 0 || x >= clipMap.getFlags()[plane].length || y >= clipMap.getFlags()[plane][x].length)
             return;
         ObjectDefinition defs = object.getDef();
         if (defs.getClipType() == 0)
@@ -341,7 +341,7 @@ public class Region {
         int plane = object.getZ();
         ObjectType type = object.getType();
         int rotation = object.getRotation();
-        if (x < 0 || y < 0 || x >= clipMap.getMasks()[plane].length || y >= clipMap.getMasks()[plane][x].length)
+        if (x < 0 || y < 0 || x >= clipMap.getFlags()[plane].length || y >= clipMap.getFlags()[plane][x].length)
             return;
         ObjectDefinition defs = object.getDef();
         if (defs.getClipType() == 0)
@@ -409,13 +409,13 @@ public class Region {
         return region;
     }
 
-    public ClipMap getClipMap() {
+    public ClipMap getStandardCollisionMap() {
         if (clipMap == null)
             clipMap = new ClipMap(regionId, false);
         return clipMap;
     }
 
-    public ClipMap getClipMapProj() {
+    public ClipMap getProjectileCollisionMap() {
         if (clipMapProj == null)
             clipMapProj = new ClipMap(regionId, true);
         return clipMapProj;
@@ -453,7 +453,7 @@ public class Region {
     }
 
     public static int getClip(WorldTile tile) {
-        return Region.get(tile.getRegionId()).getClipMap().getMasks()[tile.getZ()][tile.getXInRegion()][tile.getYInRegion()];
+        return Region.get(tile.getRegionId()).getStandardCollisionMap().getFlags()[tile.getZ()][tile.getXInRegion()][tile.getYInRegion()];
     }
 
 

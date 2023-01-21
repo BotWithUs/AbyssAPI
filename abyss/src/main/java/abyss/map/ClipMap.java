@@ -33,7 +33,7 @@ public class ClipMap {
         this.projectile = projectile;
     }
 
-    public int[][][] getMasks() {
+    public int[][][] getFlags() {
         return flags;
     }
 
@@ -480,9 +480,9 @@ public class ClipMap {
             int newRegionX = (regionId >> 8) * 64;
             int newRegionY = (regionId & 0xff) * 64;
             if (projectile)
-                Region.get(tile.getRegionId(), false).getClipMapProj().setFlag(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, flag);
+                Region.get(tile.getRegionId(), false).getProjectileCollisionMap().setFlag(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, flag);
             else
-                Region.get(tile.getRegionId(), false).getClipMap().setFlag(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, flag);
+                Region.get(tile.getRegionId(), false).getStandardCollisionMap().setFlag(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, flag);
             return;
         }
         flags[plane][x][y] = flag;
@@ -495,9 +495,9 @@ public class ClipMap {
             int newRegionX = (regionId >> 8) * 64;
             int newRegionY = (regionId & 0xff) * 64;
             if (projectile)
-                Region.get(tile.getRegionId(), false).getClipMapProj().addFlag(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, flag);
+                Region.get(tile.getRegionId(), false).getProjectileCollisionMap().addFlag(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, flag);
             else
-                Region.get(tile.getRegionId(), false).getClipMap().addFlag(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, flag);
+                Region.get(tile.getRegionId(), false).getStandardCollisionMap().addFlag(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, flag);
             return;
         }
         flags[plane][x][y] |= flag;
@@ -510,9 +510,9 @@ public class ClipMap {
             int newRegionX = (regionId >> 8) * 64;
             int newRegionY = (regionId & 0xff) * 64;
             if (projectile)
-                Region.get(tile.getRegionId(), false).getClipMapProj().removeFlag(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, flag);
+                Region.get(tile.getRegionId(), false).getProjectileCollisionMap().removeFlag(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, flag);
             else
-                Region.get(tile.getRegionId(), false).getClipMap().removeFlag(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, flag);
+                Region.get(tile.getRegionId(), false).getStandardCollisionMap().removeFlag(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, flag);
             return;
         }
         flags[plane][x][y] &= ~flag;

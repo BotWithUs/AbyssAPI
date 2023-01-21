@@ -1,15 +1,11 @@
 package abyss.plugin.api;
 
-import abyss.map.Region;
-import abyss.map.WorldObject;
-
 import java.util.Objects;
 
 /**
  * A vector3 made up of integers.
  */
 public class Vector3i {
-
     public static final Vector3i ZERO = new Vector3i(0, 0, 0);
     public static final Vector3i ONE = new Vector3i(1, 1, 1);
 
@@ -156,6 +152,10 @@ public class Vector3i {
     public Area3di expand(Vector3i amount) {
         return new Area3di(new Vector3i(x - amount.getX(), y - amount.getY(), z - amount.getZ()),
                 new Vector3i(x + amount.getX(), y + amount.getY(), z + amount.getZ()));
+    }
+
+    public Vector3i derive(int x, int y, int z) {
+        return new Vector3i(getX() + x, getY() + y, getZ() + z);
     }
 
     /**

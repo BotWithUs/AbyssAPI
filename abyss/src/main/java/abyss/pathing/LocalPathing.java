@@ -465,12 +465,12 @@ public class LocalPathing {
 				int startX = Math.max(graphBaseX, transmitRegionX << 6), startY = Math.max(graphBaseY, transmitRegionY << 6);
 				int endX = Math.min(graphBaseX + GRAPH_SIZE, (transmitRegionX << 6) + 64), endY = Math.min(graphBaseY + GRAPH_SIZE, (transmitRegionY << 6) + 64);
 				Region region = Region.get(transmitRegionX << 8 | transmitRegionY);
-				if (region.getClipMap() == null || region.getClipMap().getMasks() == null) {
+				if (region.getStandardCollisionMap() == null || region.getStandardCollisionMap().getFlags() == null) {
 					for (int fillX = startX; fillX < endX; fillX++)
 						for (int fillY = startY; fillY < endY; fillY++)
 							clip[fillX - graphBaseX][fillY - graphBaseY] = -1;
 				} else {
-					int[][] masks = region.getClipMap().getMasks()[z];
+					int[][] masks = region.getStandardCollisionMap().getFlags()[z];
 					for (int fillX = startX; fillX < endX; fillX++) {
 						for (int fillY = startY; fillY < endY; fillY++) {
 							clip[fillX - graphBaseX][fillY - graphBaseY] = masks[fillX & 0x3F][fillY & 0x3F];
