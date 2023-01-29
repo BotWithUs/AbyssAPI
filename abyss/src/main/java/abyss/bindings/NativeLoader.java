@@ -44,6 +44,7 @@ public final class NativeLoader {
         Inventories.bind(NativeLoader::registerNativeMethod);
         PluginContext.bind(NativeLoader::registerNativeMethod);
         Interface.bind(NativeLoader::registerNativeMethod);
+        Interfaces.bind(NativeLoader::registerNativeMethod);
         Component.bind(NativeLoader::registerNativeMethod);
 
         MethodBuilder results = newMethod("results").setReturnType(List.class);

@@ -3,9 +3,6 @@ package abyss.plugin.api.test
 import abyss.Utils
 import abyss.map.Region
 import abyss.map.WorldObject
-import abyss.plugin.api.Cache
-import abyss.plugin.api.Vector3i
-import abyss.plugin.api.world.WorldTile
 import abyss.plugin.api.world.WorldTile.Companion.tile
 import com.abyss.definitions.ObjectType
 import org.junit.jupiter.api.Test
@@ -27,7 +24,7 @@ class ClippingTest {
         val region = Region.get(obj.regionId)
 
 
-        println(region.clipMap)
+        println(region.standardCollisionMap)
         println(dist)
 
         val fence = tile(3184, 3288, 0)

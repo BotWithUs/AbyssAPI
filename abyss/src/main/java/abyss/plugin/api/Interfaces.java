@@ -1,5 +1,10 @@
 package abyss.plugin.api;
 
+import abyss.bindings.MethodBuilder;
+import abyss.bindings.NativeLoader;
+
+import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 /**
@@ -24,7 +29,7 @@ public final class Interfaces {
      * Determines if an Interface is open.
      *
      * @param id The id of the widget to check the visibility of.
-     * @return If the widget with the provided is is open.
+     * @return If the widget with the provided id is open.
      */
     public static boolean isOpen(int id) {
         Interface iface = getById(id);
@@ -40,6 +45,8 @@ public final class Interfaces {
 
         return false;
     }
+
+    public static native boolean hasSelectedComponent();
 
     /**
      * Retrieves a widget by walking through the children in each widget.
@@ -103,5 +110,11 @@ public final class Interfaces {
 
     public static int getChildId(int hash) {
         return hash & 65535;
+    }
+
+    public static void bind(BiConsumer<Class<?>, MethodBuilder> registerNativeMethods) {
+        registerNativeMethods.accept(Interfaces.class, NativeLoader
+                .newMethod("hasSelectedComponent")
+                .setReturnType(boolean.class));
     }
 }
