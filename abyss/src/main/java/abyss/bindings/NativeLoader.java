@@ -11,6 +11,10 @@ import abyss.plugin.api.query.spot_animations.SpotAnimationQuery;
 
 import java.util.List;
 
+/**
+ * This class is not yet in use.
+ */
+
 public final class NativeLoader {
     private NativeLoader() {
     }
