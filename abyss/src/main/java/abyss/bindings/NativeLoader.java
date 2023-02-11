@@ -9,6 +9,9 @@ import abyss.plugin.api.query.players.PlayerQuery;
 import abyss.plugin.api.query.projectiles.ProjectileQuery;
 import abyss.plugin.api.query.spot_animations.SpotAnimationQuery;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
 /**
@@ -38,12 +41,8 @@ public final class NativeLoader {
         }
     }
 
-    public static void main(String[] args) {
-        createNativeBindings();
-    }
-
     private static void createNativeBindings() {
-        Debug.bind(NativeLoader::registerNativeMethod);
+        /*Debug.bind(NativeLoader::registerNativeMethod);
         PlayerQuery.bind(NativeLoader::registerNativeMethod);
         Inventories.bind(NativeLoader::registerNativeMethod);
         PluginContext.bind(NativeLoader::registerNativeMethod);
@@ -57,7 +56,7 @@ public final class NativeLoader {
         registerNativeMethod(ChatQuery.class, results);
         registerNativeMethod(GroundItemQuery.class, results);
         registerNativeMethod(SpotAnimationQuery.class, results);
-        registerNativeMethod(ProjectileQuery.class, results);
+        registerNativeMethod(ProjectileQuery.class, results);*/
 
     }
 

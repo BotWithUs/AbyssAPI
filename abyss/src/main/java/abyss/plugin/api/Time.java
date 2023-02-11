@@ -40,7 +40,7 @@ public final class Time {
         try {
             Thread.sleep(ms);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Debug.printStackTrace("WaitFor", e);
         }
     }
 
