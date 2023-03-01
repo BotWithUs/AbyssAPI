@@ -1,7 +1,7 @@
 jdk:
-  - openjdk18
+  - openjdk17
 before_install:
-  - sdk install java 18.0.2-open
-  - sdk use java 18.0.2-open
+  - sdk install java 17.0.5-open
+  - sdk use java 17.0.5-open
   - sdk install maven
   - mvn -v
