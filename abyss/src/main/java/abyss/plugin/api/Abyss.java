@@ -193,10 +193,4 @@ public final class Abyss {
      * @return The introspection configuration bitmask.
      */
     public static native int getIntroConfiguration();
-
-    /**
-     * Captures the game screen and writes it to a file.
-     */
-
-    public static native GameSnapshot takeSnapshot();
 }
