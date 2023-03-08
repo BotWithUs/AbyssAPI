@@ -23,6 +23,8 @@ public final class ObjectQuery implements EntityQuery<ObjectQuery> {
 
     private Pattern namePattern;
 
+    private boolean showHidden;
+
     public ObjectQuery() {
         this.ids = null;
         this.names = null;
@@ -30,6 +32,7 @@ public final class ObjectQuery implements EntityQuery<ObjectQuery> {
         this.namePattern = null;
         this.area = null;
         this.tile = null;
+        this.showHidden = false;
     }
 
     @Override
@@ -65,6 +68,15 @@ public final class ObjectQuery implements EntityQuery<ObjectQuery> {
     public ObjectQuery options(String... options) {
         this.options = options;
         return this;
+    }
+
+    public ObjectQuery hidden(boolean showHidden) {
+        this.showHidden = showHidden;
+        return this;
+    }
+
+    public ObjectQuery hidden() {
+        return hidden(true);
     }
 
     public EntityResultSet<SceneObject> result() {
