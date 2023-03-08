@@ -1,5 +1,6 @@
 package abyss.plugin.api;
 
+import abyss.plugin.api.entities.SceneObject;
 import abyss.plugin.api.extensions.SimpleExtensionContainer;
 import abyss.plugin.api.variables.ContainerVariables;
 import abyss.plugin.api.variables.Variables;
@@ -151,6 +152,7 @@ public final class Backpack extends SimpleExtensionContainer {
         if(!BACKPACK.hasExtension(BackpackWidgetExtension.class)) {
             return -1;
         }
+
         BackpackWidgetExtension ext = (BackpackWidgetExtension) BACKPACK.getExt(BackpackWidgetExtension.class);
 
         Inventory inventory = Inventories.byId(ext.getInventoryId());

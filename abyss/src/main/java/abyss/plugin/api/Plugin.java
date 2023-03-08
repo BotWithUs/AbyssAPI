@@ -8,6 +8,8 @@ import abyss.plugin.api.entities.Player;
 import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.ExtensionContainer;
 import abyss.plugin.api.plugin.attributes.Attributes;
+import abyss.plugin.api.query.Queries;
+import abyss.plugin.api.query.npc.NpcQuery;
 import abyss.plugin.api.query.players.PlayerQuery;
 import abyss.plugin.api.widgets.BackpackWidgetExtension;
 import abyss.plugin.api.world.WorldTile;
@@ -76,6 +78,7 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
      *
      * @return The amount of time to wait before invoking this function again.
      */
+
     public int onLoop() {
         return 60000;
     }

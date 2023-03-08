@@ -4,6 +4,7 @@ import abyss.bindings.MethodBuilder;
 import abyss.bindings.NativeLoader;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
@@ -46,7 +47,26 @@ public final class Interfaces {
         return false;
     }
 
+    /**
+     * Checks if there is a selected component present
+     * @return True if there is a selected component present
+     */
+
     public static native boolean hasSelectedComponent();
+
+    private static native Component getSelectedComponent0();
+
+
+    /**
+     * Gets the selected component (normally when you click use on an item)
+     * @return The selected component
+     */
+    public static Optional<Component> getSelectedComponent() {
+        if(hasSelectedComponent()) {
+            return Optional.ofNullable(getSelectedComponent0());
+        }
+        return Optional.empty();
+    }
 
     /**
      * Retrieves a widget by walking through the children in each widget.
