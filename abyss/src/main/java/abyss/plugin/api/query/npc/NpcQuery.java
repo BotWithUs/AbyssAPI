@@ -31,6 +31,7 @@ public final class NpcQuery implements PathingEntityQuery<NpcQuery> {
     private int hitmarkId;
     private int hitmarkMinValue;
     private int hitmarkMaxValue;
+    private boolean strict;
 
     public NpcQuery() {
         this.ids = null;
@@ -49,6 +50,7 @@ public final class NpcQuery implements PathingEntityQuery<NpcQuery> {
         this.hitmarkMinValue = -1;
         this.hitmarkMaxValue = -1;
         this.hitmarkId = -1;
+        this.strict = false;
     }
 
 
@@ -67,6 +69,12 @@ public final class NpcQuery implements PathingEntityQuery<NpcQuery> {
     @Override
     public NpcQuery names(Pattern pattern) {
         this.namePattern = pattern;
+        return this;
+    }
+
+    @Override
+    public NpcQuery strict(boolean strict) {
+        this.strict = strict;
         return this;
     }
 

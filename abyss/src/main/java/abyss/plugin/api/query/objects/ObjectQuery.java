@@ -25,6 +25,8 @@ public final class ObjectQuery implements EntityQuery<ObjectQuery> {
 
     private boolean showHidden;
 
+    private boolean strict;
+
     public ObjectQuery() {
         this.ids = null;
         this.names = null;
@@ -33,6 +35,7 @@ public final class ObjectQuery implements EntityQuery<ObjectQuery> {
         this.area = null;
         this.tile = null;
         this.showHidden = false;
+        this.strict = false;
     }
 
     @Override
@@ -50,6 +53,12 @@ public final class ObjectQuery implements EntityQuery<ObjectQuery> {
     @Override
     public ObjectQuery names(Pattern pattern) {
         this.namePattern = pattern;
+        return this;
+    }
+
+    @Override
+    public ObjectQuery strict(boolean strict) {
+        this.strict = strict;
         return this;
     }
 

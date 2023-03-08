@@ -19,13 +19,16 @@ public class GroundItemQuery implements EntityQuery<GroundItemQuery> {
     private Area3di area;
     private WorldTile tile;
 
+    private boolean strict;
+
     public GroundItemQuery() {
         this.ids = null;
         this.names = null;
         this.options = null;
         this.area = null;
         this.tile = null;
-        this.namePattern = null;    
+        this.namePattern = null;
+        this.strict = false;
     }
 
     @Override
@@ -37,6 +40,12 @@ public class GroundItemQuery implements EntityQuery<GroundItemQuery> {
     @Override
     public GroundItemQuery names(Pattern pattern) {
         this.namePattern = pattern;
+        return this;
+    }
+
+    @Override
+    public GroundItemQuery strict(boolean strict) {
+        this.strict = strict;
         return this;
     }
 
