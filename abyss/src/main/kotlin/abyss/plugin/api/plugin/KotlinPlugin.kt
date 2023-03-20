@@ -11,11 +11,11 @@ abstract class KotlinPlugin : Plugin() {
         }
     }
 
-    override fun onServerTick(self: Player, tickCount: Long): Int {
-        return runBlocking { onTick(self, tickCount) }
+    override fun onServerTick(tickCount: Long): Int {
+        return runBlocking { onTick(tickCount) }
     }
 
     abstract suspend fun loop(): Int
 
-    abstract suspend fun onTick(self: Player, tickCount: Long): Int
+    abstract suspend fun onTick(tickCount: Long): Int
 }

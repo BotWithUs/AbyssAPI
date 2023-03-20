@@ -28,7 +28,12 @@ public final class Npc extends PathingEntity {
 
     private int id;
     private int health;
+
+    private int maxHealth;
+
     private int transformedId = -1;
+
+    private int combatLevel;
 
     private CacheNpc type;
 
@@ -54,6 +59,24 @@ public final class Npc extends PathingEntity {
      */
     public int getHealth() {
         return health;
+    }
+
+    /**
+     * Retrieves this NPC's maximum health
+     * @return The maximum amount of health this npc can have
+     */
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    /**
+     * Retrieves this NPC's combat level, repersenting the strength of the npc.
+     * @return The representation of strength for a npc while in combat
+     */
+
+    public int getCombatLevel() {
+        return combatLevel;
     }
 
     /**
@@ -128,6 +151,22 @@ public final class Npc extends PathingEntity {
     public boolean isReachable() {
         return Utils.isNpcReachable(this);
     }
+
+    /**
+     * Gets a varbit value from the npc variable domain
+     * @param varbitId Varbit ID related to npcs
+     * @return The npc varbit value
+     */
+
+    public native int getVarbitValue(int varbitId);
+
+    /**
+     * Gets a varp value from the npc variable domain
+     * @param varpId Varp ID related to npcs
+     * @return The npc varp value
+     */
+
+    public native int getVarpValue(int varpId);
 
     @Override
     public Area3di getGlobalArea() {

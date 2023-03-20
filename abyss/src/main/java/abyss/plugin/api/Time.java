@@ -51,7 +51,7 @@ public final class Time {
         long begin = System.currentTimeMillis();
         boolean met = false;
         try {
-            while (System.currentTimeMillis() < (begin + timeout) && !(met = condition.met())) {
+                while (System.currentTimeMillis() < (begin + timeout) && !(met = condition.met())) {
                 waitFor(delay);
             }
         } catch (Throwable t) {

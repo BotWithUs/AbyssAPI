@@ -10,9 +10,9 @@ import java.nio.charset.StandardCharsets;
     private int id = 0;
     private long address = 0;
     private long internal1 = 0;
-    private byte[] binaryName = Abyss.BAD_DATA_STRING.getBytes(StandardCharsets.US_ASCII);
-    private byte[][] binaryOptionNames = new byte[0][];
-    private byte[][] binaryGroundOptionNames = new byte[0][];
+    private String name = Abyss.BAD_DATA_STRING;
+    private String[] optionNames;
+    private String[] groundOptions;
 
     private boolean isMembers;
     private boolean isStackable;
@@ -51,29 +51,21 @@ import java.nio.charset.StandardCharsets;
      * @return The name of the item.
      */
     public String getName() {
-        return new String(binaryName);
+        return name;
     }
 
     /**
      * @return The name of options when right clicking this item.
      */
     public String[] getOptionNames() {
-        String[] options = new String[binaryOptionNames.length];
-        for (int i = 0; i < binaryOptionNames.length; i++) {
-            options[i] = binaryOptionNames[i] == null ? "" : new String(binaryOptionNames[i]);
-        }
-        return options;
+        return optionNames == null ? new String[0] : optionNames;
     }
 
     /**
      * @return The name of options when right clicking this item on the ground.
      */
     public String[] getGroundOptionNames() {
-        String[] options = new String[binaryGroundOptionNames.length];
-        for (int i = 0; i < binaryGroundOptionNames.length; i++) {
-            options[i] = binaryGroundOptionNames[i] == null ? "" : new String(binaryGroundOptionNames[i]);
-        }
-        return options;
+        return groundOptions == null ? new String[0] : groundOptions;
     }
 
     /*public String[] getEquipmentOptions() {
@@ -123,6 +115,6 @@ import java.nio.charset.StandardCharsets;
      */
     @Override
     public boolean isLoaded() {
-        return super.isLoaded() && binaryName != null && binaryOptionNames != null;
+        return super.isLoaded() && name != null && groundOptions != null && optionNames != null;
     }
 }

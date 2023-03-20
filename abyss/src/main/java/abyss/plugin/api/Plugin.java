@@ -1,15 +1,12 @@
 package abyss.plugin.api;
 
-import abyss.bindings.MethodBuilder;
-import abyss.bindings.NativeLoader;
 import abyss.map.Region;
 import abyss.map.WorldObject;
 import abyss.plugin.api.entities.Player;
 import abyss.plugin.api.extensions.Extension;
 import abyss.plugin.api.extensions.ExtensionContainer;
+import abyss.plugin.api.game.chat.ChatMessage;
 import abyss.plugin.api.plugin.attributes.Attributes;
-import abyss.plugin.api.query.Queries;
-import abyss.plugin.api.query.npc.NpcQuery;
 import abyss.plugin.api.query.players.PlayerQuery;
 import abyss.plugin.api.widgets.BackpackWidgetExtension;
 import abyss.plugin.api.world.WorldTile;
@@ -25,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.function.BiConsumer;
 
 /**
  * All plugins must extend this base type.
@@ -91,7 +87,7 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
      * @return - the number of ticks to wait
      */
 
-    public int onServerTick(Player self, long tickCount) {
+    public int onServerTick(long tickCount) {
         return 0;
     }
 
@@ -136,6 +132,15 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
      * Called when the visibility of a widget changes.
      */
     public void onWidgetVisibilityChanged(int id, boolean visible) {
+
+    }
+
+    /**
+     * Called when a new chat message is received
+     * @param message The game chat message
+     */
+
+    public void onChatMessage(ChatMessage message) {
 
     }
 
