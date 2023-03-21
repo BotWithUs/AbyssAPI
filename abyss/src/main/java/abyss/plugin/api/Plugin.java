@@ -209,6 +209,9 @@ public abstract class Plugin implements ExtensionContainer<Extension> {
         if (otype == null) {
             return;
         }
+        if(region.objects == null) {
+            return;
+        }
         WorldObject wo = region.objects[pos.getZ()][tile.getXInRegion()][tile.getYInRegion()][otype.slot];
         if (wo == null) {
             return;

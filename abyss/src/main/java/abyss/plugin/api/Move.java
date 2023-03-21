@@ -24,7 +24,13 @@ public final class Move {
      *
      * @param tile The tile to walk to
      */
-    public static native void to(Vector3i tile, int type);
+    public static void to(Vector3i tile, int type) {
+        to(type, tile.getX(), tile.getY());
+    }
+
+    public static void to(int type, int x, int y) {
+        Actions.menu(Actions.MENU_EXECUTE_WALK, type, x, y, 0);
+    }
 
     public static void to(Vector3i tile) {
         to(tile, MINIMAP_WALK);
@@ -57,7 +63,7 @@ public final class Move {
      * until game state is invalidated or the local player is within
      * the target destination.
      *
-     * @param tile The tile to traverse to.
+     * @param tile    The tile to traverse to.
      * @param timeout The movement timeout.
      */
     @Deprecated(forRemoval = true)
