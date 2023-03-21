@@ -25,11 +25,13 @@ public final class Move {
      * @param tile The tile to walk to
      */
     public static void to(Vector3i tile, int type) {
-        to(type, tile.getX(), tile.getY());
+        int xOffset = (int) Math.round(Math.random() * 10) - 5; // Random integer between -5 and 5
+        int yOffset = (int) Math.round(Math.random() * 10) - 5; // Random integer between -5 and 5
+        to(type, tile.getX(), tile.getY(), xOffset, yOffset);
     }
 
-    public static void to(int type, int x, int y) {
-        Actions.menu(Actions.MENU_EXECUTE_WALK, type, x, y, 0);
+    public static void to(int type, int x, int y, int xOffset, int yOffset) {
+        Actions.menu(Actions.MENU_EXECUTE_WALK, type, x + xOffset, y + yOffset, 0);
     }
 
     public static void to(Vector3i tile) {
