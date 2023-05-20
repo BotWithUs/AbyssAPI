@@ -105,7 +105,7 @@ public class ComponentItem extends Item {
         for (int i = 0; i < getOptionNames().length; i++) {
             String opt = getOptionNames()[i];
             if (option.equalsIgnoreCase(opt)) {
-                return interact(i);
+                return interact(i + 1);
             }
         }
         return false;
